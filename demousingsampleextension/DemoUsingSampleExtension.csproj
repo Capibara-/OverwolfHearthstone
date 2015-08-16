@@ -1,0 +1,912 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{397B82E0-70E3-46D3-AC9A-6DD14159F45E}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DemoUsingSampleExtension</RootNamespace>
+    <AssemblyName>DemoUsingSampleExtension</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net20\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\Users\lior\Desktop\temp index.html" />
+    <Content Include="Files\Images\abberation.png" />
+    <Content Include="Files\Images\abomination.png" />
+    <Content Include="Files\Images\abusive-sergeant.png" />
+    <Content Include="Files\Images\acidic-swamp-ooze.png" />
+    <Content Include="Files\Images\acolyte-of-pain.png" />
+    <Content Include="Files\Images\activate-arcanotron.png" />
+    <Content Include="Files\Images\activate-electron.png" />
+    <Content Include="Files\Images\activate-magmatron.png" />
+    <Content Include="Files\Images\activate-toxitron.png" />
+    <Content Include="Files\Images\activate.png" />
+    <Content Include="Files\Images\al-akir-the-windlord.png" />
+    <Content Include="Files\Images\alarm-o-bot.png" />
+    <Content Include="Files\Images\aldor-peacekeeper.png" />
+    <Content Include="Files\Images\alexstrasza.png" />
+    <Content Include="Files\Images\amani-berserker.png" />
+    <Content Include="Files\Images\ancestor-s-call.png" />
+    <Content Include="Files\Images\ancestral-healing.png" />
+    <Content Include="Files\Images\ancestral-spirit.png" />
+    <Content Include="Files\Images\ancient-brewmaster.png" />
+    <Content Include="Files\Images\ancient-mage.png" />
+    <Content Include="Files\Images\ancient-of-lore.png" />
+    <Content Include="Files\Images\ancient-of-war.png" />
+    <Content Include="Files\Images\ancient-watcher.png" />
+    <Content Include="Files\Images\angry-chicken.png" />
+    <Content Include="Files\Images\anima-golem.png" />
+    <Content Include="Files\Images\animal-companion.png" />
+    <Content Include="Files\Images\annoy-o-tron.png" />
+    <Content Include="Files\Images\anodized-robo-cub.png" />
+    <Content Include="Files\Images\antique-healbot.png" />
+    <Content Include="Files\Images\anub-ar-ambusher.png" />
+    <Content Include="Files\Images\arathi-weaponsmith.png" />
+    <Content Include="Files\Images\arcane-explosion.png" />
+    <Content Include="Files\Images\arcane-golem.png" />
+    <Content Include="Files\Images\arcane-intellect.png" />
+    <Content Include="Files\Images\arcane-missiles.png" />
+    <Content Include="Files\Images\arcane-nullifier-x-21.png" />
+    <Content Include="Files\Images\arcane-shot.png" />
+    <Content Include="Files\Images\arcanite-reaper.png" />
+    <Content Include="Files\Images\arcanotron.png" />
+    <Content Include="Files\Images\archmage-antonidas.png" />
+    <Content Include="Files\Images\archmage.png" />
+    <Content Include="Files\Images\argent-commander.png" />
+    <Content Include="Files\Images\argent-protector.png" />
+    <Content Include="Files\Images\argent-squire.png" />
+    <Content Include="Files\Images\armor-plating.png" />
+    <Content Include="Files\Images\armor-up.png" />
+    <Content Include="Files\Images\armorsmith.png" />
+    <Content Include="Files\Images\ashbringer.png" />
+    <Content Include="Files\Images\assassin-s-blade.png" />
+    <Content Include="Files\Images\assassinate.png" />
+    <Content Include="Files\Images\attack-mode.png" />
+    <Content Include="Files\Images\auchenai-soulpriest.png" />
+    <Content Include="Files\Images\avenge.png" />
+    <Content Include="Files\Images\avenging-wrath.png" />
+    <Content Include="Files\Images\axe-flinger.png" />
+    <Content Include="Files\Images\azure-drake.png" />
+    <Content Include="Files\Images\backstab.png" />
+    <Content Include="Files\Images\baine-bloodhoof.png" />
+    <Content Include="Files\Images\bananas.png" />
+    <Content Include="Files\Images\bane-of-doom.png" />
+    <Content Include="Files\Images\baron-geddon.png" />
+    <Content Include="Files\Images\baron-rivendare.png" />
+    <Content Include="Files\Images\battle-axe.png" />
+    <Content Include="Files\Images\battle-rage.png" />
+    <Content Include="Files\Images\bestial-wrath.png" />
+    <Content Include="Files\Images\betrayal.png" />
+    <Content Include="Files\Images\big-game-hunter.png" />
+    <Content Include="Files\Images\bite.png" />
+    <Content Include="Files\Images\black-whelp.png" />
+    <Content Include="Files\Images\blackwing-corruptor.png" />
+    <Content Include="Files\Images\blackwing-technician.png" />
+    <Content Include="Files\Images\blackwing.png" />
+    <Content Include="Files\Images\blade-flurry.png" />
+    <Content Include="Files\Images\blessed-champion.png" />
+    <Content Include="Files\Images\blessing-of-kings.png" />
+    <Content Include="Files\Images\blessing-of-might.png" />
+    <Content Include="Files\Images\blessing-of-wisdom.png" />
+    <Content Include="Files\Images\blingtron-3000.png" />
+    <Content Include="Files\Images\blizzard.png" />
+    <Content Include="Files\Images\blood-fury.png" />
+    <Content Include="Files\Images\blood-imp.png" />
+    <Content Include="Files\Images\blood-knight.png" />
+    <Content Include="Files\Images\bloodfen-raptor.png" />
+    <Content Include="Files\Images\bloodlust.png" />
+    <Content Include="Files\Images\bloodmage-thalnos.png" />
+    <Content Include="Files\Images\bloodsail-corsair.png" />
+    <Content Include="Files\Images\bloodsail-raider.png" />
+    <Content Include="Files\Images\bluegill-warrior.png" />
+    <Content Include="Files\Images\boar.png" />
+    <Content Include="Files\Images\bolvar-fordragon.png" />
+    <Content Include="Files\Images\bomb-lobber.png" />
+    <Content Include="Files\Images\bone-construct.png" />
+    <Content Include="Files\Images\boom-bot.png" />
+    <Content Include="Files\Images\booty-bay-bodyguard.png" />
+    <Content Include="Files\Images\boulderfist-ogre.png" />
+    <Content Include="Files\Images\bouncing-blade.png" />
+    <Content Include="Files\Images\brawl.png" />
+    <Content Include="Files\Images\brood-afflicition-black.png" />
+    <Content Include="Files\Images\brood-afflicition-blue.png" />
+    <Content Include="Files\Images\brood-afflicition-bronze.png" />
+    <Content Include="Files\Images\brood-afflicition-green.png" />
+    <Content Include="Files\Images\brood-afflicition-red.png" />
+    <Content Include="Files\Images\brood-afflicition.png" />
+    <Content Include="Files\Images\burly-rockjaw-trogg.png" />
+    <Content Include="Files\Images\burning-adrenaline.png" />
+    <Content Include="Files\Images\burrowing-mine.png" />
+    <Content Include="Files\Images\cabal-shadow-priest.png" />
+    <Content Include="Files\Images\cairne-bloodhoof.png" />
+    <Content Include="Files\Images\call-pet.png" />
+    <Content Include="Files\Images\captain-greenskin.png" />
+    <Content Include="Files\Images\captain-s-parrot.png" />
+    <Content Include="Files\Images\cenarius.png" />
+    <Content Include="Files\Images\charge.png" />
+    <Content Include="Files\Images\chicken.png" />
+    <Content Include="Files\Images\chillwind-yeti.png" />
+    <Content Include="Files\Images\chromaggus.png" />
+    <Content Include="Files\Images\chromatic-dragonkin.png" />
+    <Content Include="Files\Images\chromatic-drake.png" />
+    <Content Include="Files\Images\chromatic-mutation.png" />
+    <Content Include="Files\Images\chromatic-prototype.png" />
+    <Content Include="Files\Images\circle-of-healing.png" />
+    <Content Include="Files\Images\claw.png" />
+    <Content Include="Files\Images\cleave.png" />
+    <Content Include="Files\Images\clockwork-giant.png" />
+    <Content Include="Files\Images\clockwork-gnome.png" />
+    <Content Include="Files\Images\cobalt-guardian.png" />
+    <Content Include="Files\Images\cobra-shot.png" />
+    <Content Include="Files\Images\coghammer.png" />
+    <Content Include="Files\Images\cogmaster-s-wrench.png" />
+    <Content Include="Files\Images\cogmaster.png" />
+    <Content Include="Files\Images\cold-blood.png" />
+    <Content Include="Files\Images\coldlight-oracle.png" />
+    <Content Include="Files\Images\coldlight-seer.png" />
+    <Content Include="Files\Images\commanding-shout.png" />
+    <Content Include="Files\Images\conceal.png" />
+    <Content Include="Files\Images\cone-of-cold.png" />
+    <Content Include="Files\Images\consecration.png" />
+    <Content Include="Files\Images\core-hound.png" />
+    <Content Include="Files\Images\core-rager.png" />
+    <Content Include="Files\Images\corrupted-egg.png" />
+    <Content Include="Files\Images\corruption.png" />
+    <Content Include="Files\Images\counterspell.png" />
+    <Content Include="Files\Images\crackle.png" />
+    <Content Include="Files\Images\crazed-alchemist.png" />
+    <Content Include="Files\Images\cruel-taskmaster.png" />
+    <Content Include="Files\Images\crush.png" />
+    <Content Include="Files\Images\cult-master.png" />
+    <Content Include="Files\Images\dagger-mastery.png" />
+    <Content Include="Files\Images\dalaran-mage.png" />
+    <Content Include="Files\Images\damaged-golem.png" />
+    <Content Include="Files\Images\dancing-swords.png" />
+    <Content Include="Files\Images\dark-cultist.png" />
+    <Content Include="Files\Images\dark-iron-bouncer.png" />
+    <Content Include="Files\Images\dark-iron-dwarf.png" />
+    <Content Include="Files\Images\dark-iron-skulker.png" />
+    <Content Include="Files\Images\dark-iron-spectator.png" />
+    <Content Include="Files\Images\dark-wispers.png" />
+    <Content Include="Files\Images\dark.png" />
+    <Content Include="Files\Images\darkbomb.png" />
+    <Content Include="Files\Images\darkscale-healer.png" />
+    <Content Include="Files\Images\deadly-poison.png" />
+    <Content Include="Files\Images\deadly-shot.png" />
+    <Content Include="Files\Images\death-s-bite.png" />
+    <Content Include="Files\Images\deathbloom.png" />
+    <Content Include="Files\Images\deathcharger.png" />
+    <Content Include="Files\Images\deathlord.png" />
+    <Content Include="Files\Images\deathwing.png" />
+    <Content Include="Files\Images\defender-of-argus.png" />
+    <Content Include="Files\Images\defender.png" />
+    <Content Include="Files\Images\defias-bandit.png" />
+    <Content Include="Files\Images\defias-ringleader.png" />
+    <Content Include="Files\Images\demolisher.png" />
+    <Content Include="Files\Images\demonfire.png" />
+    <Content Include="Files\Images\demonheart.png" />
+    <Content Include="Files\Images\demonwrath.png" />
+    <Content Include="Files\Images\devilsaur.png" />
+    <Content Include="Files\Images\die-insect.png" />
+    <Content Include="Files\Images\dire-wolf-alpha.png" />
+    <Content Include="Files\Images\dismount.png" />
+    <Content Include="Files\Images\divine-favor.png" />
+    <Content Include="Files\Images\divine-spirit.png" />
+    <Content Include="Files\Images\doomguard.png" />
+    <Content Include="Files\Images\doomhammer.png" />
+    <Content Include="Files\Images\doomsayer.png" />
+    <Content Include="Files\Images\dr-boom.png" />
+    <Content Include="Files\Images\dragon-consort.png" />
+    <Content Include="Files\Images\dragon-egg.png" />
+    <Content Include="Files\Images\dragon-s-breath.png" />
+    <Content Include="Files\Images\dragonkin-sorcerer.png" />
+    <Content Include="Files\Images\dragonkin.png" />
+    <Content Include="Files\Images\dragonling-mechanic.png" />
+    <Content Include="Files\Images\dragonteeth.png" />
+    <Content Include="Files\Images\drain-life.png" />
+    <Content Include="Files\Images\drakkisath-s-command.png" />
+    <Content Include="Files\Images\drakonid-crusher.png" />
+    <Content Include="Files\Images\dread-corsair.png" />
+    <Content Include="Files\Images\dread-infernal.png" />
+    <Content Include="Files\Images\dream.png" />
+    <Content Include="Files\Images\druid-of-the-claw.png" />
+    <Content Include="Files\Images\druid-of-the-fang.png" />
+    <Content Include="Files\Images\druid-of-the-flame.png" />
+    <Content Include="Files\Images\druid-of-the-flame_2.png" />
+    <Content Include="Files\Images\druid-of-the-flame_3.png" />
+    <Content Include="Files\Images\dunemaul-shaman.png" />
+    <Content Include="Files\Images\duplicate.png" />
+    <Content Include="Files\Images\dust-devil.png" />
+    <Content Include="Files\Images\eaglehorn-bow.png" />
+    <Content Include="Files\Images\earth-elemental.png" />
+    <Content Include="Files\Images\earth-shock.png" />
+    <Content Include="Files\Images\earthen-ring-farseer.png" />
+    <Content Include="Files\Images\echo-of-medivh.png" />
+    <Content Include="Files\Images\echoing-ooze.png" />
+    <Content Include="Files\Images\echolocate.png" />
+    <Content Include="Files\Images\edwin-vancleef.png" />
+    <Content Include="Files\Images\electron.png" />
+    <Content Include="Files\Images\elite-tauren-chieftain.png" />
+    <Content Include="Files\Images\elven-archer.png" />
+    <Content Include="Files\Images\emboldener-3000.png" />
+    <Content Include="Files\Images\emerald-drake.png" />
+    <Content Include="Files\Images\emergency-coolant.png" />
+    <Content Include="Files\Images\emperor-cobra.png" />
+    <Content Include="Files\Images\emperor-thaurissan.png" />
+    <Content Include="Files\Images\enhance-o-mechano.png" />
+    <Content Include="Files\Images\enrage.png" />
+    <Content Include="Files\Images\equality.png" />
+    <Content Include="Files\Images\essence-of-the-red.png" />
+    <Content Include="Files\Images\ethereal-arcanist.png" />
+    <Content Include="Files\Images\eviscerate.png" />
+    <Content Include="Files\Images\excess-mana.png" />
+    <Content Include="Files\Images\execute.png" />
+    <Content Include="Files\Images\explosive-sheep.png" />
+    <Content Include="Files\Images\explosive-shot.png" />
+    <Content Include="Files\Images\explosive-trap.png" />
+    <Content Include="Files\Images\eye-for-an-eye.png" />
+    <Content Include="Files\Images\faceless-manipulator.png" />
+    <Content Include="Files\Images\faerie-dragon.png" />
+    <Content Include="Files\Images\fallout-slime.png" />
+    <Content Include="Files\Images\fan-of-knives.png" />
+    <Content Include="Files\Images\far-sight.png" />
+    <Content Include="Files\Images\feign-death.png" />
+    <Content Include="Files\Images\fel-cannon.png" />
+    <Content Include="Files\Images\fel-reaver.png" />
+    <Content Include="Files\Images\felguard.png" />
+    <Content Include="Files\Images\fen-creeper.png" />
+    <Content Include="Files\Images\feral-spirit.png" />
+    <Content Include="Files\Images\feugen.png" />
+    <Content Include="Files\Images\fiery-war-axe.png" />
+    <Content Include="Files\Images\finicky-cloakfield.png" />
+    <Content Include="Files\Images\finkle-einhorn.png" />
+    <Content Include="Files\Images\fire-elemental.png" />
+    <Content Include="Files\Images\fire-hawk-form.png" />
+    <Content Include="Files\Images\fireball.png" />
+    <Content Include="Files\Images\fireblast.png" />
+    <Content Include="Files\Images\firecat-form.png" />
+    <Content Include="Files\Images\fireguard-destroyer.png" />
+    <Content Include="Files\Images\firesworn.png" />
+    <Content Include="Files\Images\flame-imp.png" />
+    <Content Include="Files\Images\flame-leviathan.png" />
+    <Content Include="Files\Images\flame-of-azzinoth.png" />
+    <Content Include="Files\Images\flamecannon.png" />
+    <Content Include="Files\Images\flameheart.png" />
+    <Content Include="Files\Images\flamestrike.png" />
+    <Content Include="Files\Images\flametongue-totem.png" />
+    <Content Include="Files\Images\flamewaker-acolyte.png" />
+    <Content Include="Files\Images\flamewaker.png" />
+    <Content Include="Files\Images\flare.png" />
+    <Content Include="Files\Images\flesheating-ghoul.png" />
+    <Content Include="Files\Images\floating-watcher.png" />
+    <Content Include="Files\Images\flying-machine.png" />
+    <Content Include="Files\Images\foe-reaper-4000.png" />
+    <Content Include="Files\Images\force-of-nature.png" />
+    <Content Include="Files\Images\force-tank-max.png" />
+    <Content Include="Files\Images\forked-lightning.png" />
+    <Content Include="Files\Images\frame.png" />
+    <Content Include="Files\Images\frame_2.png" />
+    <Content Include="Files\Images\frame_3.png" />
+    <Content Include="Files\Images\frame_4.png" />
+    <Content Include="Files\Images\frame_5.png" />
+    <Content Include="Files\Images\frame_6.png" />
+    <Content Include="Files\Images\frame_7.png" />
+    <Content Include="Files\Images\frame_8.png" />
+    <Content Include="Files\Images\frame_9.png" />
+    <Content Include="Files\Images\frame_countbox.png" />
+    <Content Include="Files\Images\frame_legendary.png" />
+    <Content Include="Files\Images\frame_neg1.png" />
+    <Content Include="Files\Images\frame_neg2.png" />
+    <Content Include="Files\Images\frame_neg3.png" />
+    <Content Include="Files\Images\frame_neg4.png" />
+    <Content Include="Files\Images\frame_neg5.png" />
+    <Content Include="Files\Images\frame_neg7.png" />
+    <Content Include="Files\Images\frame_neg8.png" />
+    <Content Include="Files\Images\frame_neg9.png" />
+    <Content Include="Files\Images\frame_rarity_common.png" />
+    <Content Include="Files\Images\frame_rarity_epic.png" />
+    <Content Include="Files\Images\frame_rarity_legendary.png" />
+    <Content Include="Files\Images\frame_rarity_rare.png" />
+    <Content Include="Files\Images\freezing-trap.png" />
+    <Content Include="Files\Images\frog.png" />
+    <Content Include="Files\Images\frost-elemental.png" />
+    <Content Include="Files\Images\frost-nova.png" />
+    <Content Include="Files\Images\frost-shock.png" />
+    <Content Include="Files\Images\frostbolt.png" />
+    <Content Include="Files\Images\frostwolf-grunt.png" />
+    <Content Include="Files\Images\frostwolf-warlord.png" />
+    <Content Include="Files\Images\frothing-berserker.png" />
+    <Content Include="Files\Images\frozen-champion.png" />
+    <Content Include="Files\Images\gadgetzan-auctioneer.png" />
+    <Content Include="Files\Images\gahz-rilla.png" />
+    <Content Include="Files\Images\gallywix-s-coin.png" />
+    <Content Include="Files\Images\gang-up.png" />
+    <Content Include="Files\Images\gazlowe.png" />
+    <Content Include="Files\Images\gelbin-mekkatorque.png" />
+    <Content Include="Files\Images\get--em.png" />
+    <Content Include="Files\Images\gift-of-cards.png" />
+    <Content Include="Files\Images\gift-of-mana.png" />
+    <Content Include="Files\Images\gilblin-stalker.png" />
+    <Content Include="Files\Images\gladiator-s-longbow.png" />
+    <Content Include="Files\Images\glaivezooka.png" />
+    <Content Include="Files\Images\gnoll.png" />
+    <Content Include="Files\Images\gnomeregan-infantry.png" />
+    <Content Include="Files\Images\gnomish-experimenter.png" />
+    <Content Include="Files\Images\gnomish-inventor.png" />
+    <Content Include="Files\Images\goblin-auto-barber.png" />
+    <Content Include="Files\Images\goblin-blastmage.png" />
+    <Content Include="Files\Images\goblin-sapper.png" />
+    <Content Include="Files\Images\goldshire-footman.png" />
+    <Content Include="Files\Images\gorehowl.png" />
+    <Content Include="Files\Images\grim-patron.png" />
+    <Content Include="Files\Images\grimscale-oracle.png" />
+    <Content Include="Files\Images\grommash-hellscream.png" />
+    <Content Include="Files\Images\grove-tender.png" />
+    <Content Include="Files\Images\gruul.png" />
+    <Content Include="Files\Images\guardian-of-icecrown.png" />
+    <Content Include="Files\Images\guardian-of-kings.png" />
+    <Content Include="Files\Images\gurubashi-berserker.png" />
+    <Content Include="Files\Images\guzzler.png" />
+    <Content Include="Files\Images\gyth.png" />
+    <Content Include="Files\Images\hammer-of-wrath.png" />
+    <Content Include="Files\Images\hand-of-protection.png" />
+    <Content Include="Files\Images\harrison-jones.png" />
+    <Content Include="Files\Images\harvest-golem.png" />
+    <Content Include="Files\Images\haunted-creeper.png" />
+    <Content Include="Files\Images\headcrack.png" />
+    <Content Include="Files\Images\healing-totem.png" />
+    <Content Include="Files\Images\healing-touch.png" />
+    <Content Include="Files\Images\HearthstoneDeckTracker.ico" />
+    <Content Include="Files\Images\HearthstoneDeckTracker16.ico" />
+    <Content Include="Files\Images\heavy-axe.png" />
+    <Content Include="Files\Images\hellfire.png" />
+    <Content Include="Files\Images\hemet-nesingwary.png" />
+    <Content Include="Files\Images\heroic-strike.png" />
+    <Content Include="Files\Images\hex.png" />
+    <Content Include="Files\Images\hobgoblin.png" />
+    <Content Include="Files\Images\hogger.png" />
+    <Content Include="Files\Images\holy-fire.png" />
+    <Content Include="Files\Images\holy-light.png" />
+    <Content Include="Files\Images\holy-nova.png" />
+    <Content Include="Files\Images\holy-smite.png" />
+    <Content Include="Files\Images\holy-wrath.png" />
+    <Content Include="Files\Images\homing-chicken.png" />
+    <Content Include="Files\Images\hook.png" />
+    <Content Include="Files\Images\hound.png" />
+    <Content Include="Files\Images\houndmaster.png" />
+    <Content Include="Files\Images\humility.png" />
+    <Content Include="Files\Images\hungry-crab.png" />
+    <Content Include="Files\Images\hungry-dragon.png" />
+    <Content Include="Files\Images\hunter-s-mark.png" />
+    <Content Include="Files\Images\hyena.png" />
+    <Content Include="Files\Images\i-am-murloc.png" />
+    <Content Include="Files\Images\ice-barrier.png" />
+    <Content Include="Files\Images\ice-block.png" />
+    <Content Include="Files\Images\ice-lance.png" />
+    <Content Include="Files\Images\ignite-mana.png" />
+    <Content Include="Files\Images\illidan-stormrage.png" />
+    <Content Include="Files\Images\illuminator.png" />
+    <Content Include="Files\Images\imp-gang-boss.png" />
+    <Content Include="Files\Images\imp-losion.png" />
+    <Content Include="Files\Images\imp-master.png" />
+    <Content Include="Files\Images\imp.png" />
+    <Content Include="Files\Images\inferno.png" />
+    <Content Include="Files\Images\injured-blademaster.png" />
+    <Content Include="Files\Images\inner-fire.png" />
+    <Content Include="Files\Images\inner-rage.png" />
+    <Content Include="Files\Images\innervate.png" />
+    <Content Include="Files\Images\intense-gaze.png" />
+    <Content Include="Files\Images\iron-juggernaut.png" />
+    <Content Include="Files\Images\iron-sensei.png" />
+    <Content Include="Files\Images\ironbark-protector.png" />
+    <Content Include="Files\Images\ironbeak-owl.png" />
+    <Content Include="Files\Images\ironforge-rifleman.png" />
+    <Content Include="Files\Images\ironfur-grizzly.png" />
+    <Content Include="Files\Images\jaws.png" />
+    <Content Include="Files\Images\jeering-crowd.png" />
+    <Content Include="Files\Images\jeeves.png" />
+    <Content Include="Files\Images\jungle-panther.png" />
+    <Content Include="Files\Images\junkbot.png" />
+    <Content Include="Files\Images\keeper-of-the-grove.png" />
+    <Content Include="Files\Images\kel-thuzad.png" />
+    <Content Include="Files\Images\kezan-mystic.png" />
+    <Content Include="Files\Images\kidnapper.png" />
+    <Content Include="Files\Images\kill-command.png" />
+    <Content Include="Files\Images\king-krush.png" />
+    <Content Include="Files\Images\king-mukla.png" />
+    <Content Include="Files\Images\king-of-beasts.png" />
+    <Content Include="Files\Images\kirin-tor-mage.png" />
+    <Content Include="Files\Images\knife-juggler.png" />
+    <Content Include="Files\Images\kobold-geomancer.png" />
+    <Content Include="Files\Images\kor-kron-elite.png" />
+    <Content Include="Files\Images\lady-blaumeux.png" />
+    <Content Include="Files\Images\laughing-sister.png" />
+    <Content Include="Files\Images\lava-burst.png" />
+    <Content Include="Files\Images\lava-shock.png" />
+    <Content Include="Files\Images\lava.png" />
+    <Content Include="Files\Images\lay-on-hands.png" />
+    <Content Include="Files\Images\leeroy-jenkins.png" />
+    <Content Include="Files\Images\leper-gnome.png" />
+    <Content Include="Files\Images\lesser-heal.png" />
+    <Content Include="Files\Images\life-tap.png" />
+    <Content Include="Files\Images\light-of-the-naaru.png" />
+    <Content Include="Files\Images\light-s-justice.png" />
+    <Content Include="Files\Images\lightbomb.png" />
+    <Content Include="Files\Images\lightning-bolt.png" />
+    <Content Include="Files\Images\lightning-storm.png" />
+    <Content Include="Files\Images\lightspawn.png" />
+    <Content Include="Files\Images\lightwarden.png" />
+    <Content Include="Files\Images\lightwell.png" />
+    <Content Include="Files\Images\lil--exorcist.png" />
+    <Content Include="Files\Images\living-bomb.png" />
+    <Content Include="Files\Images\living-lava.png" />
+    <Content Include="Files\Images\loatheb.png" />
+    <Content Include="Files\Images\locust-swarm.png" />
+    <Content Include="Files\Images\loot-hoarder.png" />
+    <Content Include="Files\Images\lord-jaraxxus.png" />
+    <Content Include="Files\Images\lord-of-the-arena.png" />
+    <Content Include="Files\Images\lorewalker-cho.png" />
+    <Content Include="Files\Images\lost-tallstrider.png" />
+    <Content Include="Files\Images\mad-bomber.png" />
+    <Content Include="Files\Images\mad-scientist.png" />
+    <Content Include="Files\Images\madder-bomber.png" />
+    <Content Include="Files\Images\maexxna.png" />
+    <Content Include="Files\Images\magma-pulse.png" />
+    <Content Include="Files\Images\magma-rager.png" />
+    <Content Include="Files\Images\magmatron.png" />
+    <Content Include="Files\Images\magmaw.png" />
+    <Content Include="Files\Images\majordomo-executus.png" />
+    <Content Include="Files\Images\mal-ganis.png" />
+    <Content Include="Files\Images\malorne.png" />
+    <Content Include="Files\Images\malygos.png" />
+    <Content Include="Files\Images\mana-addict.png" />
+    <Content Include="Files\Images\mana-tide-totem.png" />
+    <Content Include="Files\Images\mana-wraith.png" />
+    <Content Include="Files\Images\mana-wyrm.png" />
+    <Content Include="Files\Images\mark-of-nature.png" />
+    <Content Include="Files\Images\mark-of-the-horsemen.png" />
+    <Content Include="Files\Images\mark-of-the-wild.png" />
+    <Content Include="Files\Images\mass-dispel.png" />
+    <Content Include="Files\Images\massive-runeblade.png" />
+    <Content Include="Files\Images\master-of-disguise.png" />
+    <Content Include="Files\Images\master-swordsmith.png" />
+    <Content Include="Files\Images\me-smash.png" />
+    <Content Include="Files\Images\mech-bear-cat.png" />
+    <Content Include="Files\Images\mechanical-dragonling.png" />
+    <Content Include="Files\Images\mechanical-yeti.png" />
+    <Content Include="Files\Images\mechwarper.png" />
+    <Content Include="Files\Images\mekgineer-thermaplugg.png" />
+    <Content Include="Files\Images\metaltooth-leaper.png" />
+    <Content Include="Files\Images\micro-machine.png" />
+    <Content Include="Files\Images\millhouse-manastorm.png" />
+    <Content Include="Files\Images\mimiron-s-head.png" />
+    <Content Include="Files\Images\mind-blast.png" />
+    <Content Include="Files\Images\mind-control-crystal.png" />
+    <Content Include="Files\Images\mind-control-tech.png" />
+    <Content Include="Files\Images\mind-control.png" />
+    <Content Include="Files\Images\mind-shatter.png" />
+    <Content Include="Files\Images\mind-spike.png" />
+    <Content Include="Files\Images\mind-vision.png" />
+    <Content Include="Files\Images\mindgames.png" />
+    <Content Include="Files\Images\mindpocalypse.png" />
+    <Content Include="Files\Images\mini-mage.png" />
+    <Content Include="Files\Images\mirror-entity.png" />
+    <Content Include="Files\Images\mirror-image.png" />
+    <Content Include="Files\Images\misdirection.png" />
+    <Content Include="Files\Images\mistress-of-pain.png" />
+    <Content Include="Files\Images\mogor-the-ogre.png" />
+    <Content Include="Files\Images\mogu-shan-warden.png" />
+    <Content Include="Files\Images\moira-bronzebeard.png" />
+    <Content Include="Files\Images\molten-giant.png" />
+    <Content Include="Files\Images\moonfire.png" />
+    <Content Include="Files\Images\mortal-coil.png" />
+    <Content Include="Files\Images\mortal-strike.png" />
+    <Content Include="Files\Images\mountain-giant.png" />
+    <Content Include="Files\Images\mr-bigglesworth.png" />
+    <Content Include="Files\Images\multi-shot.png" />
+    <Content Include="Files\Images\murloc-raider.png" />
+    <Content Include="Files\Images\murloc-scout.png" />
+    <Content Include="Files\Images\murloc-tidecaller.png" />
+    <Content Include="Files\Images\murloc-tidehunter.png" />
+    <Content Include="Files\Images\murloc-warleader.png" />
+    <Content Include="Files\Images\murloc.png" />
+    <Content Include="Files\Images\muster-for-battle.png" />
+    <Content Include="Files\Images\mutating-injection.png" />
+    <Content Include="Files\Images\mutation.png" />
+    <Content Include="Files\Images\nat-pagle.png" />
+    <Content Include="Files\Images\naturalize.png" />
+    <Content Include="Files\Images\necroknight.png" />
+    <Content Include="Files\Images\necrotic-poison.png" />
+    <Content Include="Files\Images\nefarian-strikes.png" />
+    <Content Include="Files\Images\nefarian.png" />
+    <Content Include="Files\Images\neptulon.png" />
+    <Content Include="Files\Images\nerub-ar-weblord.png" />
+    <Content Include="Files\Images\nerubian-egg.png" />
+    <Content Include="Files\Images\nerubian.png" />
+    <Content Include="Files\Images\nightblade.png" />
+    <Content Include="Files\Images\nightmare.png" />
+    <Content Include="Files\Images\noble-sacrifice.png" />
+    <Content Include="Files\Images\northshire-cleric.png" />
+    <Content Include="Files\Images\nourish.png" />
+    <Content Include="Files\Images\novice-engineer.png" />
+    <Content Include="Files\Images\nozdormu.png" />
+    <Content Include="Files\Images\oasis-snapjaw.png" />
+    <Content Include="Files\Images\ogre-brute.png" />
+    <Content Include="Files\Images\ogre-magi.png" />
+    <Content Include="Files\Images\ogre-ninja.png" />
+    <Content Include="Files\Images\ogre-warmaul.png" />
+    <Content Include="Files\Images\old-horde-orc.png" />
+    <Content Include="Files\Images\old-horde.png" />
+    <Content Include="Files\Images\old-murk-eye.png" />
+    <Content Include="Files\Images\one-eyed-cheat.png" />
+    <Content Include="Files\Images\onyxia.png" />
+    <Content Include="Files\Images\onyxiclaw.png" />
+    <Content Include="Files\Images\open-the-gates.png" />
+    <Content Include="Files\Images\panther.png" />
+    <Content Include="Files\Images\patient-assassin.png" />
+    <Content Include="Files\Images\perdition-s-blade.png" />
+    <Content Include="Files\Images\pile-on.png" />
+    <Content Include="Files\Images\piloted-shredder.png" />
+    <Content Include="Files\Images\piloted-sky-golem.png" />
+    <Content Include="Files\Images\pint-sized-summoner.png" />
+    <Content Include="Files\Images\pit-lord.png" />
+    <Content Include="Files\Images\plague.png" />
+    <Content Include="Files\Images\poison-seeds.png" />
+    <Content Include="Files\Images\polymorph.png" />
+    <Content Include="Files\Images\poultryizer.png" />
+    <Content Include="Files\Images\power-of-the-firelord.png" />
+    <Content Include="Files\Images\power-of-the-horde.png" />
+    <Content Include="Files\Images\power-of-the-wild.png" />
+    <Content Include="Files\Images\power-overwhelming.png" />
+    <Content Include="Files\Images\power-word-shield.png" />
+    <Content Include="Files\Images\powermace.png" />
+    <Content Include="Files\Images\preparation.png" />
+    <Content Include="Files\Images\priestess-of-elune.png" />
+    <Content Include="Files\Images\prophet-velen.png" />
+    <Content Include="Files\Images\puddlestomper.png" />
+    <Content Include="Files\Images\pure-cold.png" />
+    <Content Include="Files\Images\pyroblast.png" />
+    <Content Include="Files\Images\quartermaster.png" />
+    <Content Include="Files\Images\questing-adventurer.png" />
+    <Content Include="Files\Images\quick-shot.png" />
+    <Content Include="Files\Images\raging-worgen.png" />
+    <Content Include="Files\Images\ragnaros-the-firelord.png" />
+    <Content Include="Files\Images\raid-leader.png" />
+    <Content Include="Files\Images\rampage.png" />
+    <Content Include="Files\Images\ravenholdt-assassin.png" />
+    <Content Include="Files\Images\razorfen-hunter.png" />
+    <Content Include="Files\Images\razorgore-s-claws.png" />
+    <Content Include="Files\Images\recharge.png" />
+    <Content Include="Files\Images\reckless-rocketeer.png" />
+    <Content Include="Files\Images\recombobulator.png" />
+    <Content Include="Files\Images\recycle.png" />
+    <Content Include="Files\Images\redemption.png" />
+    <Content Include="Files\Images\reincarnate.png" />
+    <Content Include="Files\Images\reinforce.png" />
+    <Content Include="Files\Images\release-the-aberrations.png" />
+    <Content Include="Files\Images\rend-blackhand.png" />
+    <Content Include="Files\Images\repair-bot.png" />
+    <Content Include="Files\Images\repentance.png" />
+    <Content Include="Files\Images\resurrect.png" />
+    <Content Include="Files\Images\revenge.png" />
+    <Content Include="Files\Images\reverberating-gong.png" />
+    <Content Include="Files\Images\reversing-switch.png" />
+    <Content Include="Files\Images\river-crocolisk.png" />
+    <Content Include="Files\Images\rock-out.png" />
+    <Content Include="Files\Images\rockbiter-weapon.png" />
+    <Content Include="Files\Images\rogues-do-it.png" />
+    <Content Include="Files\Images\runeblade.png" />
+    <Content Include="Files\Images\rusty-horn.png" />
+    <Content Include="Files\Images\sabotage.png" />
+    <Content Include="Files\Images\sacrificial-pact.png" />
+    <Content Include="Files\Images\salty-dog.png" />
+    <Content Include="Files\Images\sap.png" />
+    <Content Include="Files\Images\savage-roar.png" />
+    <Content Include="Files\Images\savagery.png" />
+    <Content Include="Files\Images\savannah-highmane.png" />
+    <Content Include="Files\Images\scarlet-crusader.png" />
+    <Content Include="Files\Images\scarlet-purifier.png" />
+    <Content Include="Files\Images\scavenging-hyena.png" />
+    <Content Include="Files\Images\screwjank-clunker.png" />
+    <Content Include="Files\Images\sea-giant.png" />
+    <Content Include="Files\Images\seal-of-light.png" />
+    <Content Include="Files\Images\searing-totem.png" />
+    <Content Include="Files\Images\secretkeeper.png" />
+    <Content Include="Files\Images\sen-jin-shieldmasta.png" />
+    <Content Include="Files\Images\sense-demons.png" />
+    <Content Include="Files\Images\shade-of-naxxramas.png" />
+    <Content Include="Files\Images\shadow-bolt.png" />
+    <Content Include="Files\Images\shadow-madness.png" />
+    <Content Include="Files\Images\shadow-of-nothing.png" />
+    <Content Include="Files\Images\shadow-word-death.png" />
+    <Content Include="Files\Images\shadow-word-pain.png" />
+    <Content Include="Files\Images\shadowbomber.png" />
+    <Content Include="Files\Images\shadowboxer.png" />
+    <Content Include="Files\Images\shadowflame.png" />
+    <Content Include="Files\Images\shadowform.png" />
+    <Content Include="Files\Images\shadowstep.png" />
+    <Content Include="Files\Images\shapeshift.png" />
+    <Content Include="Files\Images\shattered-sun-cleric.png" />
+    <Content Include="Files\Images\sheep.png" />
+    <Content Include="Files\Images\shield-block.png" />
+    <Content Include="Files\Images\shield-slam.png" />
+    <Content Include="Files\Images\shieldbearer.png" />
+    <Content Include="Files\Images\shielded-minibot.png" />
+    <Content Include="Files\Images\shieldmaiden.png" />
+    <Content Include="Files\Images\ship-s-cannon.png" />
+    <Content Include="Files\Images\shiv.png" />
+    <Content Include="Files\Images\shrinkmeister.png" />
+    <Content Include="Files\Images\si7-agent.png" />
+    <Content Include="Files\Images\siege-engine.png" />
+    <Content Include="Files\Images\silence.png" />
+    <Content Include="Files\Images\siltfin-spiritwalker.png" />
+    <Content Include="Files\Images\silver-hand-knight.png" />
+    <Content Include="Files\Images\silver-hand-recruit.png" />
+    <Content Include="Files\Images\silverback-patriarch.png" />
+    <Content Include="Files\Images\silvermoon-guardian.png" />
+    <Content Include="Files\Images\sinister-strike.png" />
+    <Content Include="Files\Images\siphon-soul.png" />
+    <Content Include="Files\Images\sir-zeliek.png" />
+    <Content Include="Files\Images\skeletal-smith.png" />
+    <Content Include="Files\Images\skeleton.png" />
+    <Content Include="Files\Images\slam.png" />
+    <Content Include="Files\Images\slime.png" />
+    <Content Include="Files\Images\sludge-belcher.png" />
+    <Content Include="Files\Images\snake-trap.png" />
+    <Content Include="Files\Images\snake.png" />
+    <Content Include="Files\Images\sneed-s-old-shredder.png" />
+    <Content Include="Files\Images\snipe.png" />
+    <Content Include="Files\Images\snowchugger.png" />
+    <Content Include="Files\Images\solemn-vigil.png" />
+    <Content Include="Files\Images\son-of-the-flame.png" />
+    <Content Include="Files\Images\sonic-breath.png" />
+    <Content Include="Files\Images\soot-spewer.png" />
+    <Content Include="Files\Images\sorcerer-s-apprentice.png" />
+    <Content Include="Files\Images\soul-of-the-forest.png" />
+    <Content Include="Files\Images\soulfire.png" />
+    <Content Include="Files\Images\southsea-captain.png" />
+    <Content Include="Files\Images\southsea-deckhand.png" />
+    <Content Include="Files\Images\spectral-knight.png" />
+    <Content Include="Files\Images\spectral-rider.png" />
+    <Content Include="Files\Images\spectral-spider.png" />
+    <Content Include="Files\Images\spectral-trainee.png" />
+    <Content Include="Files\Images\spectral-warrior.png" />
+    <Content Include="Files\Images\spellbender.png" />
+    <Content Include="Files\Images\spellbreaker.png" />
+    <Content Include="Files\Images\spider-tank.png" />
+    <Content Include="Files\Images\spirit-wolf.png" />
+    <Content Include="Files\Images\spiteful-smith.png" />
+    <Content Include="Files\Images\spore.png" />
+    <Content Include="Files\Images\sporeburst.png" />
+    <Content Include="Files\Images\sprint.png" />
+    <Content Include="Files\Images\squire.png" />
+    <Content Include="Files\Images\squirrel.png" />
+    <Content Include="Files\Images\stalagg.png" />
+    <Content Include="Files\Images\stampeding-kodo.png" />
+    <Content Include="Files\Images\starfall.png" />
+    <Content Include="Files\Images\starfire.png" />
+    <Content Include="Files\Images\starving-buzzard.png" />
+    <Content Include="Files\Images\steady-shot.png" />
+    <Content Include="Files\Images\steamwheedle-sniper.png" />
+    <Content Include="Files\Images\stoneclaw-totem.png" />
+    <Content Include="Files\Images\stoneskin-gargoyle.png" />
+    <Content Include="Files\Images\stonesplinter-trogg.png" />
+    <Content Include="Files\Images\stonetusk-boar.png" />
+    <Content Include="Files\Images\stormforged-axe.png" />
+    <Content Include="Files\Images\stormpike-commando.png" />
+    <Content Include="Files\Images\stormwind-champion.png" />
+    <Content Include="Files\Images\stormwind-knight.png" />
+    <Content Include="Files\Images\stranglethorn-tiger.png" />
+    <Content Include="Files\Images\succubus.png" />
+    <Content Include="Files\Images\summoning-portal.png" />
+    <Content Include="Files\Images\sunfury-protector.png" />
+    <Content Include="Files\Images\sunwalker.png" />
+    <Content Include="Files\Images\supercharge.png" />
+    <Content Include="Files\Images\swipe.png" />
+    <Content Include="Files\Images\sword-of-justice.png" />
+    <Content Include="Files\Images\sylvanas-windrunner.png" />
+    <Content Include="Files\Images\tail-swipe.png" />
+    <Content Include="Files\Images\tank-mode.png" />
+    <Content Include="Files\Images\target-dummy.png" />
+    <Content Include="Files\Images\tauren-warrior.png" />
+    <Content Include="Files\Images\temple-enforcer.png" />
+    <Content Include="Files\Images\thane-korthazz.png" />
+    <Content Include="Files\Images\the-alchemist.png" />
+    <Content Include="Files\Images\the-beast.png" />
+    <Content Include="Files\Images\the-black-knight.png" />
+    <Content Include="Files\Images\the-coin.png" />
+    <Content Include="Files\Images\the-majordomo.png" />
+    <Content Include="Files\Images\the-rookery.png" />
+    <Content Include="Files\Images\the-true-warchief.png" />
+    <Content Include="Files\Images\thoughtsteal.png" />
+    <Content Include="Files\Images\thrallmar-farseer.png" />
+    <Content Include="Files\Images\timber-wolf.png" />
+    <Content Include="Files\Images\time-for-smash.png" />
+    <Content Include="Files\Images\time-rewinder.png" />
+    <Content Include="Files\Images\tinker-s-sharpsword-oil.png" />
+    <Content Include="Files\Images\tinkertown-technician.png" />
+    <Content Include="Files\Images\tinkmaster-overspark.png" />
+    <Content Include="Files\Images\tirion-fordring.png" />
+    <Content Include="Files\Images\toshley.png" />
+    <Content Include="Files\Images\totemic-call.png" />
+    <Content Include="Files\Images\totemic-might.png" />
+    <Content Include="Files\Images\toxitron.png" />
+    <Content Include="Files\Images\tracking.png" />
+    <Content Include="Files\Images\trade-prince-gallywix.png" />
+    <Content Include="Files\Images\treant.png" />
+    <Content Include="Files\Images\tree-of-life.png" />
+    <Content Include="Files\Images\troggzor-the-earthinator.png" />
+    <Content Include="Files\Images\true-form.png" />
+    <Content Include="Files\Images\truesilver-champion.png" />
+    <Content Include="Files\Images\tundra-rhino.png" />
+    <Content Include="Files\Images\twilight-drake.png" />
+    <Content Include="Files\Images\twilight-whelp.png" />
+    <Content Include="Files\Images\twisting-nether.png" />
+    <Content Include="Files\Images\unbound-elemental.png" />
+    <Content Include="Files\Images\understudy.png" />
+    <Content Include="Files\Images\undertaker.png" />
+    <Content Include="Files\Images\unleash-the-hounds.png" />
+    <Content Include="Files\Images\unrelenting-rider.png" />
+    <Content Include="Files\Images\unrelenting-trainee.png" />
+    <Content Include="Files\Images\unrelenting-warrior.png" />
+    <Content Include="Files\Images\unstable-ghoul.png" />
+    <Content Include="Files\Images\unstable-portal.png" />
+    <Content Include="Files\Images\upgrade.png" />
+    <Content Include="Files\Images\upgraded-repair-bot.png" />
+    <Content Include="Files\Images\v-07-tr-0n.png" />
+    <Content Include="Files\Images\vanish.png" />
+    <Content Include="Files\Images\vaporize.png" />
+    <Content Include="Files\Images\velen-s-chosen.png" />
+    <Content Include="Files\Images\venture-co-mercenary.png" />
+    <Content Include="Files\Images\violet-apprentice.png" />
+    <Content Include="Files\Images\violet-teacher.png" />
+    <Content Include="Files\Images\vitality-totem.png" />
+    <Content Include="Files\Images\void-terror.png" />
+    <Content Include="Files\Images\voidcaller.png" />
+    <Content Include="Files\Images\voidwalker.png" />
+    <Content Include="Files\Images\vol-jin.png" />
+    <Content Include="Files\Images\volcanic-drake.png" />
+    <Content Include="Files\Images\volcanic-lumberer.png" />
+    <Content Include="Files\Images\voodoo-doctor.png" />
+    <Content Include="Files\Images\wailing-soul.png" />
+    <Content Include="Files\Images\war-golem.png" />
+    <Content Include="Files\Images\warbot.png" />
+    <Content Include="Files\Images\warsong-commander.png" />
+    <Content Include="Files\Images\water-elemental.png" />
+    <Content Include="Files\Images\webspinner.png" />
+    <Content Include="Files\Images\wee-spellstopper.png" />
+    <Content Include="Files\Images\whelp.png" />
+    <Content Include="Files\Images\whelp_2.png" />
+    <Content Include="Files\Images\whirling-ash.png" />
+    <Content Include="Files\Images\whirling-blades.png" />
+    <Content Include="Files\Images\whirling-zap-o-matic.png" />
+    <Content Include="Files\Images\whirlwind.png" />
+    <Content Include="Files\Images\wicked-knife.png" />
+    <Content Include="Files\Images\wild-growth.png" />
+    <Content Include="Files\Images\wild-magic.png" />
+    <Content Include="Files\Images\wild-pyromancer.png" />
+    <Content Include="Files\Images\windfury-harpy.png" />
+    <Content Include="Files\Images\windfury.png" />
+    <Content Include="Files\Images\windspeaker.png" />
+    <Content Include="Files\Images\wisp.png" />
+    <Content Include="Files\Images\wolfrider.png" />
+    <Content Include="Files\Images\worgen-infiltrator.png" />
+    <Content Include="Files\Images\worshipper.png" />
+    <Content Include="Files\Images\worthless-imp.png" />
+    <Content Include="Files\Images\wrath-of-air-totem.png" />
+    <Content Include="Files\Images\wrath.png" />
+    <Content Include="Files\Images\young-dragonhawk.png" />
+    <Content Include="Files\Images\young-priestess.png" />
+    <Content Include="Files\Images\youthful-brewmaster.png" />
+    <Content Include="Files\Images\ysera-awakens.png" />
+    <Content Include="Files\Images\ysera.png" />
+    <Content Include="Files\Images\zombie-chow.png" />
+    <Content Include="Files\style.css" />
+    <Content Include="Files\subwindow.html" />
+    <Content Include="Files\XML\enGB.xml" />
+    <Content Include="IconMouseNormal.png" />
+    <Content Include="IconMouseOver.png" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Files\css\" />
+    <Folder Include="Files\fonts\" />
+    <Folder Include="Files\js\" />
+    <Folder Include="Files\lib\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="manifest.json" />
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>13772</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
