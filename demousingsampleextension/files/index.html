@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css" />
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <title>Ninja App</title>
-    
+
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -24,8 +24,8 @@
 <body>
 
     <div id="content" onmousedown="dragMove();">
-                     <button id="close" onclick="closeWindow();">Close</button>
-                     <button id="Add" onclick="addImageToBar('http://placehold.it/200x50')">Add</button>
+        <button id="close" onclick="closeWindow();">Close</button>
+        <button id="Add" onclick="addImageToBar('http://placehold.it/200x50')">Add</button>
     </div>
 
 
@@ -49,6 +49,7 @@
             $('#content').prepend('<div class="thumbnail" data-toggle="tooltip" data-placement="bottom" title=\"' + tooltipTitle + '\" id=\"' + id +'\"> <img src=\"' + path + '\" class="img-responsive"></div>');
             $('[data-toggle="tooltip"]').tooltip();
         }
+
 
         function dragResize(edge) {
             overwolf.windows.getCurrentWindow(function (result) {
@@ -105,16 +106,17 @@
 
         function initLibrary() {
             if (typeof (overwolf) != "undefined") {
-                overwolf.extensions.current.getExtraObject("sampleLibrary", function (result) {        
+                overwolf.extensions.current.getExtraObject("sampleLibrary", function (result) {
                     console.log("startup " + result.status);
                     if (result.status == "success") {
-                        sampleLibraryObj = result.object;       
-                            sampleLibraryObj.CardPlayedEvent.addListener(cardPlayedEventFired);
+                        sampleLibraryObj = result.object;
+                        sampleLibraryObj.CardHandEvent.addListener(cardHandEventFired);
+                        sampleLibraryObj.CardPlayedEvent.addListener(cardPlayedEventFired);
                             sampleLibraryObj.init(function (result) {
                                console.log("init success:");
                                //console.log(result);
                             });
-                   
+
                     }
                 });
             }
@@ -123,6 +125,22 @@
 
         function cardPlayedEventFired(result) {
             console.log("cardPlayedEventFired:");
+
+            var Card = JSON.parse(result.CardJSON);
+            console.log(Card.Name);
+
+            if ($('#'+Card.CardId).length == 0) {
+                //card does not exist insert it to table and then change border
+                cardHandEventFired(result);
+            }
+            $('#' + Card.CardId).css("border", "5px solid red");
+            console.log(result.CardJSON);
+        }
+
+
+
+        function cardHandEventFired(result) {
+            console.log("cardPlayedEventFired:");
             console.log("On event");
             var Card = JSON.parse(result.CardJSON);
             console.log(Card.Name);
@@ -130,10 +148,6 @@
             console.log("Image path is: " + path);
             addImageToBarWithTooltip(path, Card.Name, Card.CardId);
             console.log(Card.Name);
-            if (Card.Played == "true") {
-                console.log("Card has been played!");
-                $('#' + Card.CardId).css('opacity', '0.1');
-            }
             console.log(result.CardJSON);
         }
 

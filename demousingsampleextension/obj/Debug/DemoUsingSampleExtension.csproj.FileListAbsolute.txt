@@ -1,0 +1,7 @@
+D:\GitHub\OverwolfHearthstone\DemoUsingSampleExtension\bin\DemoUsingSampleExtension.dll.config
+D:\GitHub\OverwolfHearthstone\DemoUsingSampleExtension\bin\DemoUsingSampleExtension.dll
+D:\GitHub\OverwolfHearthstone\DemoUsingSampleExtension\bin\DemoUsingSampleExtension.pdb
+D:\GitHub\OverwolfHearthstone\DemoUsingSampleExtension\bin\Newtonsoft.Json.dll
+D:\GitHub\OverwolfHearthstone\DemoUsingSampleExtension\bin\Newtonsoft.Json.xml
+D:\GitHub\OverwolfHearthstone\DemoUsingSampleExtension\obj\Debug\DemoUsingSampleExtension.dll
+D:\GitHub\OverwolfHearthstone\DemoUsingSampleExtension\obj\Debug\DemoUsingSampleExtension.pdb

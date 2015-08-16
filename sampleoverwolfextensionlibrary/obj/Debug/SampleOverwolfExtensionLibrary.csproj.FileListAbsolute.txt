@@ -1,0 +1,4 @@
+D:\GitHub\OverwolfHearthstone\DemoUsingSampleExtension\Files\lib\SampleOverwolfExtensionLibrary.dll
+D:\GitHub\OverwolfHearthstone\DemoUsingSampleExtension\Files\lib\SampleOverwolfExtensionLibrary.pdb
+D:\GitHub\OverwolfHearthstone\SampleOverwolfExtensionLibrary\obj\Debug\SampleOverwolfExtensionLibrary.dll
+D:\GitHub\OverwolfHearthstone\SampleOverwolfExtensionLibrary\obj\Debug\SampleOverwolfExtensionLibrary.pdb
