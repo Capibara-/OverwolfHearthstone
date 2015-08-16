@@ -129,7 +129,7 @@ namespace SampleOverwolfExtensionLibrary
                                             if (l_id != "" && l_to.Contains("FRIENDLY HAND"))
                                             {
                                                 //      fireCardPlayedEvent(output); 
-                                                
+
                                                 fireCardHandEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
 
                                             }
@@ -139,7 +139,7 @@ namespace SampleOverwolfExtensionLibrary
                                                 m_AllCards[l_id].Played = "true";
 
                                                 fireCardPlayedEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
-                                               
+
 
                                             }
                                         }
@@ -217,7 +217,7 @@ namespace SampleOverwolfExtensionLibrary
         }
     }
 
-      public class CardHandEventArgs : EventArgs
+    public class CardHandEventArgs : EventArgs
     {
         public string CardJSON { get; set; }
     }

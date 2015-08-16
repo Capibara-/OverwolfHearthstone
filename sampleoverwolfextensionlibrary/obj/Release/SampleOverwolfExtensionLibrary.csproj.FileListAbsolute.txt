@@ -1,4 +1,0 @@
-C:\Users\Janalopa\Documents\Visual Studio 2010\Projects\OverwolfTobiiAPI_datastreamsonly\SampleOverwolfExtensionLibrary\bin\Release\SampleOverwolfExtensionLibrary.dll
-C:\Users\Janalopa\Documents\Visual Studio 2010\Projects\OverwolfTobiiAPI_datastreamsonly\SampleOverwolfExtensionLibrary\bin\Release\SampleOverwolfExtensionLibrary.pdb
-C:\Users\Janalopa\Documents\Visual Studio 2010\Projects\OverwolfTobiiAPI_datastreamsonly\SampleOverwolfExtensionLibrary\obj\Release\SampleOverwolfExtensionLibrary.dll
-C:\Users\Janalopa\Documents\Visual Studio 2010\Projects\OverwolfTobiiAPI_datastreamsonly\SampleOverwolfExtensionLibrary\obj\Release\SampleOverwolfExtensionLibrary.pdb

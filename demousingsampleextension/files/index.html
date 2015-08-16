@@ -1,167 +1,155 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="style.css" />
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <title>Ninja App</title>
- 
+    
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $('[data-toggle="tooltip"]').tooltip();
+        console.log("Initializing tooltips.");
+    </script>
 </head>
 
 <body>
 
     <div id="content" onmousedown="dragMove();">
-        <h1>Ninja App</h1>
-        <button id="close" onclick="closeWindow();">Close</button>
-       
-        <br />
+                     <button id="close" onclick="closeWindow();">Close</button>
+                     <button id="Add" onclick="addImageToBar('http://placehold.it/200x50')">Add</button>
+    </div>
 
 
-        <table id="myTable" width="100%" style="height: 100%;" border="0">
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
-            
-
-</div>
     <script language="javascript">
-    function dragResize(edge) {
-        overwolf.windows.getCurrentWindow(function (result) {
-            if (result.status == "success") {
-                overwolf.windows.dragResize(result.window.id, edge);
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        $('#sidebar').affix({
+            offset: {
+                top: $('header').height()
             }
         });
-    };
+        function addImageToBar(path) {
+            addImageToBarWithTooltip(path, "No info.", "cardThumbnail");
+        }
 
-    function dragMove() {
-        overwolf.windows.getCurrentWindow(function (result) {
-            if (result.status == "success") {
-                overwolf.windows.dragMove(result.window.id);
-            }
-        });
-    };
+        function addImageToBarWithTooltip(path, tooltipTitle, id) {
+            console.log(tooltipTitle);
+            $('#content').prepend('<div class="thumbnail" data-toggle="tooltip" data-placement="bottom" title=\"' + tooltipTitle + '\" id=\"' + id +'\"> <img src=\"' + path + '\" class="img-responsive"></div>');
+            $('[data-toggle="tooltip"]').tooltip();
+        }
 
-    function closeWindow() {
-        overwolf.windows.getCurrentWindow(function (result) {
-            if (result.status == "success") {
-                overwolf.windows.close(result.window.id);
-            }
-        });
-    };
-
-    function openSubWindow() {
-        alert("the subwindow will only be visible inside a game");
-        overwolf.windows.obtainDeclaredWindow("SubWindow", function (result) {
-            if (result.status == "success") {
-                overwolf.windows.restore(result.window.id, function (result) {
-                    console.log(result);
-                });
-            }
-        });
-    };
-
-    function takeScreenshot() {
-        overwolf.media.takeScreenshot(function (result) {
-            if (result.status == "success") {
-                var img = document.getElementById("screenshot");
-                img.src = result.url;
-                img.onload = function () {
-                    overwolf.media.shareImage(img, "Screen Shot");
-                };
-            }
-        });
-    }
-
-    function runTeamSpeak() {
-        overwolf.extensions.launch("lafgmhfbkjljkgoggomibmhlpijaofafbdhpjgif");
-    };
-
-    var sampleLibraryObj = null;
-
-    function initLibrary() {
-        if (typeof (overwolf) != "undefined") {
-            overwolf.extensions.current.getExtraObject("sampleLibrary", function (result) {        
-                console.log("startup " + result.status);
+        function dragResize(edge) {
+            overwolf.windows.getCurrentWindow(function (result) {
                 if (result.status == "success") {
-                    sampleLibraryObj = result.object;       
-                    sampleLibraryObj.CardHandEvent.addListener(cardHandEventFired);
-                    sampleLibraryObj.CardPlayedEvent.addListener(cardPlayedEventFired);
-                        sampleLibraryObj.init(function (result) {
-                           console.log("init success:");
-                           //console.log(result);
-                        });
-                   
+                    overwolf.windows.dragResize(result.window.id, edge);
                 }
             });
-            // Register a listener for the event defined in the C# dll, this will enable async calls from the dll to the JS.
-           // sampleLibraryObj.sampleEvent.addListener(sampleEventFired);
-        }
+        };
 
-    }
-
-
-
-
-
-    function cardPlayedEventFired(result) {
-        console.log("cardPlayedEventFired:");
-        var Cards = JSON.parse(result.CardJSON);
-        console.log(Cards.Name);
-        var found = false;
-        var table = document.getElementById("myTable");
-        if (table != null)
-        for (var i = 0, row; row = table.rows[i] ; i++) {
-            if (row.cells[0].innerHTML == Cards.Name) {
-                cell = row.cells[1];
-                if (cell.children[0].style.border != "5px solid black") {
-                    cell.children[0].style.border = "5px solid black";
-                    found = true;
+        function dragMove() {
+            overwolf.windows.getCurrentWindow(function (result) {
+                if (result.status == "success") {
+                    overwolf.windows.dragMove(result.window.id);
                 }
+            });
+        };
+
+        function closeWindow() {
+            overwolf.windows.getCurrentWindow(function (result) {
+                if (result.status == "success") {
+                    overwolf.windows.close(result.window.id);
+                }
+            });
+        };
+
+        function openSubWindow() {
+            alert("the subwindow will only be visible inside a game");
+            overwolf.windows.obtainDeclaredWindow("SubWindow", function (result) {
+                if (result.status == "success") {
+                    overwolf.windows.restore(result.window.id, function (result) {
+                        console.log(result);
+                    });
+                }
+            });
+        };
+
+        function takeScreenshot() {
+            overwolf.media.takeScreenshot(function (result) {
+                if (result.status == "success") {
+                    var img = document.getElementById("screenshot");
+                    img.src = result.url;
+                    img.onload = function () {
+                        overwolf.media.shareImage(img, "Screen Shot");
+                    };
+                }
+            });
+        }
+
+        function runTeamSpeak() {
+            overwolf.extensions.launch("lafgmhfbkjljkgoggomibmhlpijaofafbdhpjgif");
+        };
+
+        var sampleLibraryObj = null;
+
+        function initLibrary() {
+            if (typeof (overwolf) != "undefined") {
+                overwolf.extensions.current.getExtraObject("sampleLibrary", function (result) {        
+                    console.log("startup " + result.status);
+                    if (result.status == "success") {
+                        sampleLibraryObj = result.object;       
+                            sampleLibraryObj.CardPlayedEvent.addListener(cardPlayedEventFired);
+                            sampleLibraryObj.init(function (result) {
+                               console.log("init success:");
+                               //console.log(result);
+                            });
+                   
+                    }
+                });
             }
-            if (found == true)
-                break;
+
         }
-        if (found == false) {
-            cardHandEventFired(result)
-            table.rows[0].cells[1].children[0].border = "5px solid black";
-            
+
+        function cardPlayedEventFired(result) {
+            console.log("cardPlayedEventFired:");
+            console.log("On event");
+            var Card = JSON.parse(result.CardJSON);
+            console.log(Card.Name);
+            var path = "Images_renamed/" + Card.CardId + ".png";
+            console.log("Image path is: " + path);
+            addImageToBarWithTooltip(path, Card.Name, Card.CardId);
+            console.log(Card.Name);
+            if (Card.Played == "true") {
+                console.log("Card has been played!");
+                $('#' + Card.CardId).css('opacity', '0.1');
+            }
+            console.log(result.CardJSON);
         }
-        console.log(result.CardJSON);
-    }
 
 
-    function cardHandEventFired(result) {
-        console.log("cardHandEvent:");
-        var Cards = JSON.parse(result.CardJSON);
-        console.log(Cards.Name);
-        var table = document.getElementById("myTable");
-        var row = table.insertRow(0);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        cell1.innerHTML = Cards.Name;
+        function sampleEventFired(result) {
+            console.log("sampleEventFired: yaaaaa");
+            console.log(result);
+        }
 
-        console.log(Cards.Name);
-        var img = new Image();
-        img.src = "Images_renamed/" + Cards.CardId + ".png";
-        cell2.appendChild(img);
-        console.log(result.CardJSON);
-    }
-
-
-    function sampleEventFired(result) {
-        console.log("sampleEventFired: yaaaaa");
-        console.log(result);
-    }
-
-    window.onload = function (e) {
-        initLibrary();
-    }
+        window.onload = function (e) {
+            initLibrary();
+        }
 
     </script>
 
 
 
-    </div>
 </body>
 </html>
