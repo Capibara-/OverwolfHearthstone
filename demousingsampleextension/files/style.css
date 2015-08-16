@@ -1,12 +1,26 @@
 ﻿html {
-	overflow: auto;
-    position: relative;
-    min-width: 24px;
-    min-height: 768px;
-	background: white;
-    background-color: rgba(0,0,0,0.05);
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+	background: lightgreen;
 }
 
+.resizeGrip {
+	background: lightblue;
+	border: 1px solid blue;
+	position: absolute;
+}
+
+
+#content {
+	
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	padding: 0px;
+  
+}
 div.img {
     margin: 5px;
     padding: 5px;
@@ -30,15 +44,66 @@ div.desc {
   width: 120px;
   margin: 5px;
 }
-
-.thumbnail {
-	margin-bottom:5px;
-    background-color: rgba(0,0,0,0.05);
+#resizeGripTop {
+	height: 9px;
+	top: 0;
+	left: 9px;
+	right: 9px;
+	cursor: ns-resize;
 }
 
+#resizeGripBottom {
+	height: 9px;
+	bottom: 0;
+	left: 9px;
+	right: 9px;
+	cursor: ns-resize;
+}
 
+#resizeGripLeft {
+	width: 9px;
+	left: 0;
+	top: 9px;
+	bottom: 9px;
+	cursor: ew-resize;
+}
 
-#content {
-	position: relative;
-    background-color: rgba(0,0,0,0.05);
+#resizeGripRight {
+	width: 9px;
+	right: 0;
+	top: 9px;
+	bottom: 9px;
+	cursor: ew-resize;
+}
+
+#resizeGripTopLeft {
+	width: 9px;
+	height: 9px;
+	top: 0;
+	left: 0;
+	cursor: nwse-resize;
+}
+
+#resizeGripBottomLeft {
+	width: 9px;
+	height: 9px;
+	bottom: 0;
+	left: 0;
+	cursor: nesw-resize;
+}
+
+#resizeGripTopRight {
+	width: 9px;
+	height: 9px;
+	top: 0;
+	right: 0;
+	cursor: nesw-resize;
+}
+
+#resizeGripBottomRight {
+	width: 9px;
+	height: 9px;
+	bottom: 0;
+	right: 0;
+	cursor: nwse-resize;
 }

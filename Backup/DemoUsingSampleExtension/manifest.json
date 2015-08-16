@@ -1,15 +1,14 @@
 {
-    "manifest_version": 1,
-    "type": "WebApp",
-    "permissions": [ "Extensions", "Hotkeys"],
+	"manifest_version":1,
+	"type":"WebApp",
 	"meta":{
-		"name":"Ninja App",
+		"name":"Demo Extension App",
 		"version":"1.0.0",
 		"minimum-overwolf-version":"0.77.10",
 		"author":"Developer Name",
 		"icon":"IconMouseOver.png",
 		"icon_gray":"IconMouseNormal.png",
-		"description":"Hearthstone Demo"
+		"description":"Demo Extension App"
 	},
 	"data": {
 		"start_window":"MainWindow",
