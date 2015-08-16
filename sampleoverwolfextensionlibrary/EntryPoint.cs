@@ -126,14 +126,14 @@ namespace SampleOverwolfExtensionLibrary
                                             string output =
                                                    string.Format("[+] Card Moved - NAME: {0} ID: {1} FROM: {2} TO: {3}",
                                                        l_name, l_id, l_from, l_to);
-                                            if (l_id != "" && l_to.Contains("FRIENDLY HAND"))
+                                            if (l_id != "" && l_to.Contains("FRIENDLY HAND") )
                                             {
                                                 //      fireCardPlayedEvent(output); 
 
                                                 fireCardHandEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
 
                                             }
-                                            if (l_id != "" && l_to.Contains("FRIENDLY PLAY"))
+                                            if (l_id != "" && l_to.Contains("FRIENDLY PLAY") && l_id != "TU4a_006")
                                             {
                                                 //      fireCardPlayedEvent(output); 
                                                 m_AllCards[l_id].Played = "true";

@@ -2,3 +2,8 @@ D:\GitHub\OverwolfHearthstone\DemoUsingSampleExtension\Files\lib\SampleOverwolfE
 D:\GitHub\OverwolfHearthstone\DemoUsingSampleExtension\Files\lib\SampleOverwolfExtensionLibrary.pdb
 D:\GitHub\OverwolfHearthstone\SampleOverwolfExtensionLibrary\obj\Debug\SampleOverwolfExtensionLibrary.dll
 D:\GitHub\OverwolfHearthstone\SampleOverwolfExtensionLibrary\obj\Debug\SampleOverwolfExtensionLibrary.pdb
+C:\Users\lior\Desktop\app\SampleOverwolfExtensionLibrary\obj\Debug\SampleOverwolfExtensionLibrary.csprojResolveAssemblyReference.cache
+C:\Users\lior\Desktop\app\DemoUsingSampleExtension\Files\lib\SampleOverwolfExtensionLibrary.dll
+C:\Users\lior\Desktop\app\DemoUsingSampleExtension\Files\lib\SampleOverwolfExtensionLibrary.pdb
+C:\Users\lior\Desktop\app\SampleOverwolfExtensionLibrary\obj\Debug\SampleOverwolfExtensionLibrary.dll
+C:\Users\lior\Desktop\app\SampleOverwolfExtensionLibrary\obj\Debug\SampleOverwolfExtensionLibrary.pdb
