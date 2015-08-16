@@ -59,7 +59,6 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\Users\lior\Desktop\temp index.html" />
     <Content Include="Files\Images\abberation.png" />
     <Content Include="Files\Images\abomination.png" />
     <Content Include="Files\Images\abusive-sergeant.png" />
@@ -1613,6 +1612,7 @@
     <Content Include="Files\Images_renamed\TU4e_002t.png" />
     <Content Include="Files\Images_renamed\TU4f_001.png" />
     <Content Include="Files\Images_renamed\XXX_040.png" />
+    <Content Include="Files\index.html" />
     <Content Include="Files\style.css" />
     <Content Include="Files\subwindow.html" />
     <Content Include="Files\XML\enGB.xml" />
