@@ -97,72 +97,120 @@ namespace SampleOverwolfExtensionLibrary
             bw.DoWork += new DoWorkEventHandler(
                 delegate (object o, DoWorkEventArgs args)
                 {
-                    while (true)
-                    {
-
-                        using (
+                    using (
                             FileStream fs = new FileStream(m_config.GameLogFilePath, FileMode.Open, FileAccess.Read,
                                 FileShare.ReadWrite))
+                    {
+                        m_lastOffset = FindLastGame(fs);
+                    }
+                        while (true)
                         {
 
-                            fs.Seek(m_lastOffset, SeekOrigin.Begin);
-                            if (fs.Length != m_lastOffset)
+                            using (
+                                FileStream fs = new FileStream(m_config.GameLogFilePath, FileMode.Open, FileAccess.Read,
+                                    FileShare.ReadWrite))
                             {
-                                using (StreamReader sr = new StreamReader(fs))
+                                fs.Seek(m_lastOffset, SeekOrigin.Begin);
+                                if (fs.Length != m_lastOffset)
                                 {
-                                    string newLine = sr.ReadToEnd();
-                                    m_lastOffset = fs.Length;
-                                    if (cardMovementRegex.IsMatch(newLine))
+                                    using (StreamReader sr = new StreamReader(fs))
                                     {
-                                        //TODO add if (card is from -to our direction
-                                        Match match = cardMovementRegex.Match(newLine);
-                                        string l_id = match.Groups["Id"].Value.Trim();
-                                        string l_name = match.Groups["name"].Value.Trim();
-                                        string l_from = match.Groups["from"].Value.Trim();
-                                        string l_to = match.Groups["to"].Value.Trim();
-                                        //        if (l_id != "" && l_to.Contains("FRIENDLY HAND")&&(!l_name.Contains("Jaina Proudmoore")))
-                                        if (m_AllCards.ContainsKey(l_id))
+                                        string chunk = sr.ReadToEnd();
+                                        m_lastOffset = fs.Length;
+                                        var lines = chunk.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
+                                        foreach (string newLine in lines)
                                         {
-                                            string output =
-                                                   string.Format("[+] Card Moved - NAME: {0} ID: {1} FROM: {2} TO: {3}",
-                                                       l_name, l_id, l_from, l_to);
-                                            if (l_id != "" && l_to.Contains("FRIENDLY HAND") )
+                                            if (cardMovementRegex.IsMatch(newLine))
                                             {
-                                                //      fireCardPlayedEvent(output); 
+                                                //TODO add if (card is from -to our direction
+                                                Match match = cardMovementRegex.Match(newLine);
+                                                string l_id = match.Groups["Id"].Value.Trim();
+                                                string l_name = match.Groups["name"].Value.Trim();
+                                                string l_from = match.Groups["from"].Value.Trim();
+                                                string l_to = match.Groups["to"].Value.Trim();
+                                                //        if (l_id != "" && l_to.Contains("FRIENDLY HAND")&&(!l_name.Contains("Jaina Proudmoore")))
+                                                if (m_AllCards.ContainsKey(l_id))
+                                                {
+                                                    string output =
+                                                           string.Format("[+] Card Moved - NAME: {0} ID: {1} FROM: {2} TO: {3}",
+                                                               l_name, l_id, l_from, l_to);
+                                                    if (l_id != "" && l_to.Contains("FRIENDLY HAND"))
+                                                    {
+                                                        //      fireCardPlayedEvent(output); 
 
-                                                fireCardHandEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
+                                                        fireCardHandEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
 
-                                            }
-                                            if (l_id != "" && l_to.Contains("FRIENDLY PLAY") && l_id != "TU4a_006")
-                                            {
-                                                //      fireCardPlayedEvent(output); 
-                                                m_AllCards[l_id].Played = "true";
+                                                    }
+                                                    if (l_id != "" && l_to.Contains("FRIENDLY PLAY") && l_id != "TU4a_006")
+                                                    {
+                                                        //      fireCardPlayedEvent(output); 
+                                                        m_AllCards[l_id].Played = "true";
 
-                                                fireCardPlayedEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
+                                                        fireCardPlayedEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
 
 
-                                            }
+                                                    }
 
-                                            if (l_id != "" && l_to.Contains("OPPOSING PLAY") && l_id != "TU4a_006")
-                                            {
-                                                m_AllCards[l_id].Played = "true";
-                                                fireOpponentCardPlayedEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
+                                                    if (l_id != "" && l_to.Contains("OPPOSING PLAY") && l_id != "TU4a_006")
+                                                    {
+                                                        m_AllCards[l_id].Played = "true";
+                                                        fireOpponentCardPlayedEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
+                                                    }
+                                                }
                                             }
                                         }
                                     }
-                                    else
-                                    {
-                                        Thread.Sleep(m_delay);
-                                        continue;
-                                    }
                                 }
+                                Thread.Sleep(m_delay);
                             }
-                            Thread.Sleep(m_delay);
                         }
-                    }
 
                 });
             bw.RunWorkerAsync();
+        }
+
+        private long FindLastGame(FileStream fs)
+        {
+            using (var sr = new StreamReader(fs))
+            {
+                bool foundSpectatorStart = false;
+                long offset = 0, tempOffset = 0;
+                var lines = sr.ReadToEnd().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var line in lines)
+                {
+                    if (line.Contains("Begin Spectating") || line.Contains("Start Spectator"))
+                    {
+                        offset = tempOffset;
+                        foundSpectatorStart = true;
+                    }
+                    else if (line.Contains("End Spectator"))
+                        offset = tempOffset;
+                    else if (line.Contains("CREATE_GAME"))
+                    {
+                        if (foundSpectatorStart)
+                        {
+                            foundSpectatorStart = false;
+                            continue;
+                        }
+                        offset = tempOffset;
+                        continue;
+                    }
+                    tempOffset += line.Length + 1;
+                    if (line.StartsWith("[Bob] legend rank"))
+                    {
+                        if (foundSpectatorStart)
+                        {
+                            foundSpectatorStart = false;
+                            continue;
+                        }
+                        offset = tempOffset;
+                    }
+                }
+
+                return offset;
+            }
         }
 
         // Fired each time a card is played.
