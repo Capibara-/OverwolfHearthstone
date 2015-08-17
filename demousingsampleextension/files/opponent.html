@@ -25,7 +25,7 @@
 
     <div id="content" onmousedown="dragMove();">
         <button id="close" onclick="closeWindow();">Close</button>
-        <button id="Opponent" onclick="openOpponentWindow()">Opponent</button>
+        <button id="Add" onclick="addImageToBar('http://placehold.it/200x50')">Add</button>
     </div>
 
 
@@ -110,10 +110,10 @@
                     console.log("startup " + result.status);
                     if (result.status == "success") {
                         sampleLibraryObj = result.object;
-                        sampleLibraryObj.CardHandEvent.addListener(cardHandEventFired);
-                        sampleLibraryObj.CardPlayedEvent.addListener(cardPlayedEventFired);
+                        //sampleLibraryObj.CardHandEvent.addListener(cardHandEventFired);
+                        sampleLibraryObj.OpponentCardPlayedEvent.addListener(opponentCardPlayedEventFired);
                             sampleLibraryObj.init(function (result) {
-                               console.log("init success:");
+                               console.log("opponent init success:");
                             });
 
                     }
@@ -122,21 +122,9 @@
 
         }
 
-        function cardPlayedEventFired(result) {
+        function opponentCardPlayedEventFired(result) {
+            console.log("OpponentCardPlayedEvent fired.")
             var Card = JSON.parse(result.CardJSON);
-            console.log("Player moved " + Card.Name + " from hand to table.");
-            if ($('#'+Card.CardId).length == 0) {
-                //card does not exist insert it to table and then change border
-                cardHandEventFired(result);
-            }
-            $('#' + Card.CardId).css('opacity', '0.5');
-        }
-
-
-
-        function cardHandEventFired(result) {
-            var Card = JSON.parse(result.CardJSON);
-            console.log("Player received " + Card.Name + " from deck.");
             var path = "Images_renamed/" + Card.CardId + ".png";
             addImageToBarWithTooltip(path, Card.Name, Card.CardId);
         }
@@ -150,16 +138,9 @@
             initLibrary();
         }
 
-        function openOpponentWindow() {
-            overwolf.windows.obtainDeclaredWindow("OpponentWindow", function (result) {
-                if (result.status == "success") {
-                    overwolf.windows.restore(result.window.id, function (result) {
-                        console.log(result);
-                    });
-                }
-            });
-        };
-
     </script>
+
+
+
 </body>
 </html>

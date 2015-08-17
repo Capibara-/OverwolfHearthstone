@@ -142,6 +142,12 @@ namespace SampleOverwolfExtensionLibrary
 
 
                                             }
+
+                                            if (l_id != "" && l_to.Contains("OPPOSING PLAY") && l_id != "TU4a_006")
+                                            {
+                                                m_AllCards[l_id].Played = "true";
+                                                fireOpponentCardPlayedEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
+                                            }
                                         }
                                     }
                                     else
@@ -180,6 +186,16 @@ namespace SampleOverwolfExtensionLibrary
             {
                 CardHandEventArgs e = new CardHandEventArgs { CardJSON = msg };
                 CardHandEvent(e);
+            }
+        }
+
+        public event Action<object> OpponentCardPlayedEvent;
+        private void fireOpponentCardPlayedEvent(string msg)
+        {
+            if (OpponentCardPlayedEvent != null)
+            {
+                OpponentCardPlayedEventArgs e = new OpponentCardPlayedEventArgs { CardJSON = msg };
+                OpponentCardPlayedEvent(e);
             }
         }
 
@@ -222,6 +238,11 @@ namespace SampleOverwolfExtensionLibrary
         public string CardJSON { get; set; }
     }
     public class CardPlayedEventArgs : EventArgs
+    {
+        public string CardJSON { get; set; }
+    }
+
+    public class OpponentCardPlayedEventArgs : EventArgs
     {
         public string CardJSON { get; set; }
     }

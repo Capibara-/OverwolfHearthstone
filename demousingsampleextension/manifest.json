@@ -37,7 +37,7 @@
         }
       },
       "OpponentWindow": {
-        "file": "Files/index.html",
+        "file": "Files/opponent.html",
         "transparent": true,
         "resizable": true,
         "size": {
