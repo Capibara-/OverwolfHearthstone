@@ -8,14 +8,13 @@ using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Configuration;
 using System.Reflection;
+using SampleOverwolfExtensionLibrary.Events;
 
 namespace SampleOverwolfExtensionLibrary
 {
-    // JS -> C# : Create a class method that will be called by the JS, if a return value is needed a callback delegate will be used.
-    // C# -> JS : Create an Action<object> event that the JS can register a listener for, whenever a C# to JS call is required simply fire the event
-    // and the JS listener will be called.
     public class SampleOverwolfExtension : IDisposable
     {
         private static int m_delay = 900;
@@ -57,117 +56,145 @@ namespace SampleOverwolfExtensionLibrary
                 }
             }
 
+            string xmlPath = Path.Combine(m_config.ProjectDirectory, @"Files\XML\enGB.xml");
+            string jsonPath = Path.Combine(m_config.ProjectDirectory, @"Files\XML\AllSets.json");
+
             if (m_AllCards == null)
             {
-                Card c = null;
-                string path = Path.Combine(m_config.ProjectDirectory, @"Files\XML\enGB.xml");
-                ser = new XmlSerializer(typeof(Card));
                 m_AllCards = new Dictionary<string, Card>();
-                doc = new XmlDocument();
-                doc.Load(path);
-                root = doc.DocumentElement;
-                if (root != null)
-                {
-                    XmlNodeList nodes = root.SelectNodes("Card");
-
-                    if (nodes != null)
-                        foreach (XmlNode node in nodes)
-                        {
-                            using (StringReader sr = new StringReader(node.OuterXml))
-                            {
-                                try
-                                {
-                                    c = (Card)ser.Deserialize(sr);
-                                    c.Played = "false";
-                                    m_AllCards.Add(c.CardId, c);
-
-
-                                }
-                                catch (Exception e)
-                                {
-                                    // TODO: Handle bad XML file.
-                                }
-                            }
-                        }
-                }
+                ParseCardsFromJSON(jsonPath);
             }
 
             BackgroundWorker bw = new BackgroundWorker();
             callback(string.Format("Initialized cards, count: {0}", m_AllCards.Count));
-            bw.DoWork += new DoWorkEventHandler(
-                delegate (object o, DoWorkEventArgs args)
-                {
-                    using (
+            bw.DoWork += new DoWorkEventHandler(bw_DoWork);
+            bw.RunWorkerAsync();
+        }
+
+        private void bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            using (
                             FileStream fs = new FileStream(m_config.GameLogFilePath, FileMode.Open, FileAccess.Read,
                                 FileShare.ReadWrite))
+            {
+                m_lastOffset = FindLastGame(fs);
+            }
+            while (true)
+            {
+
+                using (
+                    FileStream fs = new FileStream(m_config.GameLogFilePath, FileMode.Open, FileAccess.Read,
+                        FileShare.ReadWrite))
+                {
+                    fs.Seek(m_lastOffset, SeekOrigin.Begin);
+                    if (fs.Length != m_lastOffset)
                     {
-                        m_lastOffset = FindLastGame(fs);
-                    }
-                        while (true)
+                        using (StreamReader sr = new StreamReader(fs))
                         {
+                            string chunk = sr.ReadToEnd();
+                            m_lastOffset = fs.Length;
+                            var lines = chunk.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
-                            using (
-                                FileStream fs = new FileStream(m_config.GameLogFilePath, FileMode.Open, FileAccess.Read,
-                                    FileShare.ReadWrite))
+                            foreach (string newLine in lines)
                             {
-                                fs.Seek(m_lastOffset, SeekOrigin.Begin);
-                                if (fs.Length != m_lastOffset)
+                                if (cardMovementRegex.IsMatch(newLine))
                                 {
-                                    using (StreamReader sr = new StreamReader(fs))
+                                    //TODO add if (card is from -to our direction
+                                    Match match = cardMovementRegex.Match(newLine);
+                                    string l_id = match.Groups["Id"].Value.Trim();
+                                    string l_name = match.Groups["name"].Value.Trim();
+                                    string l_from = match.Groups["from"].Value.Trim();
+                                    string l_to = match.Groups["to"].Value.Trim();
+                                    //        if (l_id != "" && l_to.Contains("FRIENDLY HAND")&&(!l_name.Contains("Jaina Proudmoore")))
+                                    if (m_AllCards.ContainsKey(l_id))
                                     {
-                                        string chunk = sr.ReadToEnd();
-                                        m_lastOffset = fs.Length;
-                                        var lines = chunk.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-
-                                        foreach (string newLine in lines)
+                                        string output =
+                                               string.Format("[+] Card Moved - NAME: {0} ID: {1} FROM: {2} TO: {3}",
+                                                   l_name, l_id, l_from, l_to);
+                                        if (l_id != "" && l_to.Contains("FRIENDLY HAND"))
                                         {
-                                            if (cardMovementRegex.IsMatch(newLine))
-                                            {
-                                                //TODO add if (card is from -to our direction
-                                                Match match = cardMovementRegex.Match(newLine);
-                                                string l_id = match.Groups["Id"].Value.Trim();
-                                                string l_name = match.Groups["name"].Value.Trim();
-                                                string l_from = match.Groups["from"].Value.Trim();
-                                                string l_to = match.Groups["to"].Value.Trim();
-                                                //        if (l_id != "" && l_to.Contains("FRIENDLY HAND")&&(!l_name.Contains("Jaina Proudmoore")))
-                                                if (m_AllCards.ContainsKey(l_id))
-                                                {
-                                                    string output =
-                                                           string.Format("[+] Card Moved - NAME: {0} ID: {1} FROM: {2} TO: {3}",
-                                                               l_name, l_id, l_from, l_to);
-                                                    if (l_id != "" && l_to.Contains("FRIENDLY HAND"))
-                                                    {
-                                                        //      fireCardPlayedEvent(output); 
+                                            //      fireCardPlayedEvent(output); 
 
-                                                        fireCardHandEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
+                                            fireCardHandEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
 
-                                                    }
-                                                    if (l_id != "" && l_to.Contains("FRIENDLY PLAY") && l_id != "TU4a_006")
-                                                    {
-                                                        //      fireCardPlayedEvent(output); 
-                                                        m_AllCards[l_id].Played = "true";
+                                        }
+                                        if (l_id != "" && l_to.Contains("FRIENDLY PLAY") && l_id != "TU4a_006")
+                                        {
+                                            //      fireCardPlayedEvent(output); 
+                                            m_AllCards[l_id].Played = "true";
 
-                                                        fireCardPlayedEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
+                                            fireCardPlayedEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
+                                        }
 
-
-                                                    }
-
-                                                    if (l_id != "" && l_to.Contains("OPPOSING PLAY") && l_id != "TU4a_006")
-                                                    {
-                                                        m_AllCards[l_id].Played = "true";
-                                                        fireOpponentCardPlayedEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
-                                                    }
-                                                }
-                                            }
+                                        if (l_id != "" && l_to.Contains("OPPOSING PLAY") && l_id != "TU4a_006")
+                                        {
+                                            m_AllCards[l_id].Played = "true";
+                                            fireOpponentCardPlayedEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
                                         }
                                     }
                                 }
-                                Thread.Sleep(m_delay);
                             }
                         }
+                    }
+                    Thread.Sleep(m_delay);
+                }
+            }
+        }
 
-                });
-            bw.RunWorkerAsync();
+        private void ParseCardsFromXML(string path)
+        {
+            XmlSerializer ser = new XmlSerializer(typeof(Configuration));
+            Card c = null;
+            ser = new XmlSerializer(typeof(Card));
+            XmlDocument doc = new XmlDocument();
+
+            doc = new XmlDocument();
+            doc.Load(path);
+            XmlElement root = doc.DocumentElement;
+            if (root != null)
+            {
+                XmlNodeList nodes = root.SelectNodes("Card");
+
+                if (nodes != null)
+                    foreach (XmlNode node in nodes)
+                    {
+                        using (StringReader sr = new StringReader(node.OuterXml))
+                        {
+                            try
+                            {
+                                c = (Card)ser.Deserialize(sr);
+                                c.Played = "false";
+                                m_AllCards.Add(c.ID, c);
+
+
+                            }
+                            catch (Exception e)
+                            {
+                                // TODO: Handle bad XML file.
+                            }
+                        }
+                    }
+            }
+        }
+
+        private void ParseCardsFromJSON(string path)
+        {
+            var dynObj = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(path));
+            foreach (JToken token in dynObj.Children())
+            {
+                if (token is JProperty)
+                {
+                    var cards = JsonConvert.DeserializeObject<List<Card>>(token.First.ToString());
+                    foreach (Card card in cards)
+                    {
+                        if (card.ID != null)
+                        {
+                            card.Played = "false";
+                            m_AllCards.Add(card.ID, card);
+                        }
+                    }
+                }
+            }
         }
 
         private long FindLastGame(FileStream fs)
@@ -213,7 +240,22 @@ namespace SampleOverwolfExtensionLibrary
             }
         }
 
-        // Fired each time a card is played.
+        public void getMyDeck(Action<object> callback)
+        {
+            int i = 0;
+            foreach (var entry in m_AllCards)
+            {
+                i++;
+                m_MyDeck.Add(entry.Value);
+                // do something with entry.Value or entry.Key
+                if (i > 30)
+                    break;
+            }
+
+            callback(JsonConvert.SerializeObject(m_MyDeck[0]));
+        }
+
+
         public event Action<object> CardPlayedEvent;
         private void fireCardPlayedEvent(string msg)
         {
@@ -225,7 +267,6 @@ namespace SampleOverwolfExtensionLibrary
             }
         }
 
-        // Fired each time a card is played.
         public event Action<object> CardHandEvent;
         private void fireCardHandEvent(string msg)
         {
@@ -248,50 +289,9 @@ namespace SampleOverwolfExtensionLibrary
         }
 
 
-
-        public void getMyDeck(Action<object> callback)
-        {
-            int i = 0;
-            foreach (var entry in m_AllCards)
-            {
-                i++;
-                m_MyDeck.Add(entry.Value);
-                // do something with entry.Value or entry.Key
-                if (i > 30)
-                    break;
-            }
-
-            callback(JsonConvert.SerializeObject(m_MyDeck[0]));
-        }
-
-
-
-        public class ThresholdReachedEventArgs : EventArgs
-        {
-            public string s1 { get; set; }
-
-        }
-        /// <summary>
-        /// Cleans up any resources being used.
-        /// </summary>
-        /// <skip/>
         public void Dispose()
         {
             GC.SuppressFinalize(this);
         }
-    }
-
-    public class CardHandEventArgs : EventArgs
-    {
-        public string CardJSON { get; set; }
-    }
-    public class CardPlayedEventArgs : EventArgs
-    {
-        public string CardJSON { get; set; }
-    }
-
-    public class OpponentCardPlayedEventArgs : EventArgs
-    {
-        public string CardJSON { get; set; }
     }
 }

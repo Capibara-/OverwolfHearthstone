@@ -20,8 +20,8 @@
         "transparent": true,
         "resizable": true,
         "size": {
-          "width": 400,
-          "height": 300
+          "width": 110,
+          "height": 1000
         },
         "min_size": {
           "width": 110,

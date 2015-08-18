@@ -125,11 +125,11 @@
         function cardPlayedEventFired(result) {
             var Card = JSON.parse(result.CardJSON);
             console.log("Player moved " + Card.Name + " from hand to table.");
-            if ($('#'+Card.CardId).length == 0) {
+            if ($('#'+Card.ID).length == 0) {
                 //card does not exist insert it to table and then change border
                 cardHandEventFired(result);
             }
-            $('#' + Card.CardId).css('opacity', '0.5');
+            $('#' + Card.ID).css('opacity', '0.5');
         }
 
 
@@ -137,8 +137,8 @@
         function cardHandEventFired(result) {
             var Card = JSON.parse(result.CardJSON);
             console.log("Player received " + Card.Name + " from deck.");
-            var path = "Images_renamed/" + Card.CardId + ".png";
-            addImageToBarWithTooltip(path, Card.Name, Card.CardId);
+            var path = "Images_renamed/" + Card.ID + ".png";
+            addImageToBarWithTooltip(path, Card.Name, Card.ID);
         }
 
 
@@ -148,6 +148,18 @@
 
         window.onload = function (e) {
             initLibrary();
+            //initSize();
+        }
+
+        function initSize() {
+            overwolf.games.onGameLaunched.addListener(
+                function (gameInfoObject) {
+                    alert("width: " + gameInfoObject.width + " height: " + gameInfoObject.height);
+                    $('#content').width(gameInfoObject.width);
+                    $('#content').height(gameInfoObject.height);
+                    overwolf.windows.changeSize("PlayerWindow", gameInfoObject.width, gameInfoObject.height, function () { console.log('Window size changed.') });
+                }
+                );
         }
 
         function openOpponentWindow() {

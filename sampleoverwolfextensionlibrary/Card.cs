@@ -8,13 +8,10 @@ namespace SampleOverwolfExtensionLibrary
     public class Card
     {
         [System.Xml.Serialization.XmlElement("CardId")]
-        public string CardId { get; set; }
+        public string ID { get; set; }
 
         [System.Xml.Serialization.XmlElement("Name")]
         public string Name { get; set; }
-
-        [System.Xml.Serialization.XmlElement("CardSet")]
-        public string CardSet { get; set; }
 
         [System.Xml.Serialization.XmlElement("Rarity")]
         public string Rarity { get; set; }
@@ -23,19 +20,13 @@ namespace SampleOverwolfExtensionLibrary
         public string Type { get; set; }
 
         [System.Xml.Serialization.XmlElement("Attack")]
-        public string Attack { get; set; }
+        public int Attack { get; set; }
 
         [System.Xml.Serialization.XmlElement("Health")]
-        public string Health { get; set; }
+        public int Health { get; set; }
 
         [System.Xml.Serialization.XmlElement("Cost")]
         public string Cost { get; set; }
-
-        [System.Xml.Serialization.XmlElement("Durability")]
-        public string Durability { get; set; }
-
-        [System.Xml.Serialization.XmlElement("Class")]
-        public string Class { get; set; }
 
         [System.Xml.Serialization.XmlElement("Faction")]
         public string Faction { get; set; }
@@ -44,9 +35,21 @@ namespace SampleOverwolfExtensionLibrary
         public string Text { get; set; }
 
         [System.Xml.Serialization.XmlElement("Mechanics")]
-        public string Mechanics { get; set; }
+        public IList<string> Mechanics { get; set; }
 
         [System.Xml.Serialization.XmlElement("Played")]
         public string Played { get; set; }
+
+        [System.Xml.Serialization.XmlElement("Played")]
+        public string Flavor { get; set; }
+
+        [System.Xml.Serialization.XmlElement("Played")]
+        public string Artist { get; set; }
+
+        [System.Xml.Serialization.XmlElement("Played")]
+        public bool Collectible { get; set; }
+
+        [System.Xml.Serialization.XmlElement("Played")]
+        public bool Elite { get; set; }
     }
 }

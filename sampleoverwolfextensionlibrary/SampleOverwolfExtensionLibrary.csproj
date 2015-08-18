@@ -44,6 +44,7 @@
     <Compile Include="Card.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

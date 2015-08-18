@@ -1636,6 +1636,7 @@
     <Folder Include="Files\lib\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Files\XML\AllSets.json" />
     <None Include="manifest.json" />
     <Content Include="packages.config" />
   </ItemGroup>
