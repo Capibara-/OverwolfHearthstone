@@ -44,3 +44,6 @@ Temporary Items
 *.cache
 *.dll
 *.pdb
+*.nupkg
+packages/Tesseract.2.4.0.0/tools/install.ps1
+*.xml
