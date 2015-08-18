@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using System.Configuration;
 using System.Reflection;
 using SampleOverwolfExtensionLibrary.Events;
+using SampleOverwolfExtensionLibrary.OCR;
 
 namespace SampleOverwolfExtensionLibrary
 {
@@ -37,28 +38,7 @@ namespace SampleOverwolfExtensionLibrary
 
         public void init(Action<object> callback)
         {
-            // Load configuration from file:
-            string overwolfDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string configFilePath = Path.Combine(overwolfDir, "Ninja\\NinjaConfig.xml");
-            XmlSerializer ser = new XmlSerializer(typeof(Configuration));
-            XmlDocument doc = new XmlDocument();
-            doc.Load(configFilePath);
-            XmlElement root = doc.DocumentElement;
-            using (StringReader sr = new StringReader(root.OuterXml))
-            {
-                try
-                {
-                    m_config = (Configuration)ser.Deserialize(sr);
-                }
-                catch (Exception e)
-                {
-                    // TODO: Hanlde bad xml.
-                }
-            }
-
-            string xmlPath = Path.Combine(m_config.ProjectDirectory, @"Files\XML\enGB.xml");
-            string jsonPath = Path.Combine(m_config.ProjectDirectory, @"Files\XML\AllSets.json");
-
+            string jsonPath = Configuration.Instance.JSONCardsFilePath;
             if (m_AllCards == null)
             {
                 m_AllCards = new Dictionary<string, Card>();
@@ -73,8 +53,9 @@ namespace SampleOverwolfExtensionLibrary
 
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
+            string logFile = Configuration.Instance.GameLogFilePath;
             using (
-                            FileStream fs = new FileStream(m_config.GameLogFilePath, FileMode.Open, FileAccess.Read,
+                            FileStream fs = new FileStream(logFile, FileMode.Open, FileAccess.Read,
                                 FileShare.ReadWrite))
             {
                 m_lastOffset = FindLastGame(fs);
@@ -83,7 +64,7 @@ namespace SampleOverwolfExtensionLibrary
             {
 
                 using (
-                    FileStream fs = new FileStream(m_config.GameLogFilePath, FileMode.Open, FileAccess.Read,
+                    FileStream fs = new FileStream(logFile, FileMode.Open, FileAccess.Read,
                         FileShare.ReadWrite))
                 {
                     fs.Seek(m_lastOffset, SeekOrigin.Begin);
