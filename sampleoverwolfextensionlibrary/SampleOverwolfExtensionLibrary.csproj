@@ -55,7 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="NinjaConfig.xml" />
+    <Content Include="Config\NinjaConfig.xml" />
     <Content Include="x64\liblept168.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -70,6 +70,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config\NinjaConfig.json" />
     <None Include="tessdata\eng.cube.bigrams">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -102,8 +103,12 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>if not exist %25APPDATA%25\Ninja mkdir %25APPDATA%25\Ninja
+if not exist %25APPDATA%25\Ninja\tessdata mkdir %25APPDATA%25\Ninja\tessdata
+copy /y $(ProjectDir)Config\NinjaConfig.json %25APPDATA%25\Ninja
+copy /y $(ProjectDir)tessdata\*.* %25APPDATA%25\Ninja\tessdata
+
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

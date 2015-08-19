@@ -28,6 +28,10 @@ namespace SampleOverwolfExtensionLibrary
                             string configuration = File.ReadAllText(configFilePath);
                             m_instance = JsonConvert.DeserializeObject<RootObject>(configuration);
                         };
+                        m_instance.JSONCardsFilePath = Environment.ExpandEnvironmentVariables(m_instance.JSONCardsFilePath);
+                        m_instance.ProjectDirectory = Environment.ExpandEnvironmentVariables(m_instance.ProjectDirectory);
+                        m_instance.GameLogFilePath = Environment.ExpandEnvironmentVariables(m_instance.GameLogFilePath);
+                        m_instance.OCR.TesseractDataPath = Environment.ExpandEnvironmentVariables(m_instance.OCR.TesseractDataPath);
                     }
                 }
                 return m_instance;
