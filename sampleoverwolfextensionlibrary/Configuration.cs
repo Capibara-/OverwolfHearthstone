@@ -21,14 +21,16 @@ namespace SampleOverwolfExtensionLibrary
                 {
                     lock (SYNC_OBJ)
                     {
-                        string overwolfDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                        string configFilePath = Path.Combine(overwolfDir, "Ninja\\NinjaConfig.json");
+                        string overwolfDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                        string configFilePath = Path.Combine(overwolfDir, "Overwolf\\Ninja\\NinjaConfig.json");
                         if (File.Exists(configFilePath))
                         {
                             string configuration = File.ReadAllText(configFilePath);
                             m_instance = JsonConvert.DeserializeObject<RootObject>(configuration);
                         };
                         m_instance.JSONCardsFilePath = Environment.ExpandEnvironmentVariables(m_instance.JSONCardsFilePath);
+                        m_instance.AppLogConfigFilePath = Environment.ExpandEnvironmentVariables(m_instance.AppLogConfigFilePath);
+                        m_instance.AppLogFilePath = Environment.ExpandEnvironmentVariables(m_instance.AppLogFilePath);
                         m_instance.ProjectDirectory = Environment.ExpandEnvironmentVariables(m_instance.ProjectDirectory);
                         m_instance.GameLogFilePath = Environment.ExpandEnvironmentVariables(m_instance.GameLogFilePath);
                         m_instance.OCR.TesseractDataPath = Environment.ExpandEnvironmentVariables(m_instance.OCR.TesseractDataPath);
@@ -51,6 +53,8 @@ namespace SampleOverwolfExtensionLibrary
             public string ProjectDirectory { get; set; }
             public string GameLogFilePath { get; set; }
             public string JSONCardsFilePath { get; set; }
+            public string AppLogConfigFilePath { get; set; }
+            public string AppLogFilePath { get; set; }
             public OCR OCR { get; set; }
         }
     }

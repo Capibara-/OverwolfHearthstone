@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Configuration;
-using System.Reflection;
 using SampleOverwolfExtensionLibrary.Events;
-using SampleOverwolfExtensionLibrary.OCR;
+using log4net;
+using log4net.Config;
+using System.Diagnostics;
 
 namespace SampleOverwolfExtensionLibrary
 {
-    public class SampleOverwolfExtension : IDisposable
+    public class EntryPoint : IDisposable
     {
+        private static readonly ILog logger = LogManager.GetLogger(typeof(EntryPoint));
         private static int m_delay = 900;
         private static long m_lastOffset = 0;
         public static int m_index = 0;
@@ -27,17 +27,23 @@ namespace SampleOverwolfExtensionLibrary
         public const int DECK_SIZE = 30;
         Regex cardMovementRegex = new Regex(@"\w*(name=(?<name>(.+?(?=id)))).*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 
-        public SampleOverwolfExtension(int nativeWindowHandle)
+        public EntryPoint(int nativeWindowHandle)
         {
         }
 
-        public SampleOverwolfExtension()
+        public EntryPoint()
         {
         }
 
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
 
         public void init(Action<object> callback)
         {
+            // Load log4net configuration file.
+            log4net.Config.XmlConfigurator.Configure(new FileInfo(Configuration.Instance.AppLogConfigFilePath));
             string jsonPath = Configuration.Instance.JSONCardsFilePath;
             if (m_AllCards == null)
             {
@@ -47,11 +53,12 @@ namespace SampleOverwolfExtensionLibrary
 
             BackgroundWorker bw = new BackgroundWorker();
             callback(string.Format("Initialized cards, count: {0}", m_AllCards.Count));
-            bw.DoWork += new DoWorkEventHandler(bw_DoWork);
+            logger.Error(string.Format("Initialized cards, count: {0}", m_AllCards.Count));
+            bw.DoWork += new DoWorkEventHandler(pollLogFile);
             bw.RunWorkerAsync();
         }
 
-        private void bw_DoWork(object sender, DoWorkEventArgs e)
+        private void pollLogFile(object sender, DoWorkEventArgs e)
         {
             string logFile = Configuration.Instance.GameLogFilePath;
             using (
@@ -92,10 +99,10 @@ namespace SampleOverwolfExtensionLibrary
                                         string output =
                                                string.Format("[+] Card Moved - NAME: {0} ID: {1} FROM: {2} TO: {3}",
                                                    l_name, l_id, l_from, l_to);
+                                        logger.Debug(output);
                                         if (l_id != "" && l_to.Contains("FRIENDLY HAND"))
                                         {
                                             //      fireCardPlayedEvent(output); 
-
                                             fireCardHandEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
 
                                         }
@@ -221,7 +228,7 @@ namespace SampleOverwolfExtensionLibrary
             }
         }
 
-        public void getMyDeck(Action<object> callback)
+        public void GetMyDeck(Action<object> callback)
         {
             int i = 0;
             foreach (var entry in m_AllCards)
@@ -235,7 +242,6 @@ namespace SampleOverwolfExtensionLibrary
 
             callback(JsonConvert.SerializeObject(m_MyDeck[0]));
         }
-
 
         public event Action<object> CardPlayedEvent;
         private void fireCardPlayedEvent(string msg)
@@ -267,12 +273,6 @@ namespace SampleOverwolfExtensionLibrary
                 OpponentCardPlayedEventArgs e = new OpponentCardPlayedEventArgs { CardJSON = msg };
                 OpponentCardPlayedEvent(e);
             }
-        }
-
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
     }
 }

@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SampleOverwolfExtensionLibrary</RootNamespace>
     <AssemblyName>SampleOverwolfExtensionLibrary</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,9 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net35-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net20\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -55,7 +60,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\NinjaConfig.xml" />
     <Content Include="x64\liblept168.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -70,7 +74,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config\log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Config\NinjaConfig.json" />
+    <None Include="packages.config" />
     <None Include="tessdata\eng.cube.bigrams">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -98,16 +106,15 @@
     <None Include="tessdata\eng.traineddata">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if not exist %25APPDATA%25\Ninja mkdir %25APPDATA%25\Ninja
-if not exist %25APPDATA%25\Ninja\tessdata mkdir %25APPDATA%25\Ninja\tessdata
-copy /y $(ProjectDir)Config\NinjaConfig.json %25APPDATA%25\Ninja
-copy /y $(ProjectDir)tessdata\*.* %25APPDATA%25\Ninja\tessdata
-
+    <PostBuildEvent>if not exist %25LOCALAPPDATA%25\Overwolf\Ninja mkdir %25LOCALAPPDATA%25\Overwolf\Ninja
+if not exist %25LOCALAPPDATA%25\Overwolf\Ninja\tessdata mkdir %25LOCALAPPDATA%25\Overwolf\Ninja\tessdata
+copy /y $(ProjectDir)Config\NinjaConfig.json %25LOCALAPPDATA%25\Overwolf\Ninja
+copy /y $(ProjectDir)Config\log4net.config %25LOCALAPPDATA%25\Overwolf\Ninja
+copy /y $(ProjectDir)tessdata\*.* %25LOCALAPPDATA%25\Overwolf\Ninja\tessdata
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

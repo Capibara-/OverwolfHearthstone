@@ -59,9 +59,9 @@
       }
     },
     "extra-objects": {
-      "sampleLibrary": {
+      "NinjaLibrary": {
         "file": "Files/lib/SampleOverwolfExtensionLibrary.dll",
-        "class": "SampleOverwolfExtensionLibrary.SampleOverwolfExtension"
+        "class": "SampleOverwolfExtensionLibrary.EntryPoint"
       }
     }
   }

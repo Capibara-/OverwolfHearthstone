@@ -1,9 +1,11 @@
 {
 "ProjectDirectory": "D:\\GitHub\\OverwolfHearthstone\\demousingsampleextension\\",
 "GameLogFilePath": "C:\\Program Files (x86)\\Hearthstone\\Hearthstone_Data\\output_log.txt",
-"JSONCardsFilePath": "%APPDATA%\\Ninja\\AllSets.json",
+  "JSONCardsFilePath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\AllSets.json",
+  "AppLogConfigFilePath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\log4net.config",
+  "AppLogFilePath":  "%LOCALAPPDATA%\\Overwolf\\Ninja\\NinjaLog.txt",
 "OCR" : {
-  "TesseractDataPath": "%APPDATA%\\Ninja\\tessdata",
+  "TesseractDataPath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\tessdata",
   "IsWhiteRangeMinVal": 185,
   "IsWhiteRangeMaxDiff": 10,
   "IsWhiteRangeMinAlpha": 150

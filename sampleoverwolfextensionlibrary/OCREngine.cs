@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using log4net;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -21,15 +22,16 @@ namespace SampleOverwolfExtensionLibrary.OCR
         private int m_minVal = 0;
         private int m_maxDiff = 0;
         private int m_minAlpha = 0;
+        private static readonly ILog logger = LogManager.GetLogger(typeof(OCREngine));
 
         private OCREngine()
         {
-            m_cards = new List<string>();
             string tessdataPath = Configuration.Instance.OCR.TesseractDataPath;
             m_jsonCardsFilePath = Configuration.Instance.JSONCardsFilePath;
             m_minAlpha = Configuration.Instance.OCR.IsWhiteRangeMinAlpha;
             m_maxDiff = Configuration.Instance.OCR.IsWhiteRangeMaxDiff;
             m_minVal = Configuration.Instance.OCR.IsWhiteRangeMinVal;
+            m_cards = new List<string>();
             m_ocrEngine = new TesseractEngine(tessdataPath, "eng", EngineMode.TesseractAndCube);
 
         }
@@ -80,7 +82,7 @@ namespace SampleOverwolfExtensionLibrary.OCR
         }
 
         // Parses out the cards data from a JSON file. Only returns cards where predicate(card) == true.
-        public List<string> ParseCardsFromJSON(string path, Func<Card, bool> predicate)
+        public List<string> ParseCardsFromJSON(string path, System.Func<Card, bool> predicate)
         {
             List<string> retVal = new List<string>();
             var dynObj = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(path));
@@ -140,7 +142,8 @@ namespace SampleOverwolfExtensionLibrary.OCR
             }
             return retVal;
         }
-
+        
+        // Changes every pixel such that if isNotInWhiteRange(pixel) == true the pixel is colored black and otherwise it is colored white.
         private void cleanImage(string inPath, string outPath)
         {
             Bitmap bmp = (Bitmap)Image.FromFile(inPath);
@@ -267,7 +270,7 @@ namespace SampleOverwolfExtensionLibrary.OCR
         }
 
         // Changes the color of each pixel where predicate(pixel) == true to newColor. All other pixels get colored absoluteOriginal.
-        private Bitmap changeColor(Bitmap scrBitmap, Color newColor, Color absoluteOriginal, Func<Color, bool> predicate)
+        private Bitmap changeColor(Bitmap scrBitmap, Color newColor, Color absoluteOriginal, System.Func<Color, bool> predicate)
         {
             Color actulaColor;
             Bitmap newBitmap = new Bitmap(scrBitmap.Width, scrBitmap.Height);

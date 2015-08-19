@@ -106,7 +106,7 @@
 
         function initLibrary() {
             if (typeof (overwolf) != "undefined") {
-                overwolf.extensions.current.getExtraObject("sampleLibrary", function (result) {
+                overwolf.extensions.current.getExtraObject("NinjaLibrary", function (result) {
                     console.log("startup " + result.status);
                     if (result.status == "success") {
                         sampleLibraryObj = result.object;
