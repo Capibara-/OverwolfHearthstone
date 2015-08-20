@@ -26,14 +26,13 @@ namespace SampleOverwolfExtensionLibrary.OCR
 
         private OCREngine()
         {
-            string tessdataPath = Configuration.Instance.OCR.TesseractDataPath;
+            m_ocrEngine = new TesseractEngine(Configuration.Instance.OCR.TesseractDataPath,
+                "eng", EngineMode.TesseractAndCube);
             m_jsonCardsFilePath = Configuration.Instance.JSONCardsFilePath;
             m_minAlpha = Configuration.Instance.OCR.IsWhiteRangeMinAlpha;
             m_maxDiff = Configuration.Instance.OCR.IsWhiteRangeMaxDiff;
             m_minVal = Configuration.Instance.OCR.IsWhiteRangeMinVal;
             m_cards = new List<string>();
-            m_ocrEngine = new TesseractEngine(tessdataPath, "eng", EngineMode.TesseractAndCube);
-
         }
 
         public void Dispose()

@@ -12,7 +12,7 @@ namespace SampleOverwolfExtensionLibrary
     {
         private static RootObject m_instance = null;
         private static object SYNC_OBJ = new object();
-
+        // TODO: Add application Temp folder to configuration file.
         public static RootObject Instance
         {
             get
@@ -31,7 +31,6 @@ namespace SampleOverwolfExtensionLibrary
                         m_instance.JSONCardsFilePath = Environment.ExpandEnvironmentVariables(m_instance.JSONCardsFilePath);
                         m_instance.AppLogConfigFilePath = Environment.ExpandEnvironmentVariables(m_instance.AppLogConfigFilePath);
                         m_instance.AppLogFilePath = Environment.ExpandEnvironmentVariables(m_instance.AppLogFilePath);
-                        m_instance.ProjectDirectory = Environment.ExpandEnvironmentVariables(m_instance.ProjectDirectory);
                         m_instance.GameLogFilePath = Environment.ExpandEnvironmentVariables(m_instance.GameLogFilePath);
                         m_instance.OCR.TesseractDataPath = Environment.ExpandEnvironmentVariables(m_instance.OCR.TesseractDataPath);
                     }
@@ -46,11 +45,12 @@ namespace SampleOverwolfExtensionLibrary
             public int IsWhiteRangeMinVal { get; set; }
             public int IsWhiteRangeMaxDiff { get; set; }
             public int IsWhiteRangeMinAlpha { get; set; }
+            public double RightSideCropRatio { get; set; }
+            public double LeftSideCropRatio { get; set; }
         }
 
         public class RootObject
         {
-            public string ProjectDirectory { get; set; }
             public string GameLogFilePath { get; set; }
             public string JSONCardsFilePath { get; set; }
             public string AppLogConfigFilePath { get; set; }

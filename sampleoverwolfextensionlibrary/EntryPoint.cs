@@ -18,14 +18,15 @@ namespace SampleOverwolfExtensionLibrary
     public class EntryPoint : IDisposable
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(EntryPoint));
+        private static bool m_isGameRunning = false;
+        private BackgroundWorker m_Worker = null;
         private static int m_delay = 900;
         private static long m_lastOffset = 0;
-        public static int m_index = 0;
-        private Configuration m_config;
+        private static int m_index = 0;
         private Dictionary<string, Card> m_AllCards = null;
-        public static List<Card> m_MyDeck = new List<Card>();
+        private static List<Card> m_MyDeck = new List<Card>();
         public const int DECK_SIZE = 30;
-        Regex cardMovementRegex = new Regex(@"\w*(name=(?<name>(.+?(?=id)))).*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+        private Regex cardMovementRegex = new Regex(@"\w*(name=(?<name>(.+?(?=id)))).*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 
         public EntryPoint(int nativeWindowHandle)
         {
@@ -40,7 +41,7 @@ namespace SampleOverwolfExtensionLibrary
             GC.SuppressFinalize(this);
         }
 
-        public void init(Action<object> callback)
+        public void Init(Action<object> callback)
         {
             // Load log4net configuration file.
             log4net.Config.XmlConfigurator.Configure(new FileInfo(Configuration.Instance.AppLogConfigFilePath));
@@ -49,13 +50,15 @@ namespace SampleOverwolfExtensionLibrary
             {
                 m_AllCards = new Dictionary<string, Card>();
                 ParseCardsFromJSON(jsonPath);
+                callback(string.Format("Initialized cards, count: {0}", m_AllCards.Count));
+                logger.Info(string.Format("Initialized cards, count: {0}", m_AllCards.Count));
             }
 
-            BackgroundWorker bw = new BackgroundWorker();
-            callback(string.Format("Initialized cards, count: {0}", m_AllCards.Count));
-            logger.Error(string.Format("Initialized cards, count: {0}", m_AllCards.Count));
-            bw.DoWork += new DoWorkEventHandler(pollLogFile);
-            bw.RunWorkerAsync();
+            if (m_Worker == null)
+            {
+                m_Worker = new BackgroundWorker();
+                m_Worker.DoWork += new DoWorkEventHandler(pollLogFile);
+            }            
         }
 
         private void pollLogFile(object sender, DoWorkEventArgs e)
@@ -272,6 +275,33 @@ namespace SampleOverwolfExtensionLibrary
             {
                 OpponentCardPlayedEventArgs e = new OpponentCardPlayedEventArgs { CardJSON = msg };
                 OpponentCardPlayedEvent(e);
+            }
+        }
+
+        public void GameOn(Action<object> callback)
+        {
+            m_isGameRunning = true;
+            logger.Debug("Set isGameRunning to true.");
+            callback("Set isGameRunning to true.");
+            if (m_Worker != null)
+            {
+                callback("Starting worker thread.");
+                logger.Debug("Starting worker thread.");
+                m_Worker.RunWorkerAsync();
+            }
+            
+        }
+
+        public void GameOff(Action<object> callback)
+        {
+            m_isGameRunning = false;
+            logger.Debug("Set isGameRunning to false.");
+            callback("Set isGameRunning to false.");
+            if (m_Worker != null && m_Worker.IsBusy)
+            {
+                callback("Stopping worker thread.");
+                logger.Debug("Stopping worker thread.");
+                m_Worker.CancelAsync();
             }
         }
     }
