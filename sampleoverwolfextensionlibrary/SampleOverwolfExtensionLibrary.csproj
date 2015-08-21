@@ -46,7 +46,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Tesseract, Version=2.4.0.0, Culture=neutral, PublicKeyToken=ebeb3d86bef60cbe, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tesseract.2.4.0.0\lib\net20\Tesseract.dll</HintPath>
+      <HintPath>..\packages\Tesseract.2.4.0.0\lib\net35\Tesseract.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -78,7 +78,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Config\NinjaConfig.json" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="tessdata\eng.cube.bigrams">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
