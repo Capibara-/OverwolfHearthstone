@@ -2,13 +2,29 @@
   "GameLogFilePath": "C:\\Program Files (x86)\\Hearthstone\\Hearthstone_Data\\output_log.txt",
   "JSONCardsFilePath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\AllSets.json",
   "AppLogConfigFilePath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\log4net.config",
-  "AppLogFilePath":  "%LOCALAPPDATA%\\Overwolf\\Ninja\\NinjaLog.txt",
-  "OCR" : {
+  "AppLogFilePath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\NinjaLog.txt",
+  "TempFolder": "%LOCALAPPDATA%\\Overwolf\\Ninja\\Temp",
+  "OCR": {
     "TesseractDataPath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\tessdata",
-    "IsWhiteRangeMinVal": 185,
-    "IsWhiteRangeMaxDiff": 10,
-    "IsWhiteRangeMinAlpha": 150,
-    "RightSideCropRatio": 3.6432637571,
-    "LeftSideCropRatio":  5.78313253
+    "splitToStrips": {
+      "deckNameRatio": 9.391304347,
+      "stripRatio": 27.0,
+      "bottomMenuRatio": 9.6428571428571
+    },
+    "isNotWhiteRange": {
+      "minVal": 185,
+      "maxDiff": 10,
+      "minAlpha": 150,
+    },
+    "isNotInYellowRange": {
+      "delta": 80
+    },
+    "CropWidth": {
+      "rightSideRatio": 3.6432637571,
+      "leftSideRatio": 5.78313253
+    },
+    "recognizeStripNumber": {
+      "numberToStripWidthRatio": 11.4705882352941
+    }
   }
 }

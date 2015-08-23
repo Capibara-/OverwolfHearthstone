@@ -17,12 +17,11 @@ namespace SampleOverwolfExtensionLibrary
 {
     public class EntryPoint : IDisposable
     {
+        // TODO: Move all member initialization to Init() + read delay from configuration file.
         private static readonly ILog logger = LogManager.GetLogger(typeof(EntryPoint));
-        private static bool m_isGameRunning = false;
         private BackgroundWorker m_Worker = null;
         private static int m_delay = 900;
         private static long m_lastOffset = 0;
-        private static int m_index = 0;
         private Dictionary<string, Card> m_AllCards = null;
         private static List<Card> m_MyDeck = new List<Card>();
         public const int DECK_SIZE = 30;

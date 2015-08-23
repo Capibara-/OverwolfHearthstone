@@ -113,6 +113,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if not exist %25LOCALAPPDATA%25\Overwolf\Ninja mkdir %25LOCALAPPDATA%25\Overwolf\Ninja
+if not exist %25LOCALAPPDATA%25\Overwolf\Ninja\Temp mkdir %25LOCALAPPDATA%25\Overwolf\Ninja\Temp
 if not exist %25LOCALAPPDATA%25\Overwolf\Ninja\tessdata mkdir %25LOCALAPPDATA%25\Overwolf\Ninja\tessdata
 copy /y $(ProjectDir)Config\NinjaConfig.json %25LOCALAPPDATA%25\Overwolf\Ninja
 copy /y $(ProjectDir)Config\log4net.config %25LOCALAPPDATA%25\Overwolf\Ninja

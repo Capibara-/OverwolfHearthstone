@@ -5,6 +5,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Text;
 using Tesseract;
@@ -19,9 +20,7 @@ namespace SampleOverwolfExtensionLibrary.OCR
         private List<string> m_cards = null;
         private TesseractEngine m_ocrEngine = null;
         private bool m_disposed = false;
-        private int m_minVal = 0;
-        private int m_maxDiff = 0;
-        private int m_minAlpha = 0;
+
         private static readonly ILog logger = LogManager.GetLogger(typeof(OCREngine));
 
         private OCREngine()
@@ -29,9 +28,6 @@ namespace SampleOverwolfExtensionLibrary.OCR
             m_ocrEngine = new TesseractEngine(Configuration.Instance.OCR.TesseractDataPath,
                 "eng", EngineMode.TesseractAndCube);
             m_jsonCardsFilePath = Configuration.Instance.JSONCardsFilePath;
-            m_minAlpha = Configuration.Instance.OCR.IsWhiteRangeMinAlpha;
-            m_maxDiff = Configuration.Instance.OCR.IsWhiteRangeMaxDiff;
-            m_minVal = Configuration.Instance.OCR.IsWhiteRangeMinVal;
             m_cards = new List<string>();
         }
 
@@ -102,14 +98,24 @@ namespace SampleOverwolfExtensionLibrary.OCR
             return retVal;
         }
 
-        public string PerformOCR(string imagePath)
+        public string PerformOCR(string imagePath, bool isSingleChar)
         {
             string retVal = string.Empty;
             using (var img = Pix.LoadFromFile(imagePath))
             {
-                using (var page = m_ocrEngine.Process(img))
+                if (isSingleChar)
                 {
-                    retVal = page.GetText();
+                    using (var page = m_ocrEngine.Process(img, Tesseract.PageSegMode.SingleChar))
+                    {
+                        retVal = page.GetText();
+                    }
+                }
+                else
+                {
+                    using (var page = m_ocrEngine.Process(img))
+                    {
+                        retVal = page.GetText();
+                    }
                 }
             }
             return retVal;
@@ -125,29 +131,77 @@ namespace SampleOverwolfExtensionLibrary.OCR
 
             string noiseFreeImage = Path.Combine(imagesFolder, "temp.png");
             List<string> names = ParseCardsFromJSON(m_jsonCardsFilePath, isPlayableCard);
-            string OCRedText = string.Empty;
+            string cardName = string.Empty;
+            string cardNumber = string.Empty;
+            bool isDouble = false;
+
             foreach (string fileName in Directory.GetFiles(imagesFolder))
             {
-                // Make image white text on black background:
-                cleanImage(fileName, noiseFreeImage);
-
-                // Use only specific characters:
-                m_ocrEngine.SetVariable("tessedit_char_whitelist", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\'\"");
-                OCRedText = PerformOCR(noiseFreeImage);
-                File.Delete(noiseFreeImage);
+                cardNumber = recognizeStripNumber(fileName);
                 // Calculate the card name with the minimum Damerau–Levenshtein distance:
-                int index = getMinDamLevIndex(OCRedText.Trim(new char[] { '\n', '\r' }), names);
-                retVal.Add(new OCRResults(fileName, OCRedText, names[index]));
+                cardName = recognizeStripName(fileName);
+                int index = getMinDamLevIndex(cardName.Trim(new char[] { '\n', '\r' }), names);
+                if (!string.IsNullOrEmpty(cardName))
+                {
+                    isDouble = (string.IsNullOrEmpty(cardNumber) ? false : true);
+                    retVal.Add(new OCRResults(fileName, cardName, names[index], isDouble));
+                }
             }
             return retVal;
         }
-        
-        // Changes every pixel such that if isNotInWhiteRange(pixel) == true the pixel is colored black and otherwise it is colored white.
-        private void cleanImage(string inPath, string outPath)
+
+        private string recognizeStripName(string fileName, string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\'\"")
         {
-            Bitmap bmp = (Bitmap)Image.FromFile(inPath);
-            Bitmap newBMP = changeColor(bmp, Color.Black, Color.White, isNotInWhiteRange);
-            newBMP.Save(outPath);
+            string noiseFreeImage = Path.Combine(Configuration.Instance.TempFolder, "temp.png");
+            // Make image white text on black background:
+            cleanImage(fileName, noiseFreeImage, isNotInWhiteRange);
+
+            // Use only specific characters:
+            m_ocrEngine.SetVariable("tessedit_char_whitelist", allowedChars);
+            string retVal = PerformOCR(noiseFreeImage, false);
+            File.Delete(noiseFreeImage);
+            return retVal;
+        }
+
+        private string recognizeStripNumber(string stripFileName, string allowedChars = "12")
+        {
+            // TODO: Extern to config
+            double numberToStripWidthRatio = Configuration.Instance.OCR.recognizeStripNumber.numberToStripWidthRatio;// 11.4705882352941;
+            string tempImage = Path.Combine(Configuration.Instance.TempFolder, "temp.png");
+
+            // Make image white text on black background:
+            Bitmap original = Image.FromFile(stripFileName) as Bitmap;
+            Bitmap noiseFreeBitmap = cleanImage(original, isNotInYellowRange);
+
+            // Crop image and leave only the number:
+            int newStartPointForStrip = original.Width - (int)Math.Round(original.Width / numberToStripWidthRatio);
+            Bitmap croppedImage = CropImage(noiseFreeBitmap, new Rectangle(newStartPointForStrip, 0, original.Width - newStartPointForStrip, original.Height));
+
+            // TODO: Extern to config.
+            int scaleFactor = 5;
+
+            // Scale image by scaleFactor:
+            int newWidth = (int)(croppedImage.Width * scaleFactor);
+            int newHeight = (int)(croppedImage.Height * scaleFactor);
+            using (var newImage = new Bitmap(newWidth, newHeight))
+            {
+                using (var graphics = Graphics.FromImage(newImage))
+                {
+                    graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                    graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    graphics.DrawImage(croppedImage, new Rectangle(0, 0, newWidth, newHeight));
+                    newImage.Save(tempImage);
+                }
+            }
+            
+            // Use only specific characters:
+            m_ocrEngine.SetVariable("tessedit_char_whitelist", allowedChars);
+            string retVal = PerformOCR(tempImage, true);
+
+            // Remove temp files:
+            File.Delete(tempImage);
+            return retVal;
         }
 
         // Returns the index in candidates of the string that has the minimum Damerau–Levenshtein distance to input.
@@ -287,8 +341,10 @@ namespace SampleOverwolfExtensionLibrary.OCR
 
         private bool isNotInWhiteRange(Color color)
         {
-            return !isInWhiteRange(color, m_minVal, m_maxDiff, m_minAlpha);
-        }
+            int minVal = Configuration.Instance.OCR.isNotWhiteRange.minVal;
+            int maxDiff = Configuration.Instance.OCR.isNotWhiteRange.maxDiff;
+            int minAlpha = Configuration.Instance.OCR.isNotWhiteRange.minAlpha;
+            return !isInWhiteRange(color, minVal, maxDiff, minAlpha);        }
 
         // Checks if color is white with specified variance (minVal, maxDiff, minAlpha).
         private bool isInWhiteRange(Color color, int minVal, int maxDiff, int minAlpha)
@@ -299,10 +355,98 @@ namespace SampleOverwolfExtensionLibrary.OCR
             return retVal;
         }
 
+        // Checks if color is yellow with given delta.W
+        private bool isInYellowRange(Color color, int delta)
+        {
+            bool retval = Math.Abs(color.R - Color.Yellow.R) < delta;
+            retval = retval && Math.Abs(color.G - Color.Yellow.G) < delta;
+            return retval && Math.Abs(color.B - Color.Yellow.B) < delta;
+        }
+
+        private bool isNotInYellowRange(Color color)
+        {
+            int delta = Configuration.Instance.OCR.isNotInYellowRange.delta;
+            return !isInYellowRange(color, delta);
+        }
+
         // A preidcate used in ParseCardsFromJSON to only select cards that are selectable for a deck.
         private bool isPlayableCard(Card c)
         {
             return c.ID != null && (c.Type == "Minion" || c.Type == "Spell");
+        }
+
+        public void CropWidth(string originalImage, string outputImage)
+        {
+            if (File.Exists(originalImage))
+            {
+                Bitmap src = Image.FromFile(originalImage) as Bitmap;
+                double rightSideRatio = Configuration.Instance.OCR.CropWidth.rightSideRatio;// 3.6432637571;
+                double leftSideRatio = Configuration.Instance.OCR.CropWidth.leftSideRatio;// 5.78313253;
+
+                double newStartWidth = Math.Round(src.Width / rightSideRatio);
+                double stripWidth = Math.Round(newStartWidth - src.Width / leftSideRatio);
+                int stripStartPos = src.Width - (int)newStartWidth;
+
+                CropImage(originalImage, outputImage, new Rectangle(stripStartPos, 0, (int)stripWidth, src.Height));
+            }
+        }
+
+        public void SplitToStrips(string widthCroppedImage, string outputFolder)
+        {
+            if (File.Exists(widthCroppedImage))
+            {
+                double deckNameRatio = Configuration.Instance.OCR.SplitToStrips.deckNameRatio;// 9.391304347;
+                double stripRatio = Configuration.Instance.OCR.SplitToStrips.stripRatio;// 27.0;
+                double bottomMenuRatio = Configuration.Instance.OCR.SplitToStrips.bottomMenuRatio;// 9.6428571428571;
+
+                Bitmap src = Image.FromFile(widthCroppedImage) as Bitmap;
+                int deckNamePixelSize = (int)Math.Round(src.Height / deckNameRatio);
+                int stripPixelSize = (int)Math.Round(src.Height / stripRatio);
+                int bottomMenuPixelSize = (int)Math.Round(src.Height / bottomMenuRatio);
+                int i = 0;
+
+                while (src.Height - deckNamePixelSize - (i + 1) * stripPixelSize > bottomMenuPixelSize)
+                {
+                    int newY = deckNamePixelSize + i * stripPixelSize;
+                    CropImage(widthCroppedImage, Path.Combine(outputFolder, "OutputStrip" + i + ".png"), new Rectangle(0, newY, src.Width, stripPixelSize));
+                    i++;
+                }
+            }
+        }
+
+        // Returns a black and white Bitmap where all pixels such that predicate(pixel) == true are black and rest are white.
+        private Bitmap cleanImage(Bitmap inputBitmap, Func<Color, bool> predicate)
+        {
+            Bitmap retVal = changeColor(inputBitmap, Color.Black, Color.White, predicate);
+            return retVal;
+        }
+
+        // Same as above only saves the clean image to outPath.
+        private void cleanImage(string inPath, string outPath, Func<Color, bool> predicate)
+        {
+            Bitmap srcBitmap = Image.FromFile(inPath) as Bitmap;
+            Bitmap retVal = cleanImage(srcBitmap, predicate);
+            retVal.Save(outPath);
+        }
+
+        public Bitmap CropImage(Bitmap originalImage, Rectangle cropRect)
+        {
+            Bitmap target = new Bitmap(cropRect.Width, cropRect.Height);
+
+            using (Graphics g = Graphics.FromImage(target))
+            {
+                g.DrawImage(originalImage, new Rectangle(0, 0, target.Width, target.Height),
+                                 cropRect,
+                                 GraphicsUnit.Pixel);
+            }
+            return target;
+        }
+
+        public void CropImage(string originalImage, string outputImage, Rectangle cropRect)
+        {
+            Bitmap src = Image.FromFile(originalImage) as Bitmap;
+            Bitmap retVal = CropImage(src, cropRect);
+            retVal.Save(outputImage);
         }
     }
 }

@@ -9,12 +9,14 @@ namespace SampleOverwolfExtensionLibrary.OCR
         private string m_filename;
         private string m_ocrOutput;
         private string m_result;
+        private bool m_isDouble;
 
-        public OCRResults(string filename, string ocrOutput, string result)
+        public OCRResults(string filename, string ocrOutput, string result, bool isDouble)
         {
             m_filename = filename;
             m_ocrOutput = ocrOutput;
             m_result = result;
+            m_isDouble = isDouble;
         }
 
         public string Filename
@@ -33,6 +35,18 @@ namespace SampleOverwolfExtensionLibrary.OCR
         {
             get { return m_result; }
             set { m_result = value; }
+        }
+
+        public bool IsDouble
+        {
+            get
+            {
+                return m_isDouble;
+            }
+            set
+            {
+                m_isDouble = value;
+            }
         }
 
         public bool Equals(OCRResults other)
