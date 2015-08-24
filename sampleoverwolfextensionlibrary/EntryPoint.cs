@@ -19,6 +19,7 @@ namespace SampleOverwolfExtensionLibrary
     {
         // TODO: Move all member initialization to Init() + read delay from configuration file.
         private static readonly ILog logger = LogManager.GetLogger(typeof(EntryPoint));
+        private static bool m_isGameRunning = false;
         private BackgroundWorker m_Worker = null;
         private static int m_delay = 900;
         private static long m_lastOffset = 0;
