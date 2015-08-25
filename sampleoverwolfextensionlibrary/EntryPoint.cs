@@ -56,6 +56,7 @@ namespace SampleOverwolfExtensionLibrary
             {
                 m_Worker = new BackgroundWorker();
                 m_Worker.DoWork += new DoWorkEventHandler(pollLogFile);
+                m_Worker.WorkerSupportsCancellation = true;
             }            
         }
 
@@ -276,7 +277,7 @@ namespace SampleOverwolfExtensionLibrary
             }
         }
 
-        public void GameOn(Action<object> callback)
+        public void StartWorkerThread(Action<object> callback)
         {
             m_isGameRunning = true;
             logger.Debug("Set isGameRunning to true.");
@@ -290,7 +291,7 @@ namespace SampleOverwolfExtensionLibrary
             
         }
 
-        public void GameOff(Action<object> callback)
+        public void StopWorkerThread(Action<object> callback)
         {
             m_isGameRunning = false;
             logger.Debug("Set isGameRunning to false.");
