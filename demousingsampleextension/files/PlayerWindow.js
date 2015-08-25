@@ -1,17 +1,17 @@
 ﻿
-// Inint Bootstrap tooltips:
+// Init Bootstrap tooltips:
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
 function addImageToBar(path) {
-    addImageToBarWithTooltip(path, "No info.", "cardThumbnail");
+    addImageToBarWithTooltip("playerSide", path, "No info.", "cardThumbnail");
 };
 
-function addImageToBarWithTooltip(path, tooltipTitle, id) {
+function addImageToBarWithTooltip(elementName, path, tooltipTitle, id) {
     console.log(tooltipTitle);
     // TODO: Validate input.
-    $('#content').prepend('<div class="thumbnail" data-toggle="tooltip" data-placement="bottom" title=\"' + tooltipTitle + '\" id=\"' + id + '\"> <img src=\"' + path + '\" class="img-responsive"></div>');
+    $('#' + elementName).prepend('<div class="thumbnail" data-toggle="tooltip" data-placement="bottom" title=\"' + tooltipTitle + '\" id=\"' + id + '\"> <img src=\"' + path + '\" class="img-responsive"></div>');
     $('[data-toggle="tooltip"]').tooltip();
 };
 
@@ -43,17 +43,14 @@ function closeWindow() {
 function takeScreenshot() {
     overwolf.media.takeScreenshot(function (result) {
         if (result.status == "success") {
-            var img = document.getElementById("screenshot");
-            img.src = result.url;
-            img.onload = function () {
-                overwolf.media.shareImage(img, "Screen Shot");
-            };
+            var imagePath = result.url;
+            console.log(result.url);
+            addImageToBar(result.url);
         }
     });
 };
 
 var sampleLibraryObj = null;
-var running = false;
 
 function initLibrary() {
     if (typeof (overwolf) != "undefined") {
@@ -71,6 +68,7 @@ function initLibrary() {
                     // Init C# module:
                     sampleLibraryObj.CardHandEvent.addListener(cardHandEventFired);
                     sampleLibraryObj.CardPlayedEvent.addListener(cardPlayedEventFired);
+                    sampleLibraryObj.OpponentCardPlayedEvent.addListener(onOpponentCardPlay)
                     sampleLibraryObj.Init(genericCallback);
                     if (isGameRunning) {
                         sampleLibraryObj.GameOn(genericCallback);
@@ -83,6 +81,14 @@ function initLibrary() {
         });
     }
 };
+
+function onOpponentCardPlay(result) {
+    var card = JSON.parse(result.CardJSON);
+    console.log("Opponent moved " + card.Name + " from hand to table.");
+    var path = "Images_renamed/" + card.ID + ".png";
+    addImageToBarWithTooltip("opponentSide", path, card.Name, card.ID);
+    $('#' + card.ID).css('opacity', '0.5');
+}
 
 function genericCallback(result) {
     console.log("genericCallback: " + result);
@@ -104,7 +110,7 @@ function cardHandEventFired(result) {
     var Card = JSON.parse(result.CardJSON);
     console.log("Player received " + Card.Name + " from deck.");
     var path = "Images_renamed/" + Card.ID + ".png";
-    addImageToBarWithTooltip(path, Card.Name, Card.ID);
+    addImageToBarWithTooltip("playerSide", path, Card.Name, Card.ID);
 };
 
 function onGameInfoUpdate(gameInfoChangeDataObject) {
@@ -129,8 +135,8 @@ function initSize() {
     overwolf.games.onGameLaunched.addListener(
         function (gameInfoObject) {
             alert("width: " + gameInfoObject.width + " height: " + gameInfoObject.height);
-            $('#content').width(gameInfoObject.width);
-            $('#content').height(gameInfoObject.height);
+            $('#container').width(gameInfoObject.width);
+            $('#container').height(gameInfoObject.height);
             overwolf.windows.changeSize("PlayerWindow", gameInfoObject.width, gameInfoObject.height, function () { console.log('Window size changed.') });
         });
 };
@@ -156,6 +162,8 @@ function resizeWindow() {
         if (result.status == "success")
         {
             overwolf.windows.changeSize(result.window.id, width, height, genericCallback);
+            $('#container').height(height);
+            $('#container').width(width);
         }
     });
 }

@@ -5,12 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="style.css" />
+    
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <title>Ninja App</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css" />
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script>
@@ -24,13 +25,13 @@
 </head>
 
 <body>
-
-
-    <div class="container-fluid" onmousedown="dragMove();">
-        <div class="row">
-            <div class="col-md-1" id="content">
-                <button id="close" onclick="closeWindow();">Close</button>
-                <button id="refresh" onclick="reloadPage()">Resfresh</button>
+    <div class="container-fluid" onmousedown="dragMove();" id="container">
+        <div class="row" id="row">
+            <div class="col-md-1" id="playerSide">
+                <button id="closeBtn" onclick="closeWindow();">Close</button>
+                <button id="refreshBtn" onclick="reloadPage()">Resfresh</button>
+                <button id="testBtn" onclick="openWindow('TestWindow')">test</button>
+                <button id="screenshotBtn" onclick="takeScreenshot()">Screenshot</button>
                 <a href="#" data-toggle="modal" data-target="#ChangeResolutionModal">Change Resolution</a>
 
                 <!--Code for popups:-->
@@ -77,8 +78,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">.col-md-10</div>
-            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-10" id="middle"></div>
+            <div class="col-md-1" id="opponentSide"></div>
         </div>
     </div>
 </body>
