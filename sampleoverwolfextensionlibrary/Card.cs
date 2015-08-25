@@ -21,5 +21,6 @@ namespace SampleOverwolfExtensionLibrary
         public string Artist { get; set; }
         public bool Collectible { get; set; }
         public bool Elite { get; set; }
+        public bool IsDouble { get; set; }
     }
 }

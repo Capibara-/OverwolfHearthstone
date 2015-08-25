@@ -13,178 +13,73 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" />
+
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script>
-        $('[data-toggle="tooltip"]').tooltip();
-        console.log("Initializing tooltips.");
-    </script>
+
+    <!--Load Overwolf scripts:-->
+    <script language="javascript" src="PlayerWindow.js"></script>
 </head>
 
 <body>
 
-    <div id="content" onmousedown="dragMove();">
-        <button id="close" onclick="closeWindow();">Close</button>
-        <button id="Opponent" onclick="openOpponentWindow()">Opponent</button>
+
+    <div class="container-fluid" onmousedown="dragMove();">
+        <div class="row">
+            <div class="col-md-1" id="content">
+                <button id="close" onclick="closeWindow();">Close</button>
+                <button id="refresh" onclick="reloadPage()">Resfresh</button>
+                <a href="#" data-toggle="modal" data-target="#ChangeResolutionModal">Change Resolution</a>
+
+                <!--Code for popups:-->
+                <div class="modal fade" id="ChangeResolutionModal" tabindex="-1"
+                     role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">
+                                        &times;
+                                    </span><span class="sr-only">
+                                        Close
+                                    </span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    Change Resolution
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group">
+                                    <span class="input-group-addon">@</span>
+                                    <input type="text" class="form-control" placeholder="Width" id="widthText" />
+                                </div>
+                                <p>
+                                </p>
+                                <div class="input-group">
+                                    <span class="input-group-addon">@</span>
+                                    <input type="text" class="form-control" placeholder="Height" id="heightText"/>
+                                </div>
+                                <p>
+                                </p>
+                                <button type="button" class="btn-primary" onclick="resizeWindow()">
+                                    Change
+                                </button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button"
+                                        class="btn btn-default" data-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">.col-md-10</div>
+            <div class="col-md-1">.col-md-1</div>
+        </div>
     </div>
-
-
-    <script language="javascript">
-
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-
-        $('#sidebar').affix({
-            offset: {
-                top: $('header').height()
-            }
-        });
-        function addImageToBar(path) {
-            addImageToBarWithTooltip(path, "No info.", "cardThumbnail");
-        };
-
-        function addImageToBarWithTooltip(path, tooltipTitle, id) {
-            console.log(tooltipTitle);
-            $('#content').prepend('<div class="thumbnail" data-toggle="tooltip" data-placement="bottom" title=\"' + tooltipTitle + '\" id=\"' + id + '\"> <img src=\"' + path + '\" class="img-responsive"></div>');
-            $('[data-toggle="tooltip"]').tooltip();
-        };
-
-
-        function dragResize(edge) {
-            overwolf.windows.getCurrentWindow(function (result) {
-                if (result.status == "success") {
-                    overwolf.windows.dragResize(result.window.id, edge);
-                }
-            });
-        };
-
-        function dragMove() {
-            overwolf.windows.getCurrentWindow(function (result) {
-                if (result.status == "success") {
-                    overwolf.windows.dragMove(result.window.id);
-                }
-            });
-        };
-
-        function closeWindow() {
-            overwolf.windows.getCurrentWindow(function (result) {
-                if (result.status == "success") {
-                    overwolf.windows.close(result.window.id);
-                }
-            });
-        };
-
-        function takeScreenshot() {
-            overwolf.media.takeScreenshot(function (result) {
-                if (result.status == "success") {
-                    var img = document.getElementById("screenshot");
-                    img.src = result.url;
-                    img.onload = function () {
-                        overwolf.media.shareImage(img, "Screen Shot");
-                    };
-                }
-            });
-        };
-
-        var sampleLibraryObj = null;
-        var running = false;
-
-        function initLibrary() {
-            if (typeof (overwolf) != "undefined") {
-                overwolf.games.getRunningGameInfo(function (gameInfoOBject) {
-                    console.log(gameInfoOBject);
-                    var isGameRunning = false;
-                    if (gameInfoOBject != null) {
-                        console.log("Game is running!");
-                        isGameRunning = true;
-                    }
-                    overwolf.extensions.current.getExtraObject("NinjaLibrary", function (result) {
-                        console.log("startup " + result.status);
-                        if (result.status == "success") {
-                            sampleLibraryObj = result.object;
-                            // Init C# module:
-                            sampleLibraryObj.CardHandEvent.addListener(cardHandEventFired);
-                            sampleLibraryObj.CardPlayedEvent.addListener(cardPlayedEventFired);
-                            sampleLibraryObj.Init(genericCallback);
-                            if (isGameRunning) {
-                                sampleLibraryObj.GameOn(genericCallback);
-                            }
-                            else {
-                                sampleLibraryObj.GameOff(genericCallback);
-                            }
-                        }
-                    });
-                });
-            }
-        };
-
-        function genericCallback(result) {
-            console.log("genericCallback: " + result);
-        };
-
-        function cardPlayedEventFired(result) {
-            var Card = JSON.parse(result.CardJSON);
-            console.log("Player moved " + Card.Name + " from hand to table.");
-            if ($('#' + Card.ID).length == 0) {
-                //card does not exist insert it to table and then change border
-                cardHandEventFired(result);
-            }
-            $('#' + Card.ID).css('opacity', '0.5');
-        };
-
-
-
-        function cardHandEventFired(result) {
-            var Card = JSON.parse(result.CardJSON);
-            console.log("Player received " + Card.Name + " from deck.");
-            var path = "Images_renamed/" + Card.ID + ".png";
-            addImageToBarWithTooltip(path, Card.Name, Card.ID);
-        };
-
-        function onGameInfoUpdate(gameInfoChangeDataObject) {
-            if (gameInfoChangeDataObject.gameChanged) {
-                console.log("onGameInfoUpdate: Game changed.");
-                return;
-            }
-
-            if (gameInfoChangeDataObject.resolutionChanged) {
-                console.log("onGameInfoUpdate: Resolution changed.");
-                return;
-            }
-        };
-
-        function sampleEventFired(result) {
-            console.log(result);
-        };
-
-        window.onload = function (e) {
-            initLibrary();
-            overwolf.games.onGameInfoUpdated.addListener(onGameInfoUpdate);
-            //initSize();
-        };
-
-        function initSize() {
-            overwolf.games.onGameLaunched.addListener(
-                function (gameInfoObject) {
-                    alert("width: " + gameInfoObject.width + " height: " + gameInfoObject.height);
-                    $('#content').width(gameInfoObject.width);
-                    $('#content').height(gameInfoObject.height);
-                    overwolf.windows.changeSize("PlayerWindow", gameInfoObject.width, gameInfoObject.height, function () { console.log('Window size changed.') });
-                }
-                );
-        };
-
-        function openOpponentWindow() {
-            overwolf.windows.obtainDeclaredWindow("OpponentWindow", function (result) {
-                if (result.status == "success") {
-                    overwolf.windows.restore(result.window.id, function (result) {
-                        console.log(result);
-                    });
-                }
-            });
-        };
-
-    </script>
 </body>
 </html>

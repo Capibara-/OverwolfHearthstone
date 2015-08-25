@@ -10,8 +10,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SampleOverwolfExtensionLibrary.Events;
 using log4net;
-using log4net.Config;
-using System.Diagnostics;
 
 namespace SampleOverwolfExtensionLibrary
 {

@@ -3,8 +3,11 @@
     position: relative;
     min-width: 24px;
     min-height: 768px;
-	background: white;
-    background-color: rgba(0,0,0,0.05);
+    /*background: transparent;*/
+}
+
+body {
+        /*background: transparent;*/
 }
 
 div.img {
@@ -13,7 +16,7 @@ div.img {
     border: 1px solid #0000ff;
     height: auto;
     width: auto;
-    float: down;
+    float: none;
     text-align: center;
 }	
 
@@ -38,7 +41,20 @@ div.desc {
 
 
 
-#content {
+#left {
 	position: relative;
-    background-color: rgba(0,0,0,0.05);
+    /*background: transparent;*/
+    height: 1080px;
+}
+
+#box { 
+    width: 200px; 
+    height: 200px; 
+    background-color: blue; 
+
+}
+
+#slider { 
+    width: 200px; 
+
 }

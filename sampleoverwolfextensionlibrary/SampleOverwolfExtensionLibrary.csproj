@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Card.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Deck.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="OCREngine.cs" />

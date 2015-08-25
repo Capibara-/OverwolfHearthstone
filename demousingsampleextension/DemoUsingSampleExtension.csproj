@@ -1613,7 +1613,7 @@
     <Content Include="Files\Images_renamed\TU4f_001.png" />
     <Content Include="Files\Images_renamed\XXX_040.png" />
     <Content Include="Files\index.html" />
-    <Content Include="Files\opponent.html" />
+    <Content Include="Files\PlayerWindow.js" />
     <Content Include="Files\style.css" />
     <Content Include="Files\XML\enGB.xml" />
     <Content Include="IconMouseNormal.png" />
