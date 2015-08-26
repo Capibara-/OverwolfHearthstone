@@ -15,16 +15,21 @@ namespace SampleOverwolfExtensionLibrary
 {
     public class EntryPoint : IDisposable
     {
-        // TODO: Move all member initialization to Init() + read delay from configuration file.
+        // TODO: Add try/catch blocks to catch all possible unhandled exceptions and send a message to the JS code (instead of killing the OverwolfBrowser proccess).
         private static readonly ILog logger = LogManager.GetLogger(typeof(EntryPoint));
-        private static bool m_isGameRunning = false;
-        private BackgroundWorker m_Worker = null;
-        private static int m_delay = 900;
-        private static long m_lastOffset = 0;
+
+        private List<Card> m_MyDeck = null;
+        private bool m_isGameRunning = false;
+        private long m_lastOffset = 0;
+        private int m_delay = 900;
         private Dictionary<string, Card> m_AllCards = null;
-        private static List<Card> m_MyDeck = new List<Card>();
-        public const int DECK_SIZE = 30;
-        private Regex cardMovementRegex = new Regex(@"\w*(name=(?<name>(.+?(?=id)))).*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+        private BackgroundWorker m_Worker = null;
+        private Regex m_cardMovementRegex = null;
+
+        public event Action<object> CardPlayedEvent;
+        public event Action<object> OpponentCardPlayedEvent;
+        public event Action<object> CardHandEvent;
+
 
         public EntryPoint(int nativeWindowHandle)
         {
@@ -41,6 +46,9 @@ namespace SampleOverwolfExtensionLibrary
 
         public void Init(Action<object> callback)
         {
+            m_cardMovementRegex = new Regex(@"\w*(name=(?<name>(.+?(?=id)))).*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+            m_MyDeck = new List<Card>();
+
             // Load log4net configuration file.
             log4net.Config.XmlConfigurator.Configure(new FileInfo(Configuration.Instance.AppLogConfigFilePath));
             string jsonPath = Configuration.Instance.JSONCardsFilePath;
@@ -87,10 +95,10 @@ namespace SampleOverwolfExtensionLibrary
 
                             foreach (string newLine in lines)
                             {
-                                if (cardMovementRegex.IsMatch(newLine))
+                                if (m_cardMovementRegex.IsMatch(newLine))
                                 {
                                     //TODO add if (card is from -to our direction
-                                    Match match = cardMovementRegex.Match(newLine);
+                                    Match match = m_cardMovementRegex.Match(newLine);
                                     string l_id = match.Groups["Id"].Value.Trim();
                                     string l_name = match.Groups["name"].Value.Trim();
                                     string l_from = match.Groups["from"].Value.Trim();
@@ -245,7 +253,6 @@ namespace SampleOverwolfExtensionLibrary
             callback(JsonConvert.SerializeObject(m_MyDeck[0]));
         }
 
-        public event Action<object> CardPlayedEvent;
         private void fireCardPlayedEvent(string msg)
         {
 
@@ -256,7 +263,6 @@ namespace SampleOverwolfExtensionLibrary
             }
         }
 
-        public event Action<object> CardHandEvent;
         private void fireCardHandEvent(string msg)
         {
 
@@ -267,7 +273,6 @@ namespace SampleOverwolfExtensionLibrary
             }
         }
 
-        public event Action<object> OpponentCardPlayedEvent;
         private void fireOpponentCardPlayedEvent(string msg)
         {
             if (OpponentCardPlayedEvent != null)

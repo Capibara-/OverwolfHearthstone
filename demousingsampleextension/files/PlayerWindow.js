@@ -7,7 +7,6 @@ $(document).ready(function () {
 window.onload = function (e) {
     initLibrary();
     overwolf.games.onGameInfoUpdated.addListener(onGameInfoUpdate);
-    //initSize();
 };
 
 var sampleLibraryObj = null;
@@ -84,12 +83,6 @@ function updateRunningState() {
 function initLibrary() {
     if (typeof (overwolf) != "undefined") {
         overwolf.games.getRunningGameInfo(function (gameInfoOBject) {
-            //console.log(gameInfoOBject);
-            //var isGameRunning = false;
-            //if (gameInfoOBject != null) {
-            //    console.log("Game is running!");
-            //    isGameRunning = true;
-            //}
             overwolf.extensions.current.getExtraObject("NinjaLibrary", function (result) {
                 console.log("startup " + result.status);
                 if (result.status == "success") {
@@ -101,27 +94,10 @@ function initLibrary() {
                     sampleLibraryObj.OpponentCardPlayedEvent.addListener(onOpponentCardPlay)
                     sampleLibraryObj.Init(genericCallback);
                     updateRunningState();
-                    // Start worker thread if game is running:
-                    //if (isGameRunning) {
-                    //    sampleLibraryObj.StartWorkerThread(genericCallback);
-                    //}
-                    //else {
-                    //    sampleLibraryObj.StopWorkerThread(genericCallback);
-                    //}
                 }
             });
         });
     }
-};
-
-function initSize() {
-    overwolf.games.onGameLaunched.addListener(
-        function (gameInfoObject) {
-            alert("width: " + gameInfoObject.width + " height: " + gameInfoObject.height);
-            $('#container').width(gameInfoObject.width);
-            $('#container').height(gameInfoObject.height);
-            overwolf.windows.changeSize("PlayerWindow", gameInfoObject.width, gameInfoObject.height, function () { console.log('Window size changed.') });
-        });
 };
 
 function openWindow(windowName) {
@@ -139,8 +115,8 @@ function resizeWindow(width, height) {
         if (result.status == "success")
         {
             overwolf.windows.changeSize(result.window.id, width, height, genericCallback);
-            $('#container').height(height);
-            $('#container').width(width);
+            $('#body').height(height);
+            $('#body').width(width);
         }
     });
 }
@@ -181,13 +157,24 @@ function onOpponentCardPlay(result) {
     $('#' + card.ID).css('opacity', '0.5');
 }
 
+function changeOpponentDeckVisibility() {
+    if ($('#opponentDeckBtn').hasClass('active')) {
+        $('#opponentSide').css('background', 'white');
+        $('#opponentDeckBtn').removeClass('active');
+    }
+    else {
+        $('#opponentSide').css('background', 'transparent');
+        $('#opponentDeckBtn').addClass('active');
+    }
+}
+
 
 // Overwolf API event handlers:
 
 function onGameInfoUpdate(gameInfoChangeDataObject) {
     // TODO: Make sure the game is Hearthstone using the game id:
     console.log("onGameInfoUpdated fired.");
-    if (gameInfoChangeDataObject != null && gameInfoChangeDataObject.gameInfo != null) {
+    if (gameInfoChangeDataObject != null && gameInfoChangeDataObject.gameInfo != null && gameInfoChangeDataObject.gameInfo.id == 98981) {
         console.log('not null');
         var gameInfoOBject = gameInfoChangeDataObject.gameInfo;
 

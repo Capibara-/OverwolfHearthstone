@@ -40,25 +40,15 @@ div.desc {
     background-color: rgba(0,0,0,0.05);
 }
 
-#box { 
-    width: 200px; 
-    height: 200px; 
-    background-color: blue; 
-
-}
-
-#slider { 
-    width: 200px; 
-}
-
-#left {
-    background: white;
-}
-
 #playerSide {
     background: white;
+    height: 97%;
+}
+
+#middle {
 }
 
 #opponentSide {
     background: white;
+    height: 97%;
 }
