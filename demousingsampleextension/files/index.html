@@ -28,11 +28,12 @@
     <div class="container-fluid">
         <div class="row" id="row" onmousedown="dragMove();">
             <div class="col-md-1" id="playerSide">
-                <button id="opponentDeckBtn" type="button" class="btn btn-warning btn-xs center-block" onclick="changeOpponentDeckVisibility()">Hide Opponent Deck</button>
-                <button id="refreshBtn" type="button" class="btn btn-primary btn-xs center-block" onclick="reloadPage()">Resfresh</button>
-                <button id="screenshotBtn" type="button" class="btn btn-primary btn-xs center-block" onclick="takeScreenshot()">Screenshot</button>
-                <button id="closeBtn" type="button" class="btn btn-danger btn-xs center-block" onclick="closeWindow();">Close</button>
-                <a href="#" data-toggle="modal" data-target="#ChangeResolutionModal">Change Resolution</a>
+                <br />
+                <button id="opponentDeckBtn" type="button" class="btn btn-warning btn-xs center-block btn-block" onclick="changeOpponentDeckVisibility()">Hide Opponent Deck</button>
+                <button id="refreshBtn" type="button" class="btn btn-primary btn-xs center-block btn-block" onclick="reloadPage()">Resfresh</button>
+                <button id="screenshotBtn" type="button" class="btn btn-primary btn-xs center-block btn-block" onclick="takeScreenshot()">Screenshot</button>
+                <button id="resolutionBtn" data-toggle="modal" type="button" class="btn btn-info btn-xs center-block btn-block" data-target="#ChangeResolutionModal">Change Resolution</button>
+                <button id="closeBtn" type="button" class="btn btn-danger btn-xs center-block btn-block" onclick="closeWindow();">Close</button>
 
                 <!--Code for popups:-->
                 <div class="modal fade" id="ChangeResolutionModal" tabindex="-1"

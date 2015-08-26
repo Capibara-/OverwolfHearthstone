@@ -174,20 +174,25 @@ function changeOpponentDeckVisibility() {
 function onGameInfoUpdate(gameInfoChangeDataObject) {
     // TODO: Make sure the game is Hearthstone using the game id:
     console.log("onGameInfoUpdated fired.");
-    if (gameInfoChangeDataObject != null && gameInfoChangeDataObject.gameInfo != null && gameInfoChangeDataObject.gameInfo.id == 98981) {
-        console.log('not null');
+    if (gameInfoChangeDataObject != null && gameInfoChangeDataObject.gameInfo != null &&
+        (gameInfoChangeDataObject.gameInfo.id == 98981 || gameInfoChangeDataObject.gameInfo.id == 98982)) {
         var gameInfoOBject = gameInfoChangeDataObject.gameInfo;
 
         if (gameInfoChangeDataObject.runningChanged || gameInfoChangeDataObject.gameChanged) {
             console.log("onGameInfoUpdate: Game state changed.");
             if (gameInfoOBject.isRunning) {
                 // Game turned on:
+                console.log('Game turned ON.');
                 sampleLibraryObj.StartWorkerThread(genericCallback);
                 resizeWindow(gameInfoOBject.width, gameInfoOBject.height);
             }
             else {
                 // Game turned off:
+                console.log('Game turned OFF.');
                 sampleLibraryObj.StopWorkerThread(genericCallback);
+                // Remove all cards from trackers:
+                $('#playerSide>div').remove('.thumbnail');
+                $('#opponentSide>div').remove('.thumbnail');
             }
         }
         if (gameInfoChangeDataObject.resolutionChanged) {
