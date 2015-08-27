@@ -1,7 +1,8 @@
 ﻿
-// Init Bootstrap tooltips:
+// Init Bootstrap tooltips and popovers:
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
+    //$('[data-toggle="popover"]').popover();
 });
 
 window.onload = function (e) {
@@ -10,6 +11,10 @@ window.onload = function (e) {
 };
 
 var sampleLibraryObj = null;
+
+function plugin() {
+    return document.querySelector('#plugin');
+}
 
 function reloadPage() {
     location = location;
@@ -24,11 +29,47 @@ function addImageToBar(path) {
 };
 
 function addImageToBarWithTooltip(elementName, path, tooltipTitle, id) {
-    console.log(tooltipTitle);
-    // TODO: Validate input.
-    $('#' + elementName).prepend('<div class="thumbnail" data-toggle="tooltip" data-placement="bottom" title=\"' + tooltipTitle + '\" id=\"' + id + '\"> <img src=\"' + path + '\" class="img-responsive"></div>');
+    var $newdiv = $('<div class="thumbnail" data-toggle="tooltip" data-placement="bottom"/>');
+    $newdiv.attr('title', tooltipTitle);
+    $newdiv.attr('id', id);
+
+    var $newimg = $('<img class="img-responsive"/>');
+    $newimg.attr('src', path);
+
+    // Append img to div:
+    $newdiv.append($newimg);
+    // Append div to element:
+    $('#' + elementName).prepend($newdiv);
+    // Enable tooltip:
     $('[data-toggle="tooltip"]').tooltip();
 };
+
+function addImageToBarWithPopover(elementName, path, tooltipTitle, popoverContent, id) {
+    // Create new div WITH tooltip:
+    //var $newdiv = $('<div class="thumbnail" data-toggle="tooltip" data-placement="bottom"/>');
+
+    // Create new div WITHOUT tooltip:
+    var $newdiv = $('<div class="thumbnail"/>');
+    $newdiv.attr('title', tooltipTitle);
+    $newdiv.attr('id', id);
+
+    // Create new img add a popover to it:
+    var $newimg = $('<img class="img-responsive"/>');
+    $newimg.attr('src', path);
+
+    // Add popover:
+    $newimg.popover({ title: tooltipTitle, content: popoverContent, html: true, placement: "right", trigger: "hover" });
+
+    // Append img to div:
+    $newdiv.append($newimg);
+    // Append div to element:
+    $('#' + elementName).prepend($newdiv);
+    // Enable tooltip/popover:
+    //$('[data-toggle="tooltip"]').tooltip();
+    $('.popover').popover({
+        container: 'body'
+    });
+}
 
 
 function dragResize(edge) {
@@ -65,16 +106,16 @@ function takeScreenshot() {
     });
 };
 
-function updateRunningState() {
+function initRunningState() {
     // Start worker thread and change resolution if game is running:
     overwolf.games.getRunningGameInfo(function (gameInfoOBject) {
         if (gameInfoOBject != null) {
-            console.log("Game is running!");
+            console.log("Game is running.");
             sampleLibraryObj.StartWorkerThread(genericCallback);
             resizeWindow(gameInfoOBject.width, gameInfoOBject.height);
         }
         else {
-            console.log("Game is NOT running!");
+            console.log("Game is NOT running.");
             sampleLibraryObj.StopWorkerThread(genericCallback);
         }
     });
@@ -89,11 +130,12 @@ function initLibrary() {
                     sampleLibraryObj = result.object;
 
                     // Init C# module and register event handlers:
-                    sampleLibraryObj.CardHandEvent.addListener(cardHandEventFired);
-                    sampleLibraryObj.CardPlayedEvent.addListener(cardPlayedEventFired);
-                    sampleLibraryObj.OpponentCardPlayedEvent.addListener(onOpponentCardPlay)
+                    sampleLibraryObj.CardReceivedEvent.addListener(onCardReceived);
+                    sampleLibraryObj.CardPlayedEvent.addListener(onCardPlayed);
+                    sampleLibraryObj.OpponentCardPlayedEvent.addListener(onOpponentCardPlayed)
                     sampleLibraryObj.Init(genericCallback);
-                    updateRunningState();
+                    // Start worker thread incase the game is already running:
+                    initRunningState();
                 }
             });
         });
@@ -130,30 +172,28 @@ function resizeWindowFromMenu() {
 
 // C# interop event handlers:
 
-function cardPlayedEventFired(result) {
+function onCardPlayed(result) {
     var Card = JSON.parse(result.CardJSON);
     console.log("Player moved " + Card.Name + " from hand to table.");
     if ($('#' + Card.ID).length == 0) {
         //card does not exist insert it to table and then change border
-        cardHandEventFired(result);
+        onCardReceived(result);
     }
     $('#' + Card.ID).css('opacity', '0.5');
 };
 
-
-
-function cardHandEventFired(result) {
-    var Card = JSON.parse(result.CardJSON);
-    console.log("Player received " + Card.Name + " from deck.");
-    var path = "Images_renamed/" + Card.ID + ".png";
-    addImageToBarWithTooltip("playerSide", path, Card.Name, Card.ID);
+function onCardReceived(result) {
+    var card = JSON.parse(result.CardJSON);
+    console.log("Player received " + card.Name + " from deck.");
+    var path = "Images_renamed/" + card.ID + ".png";
+    addImageToBarWithPopover("playerSide", path, card.Name, card.Text, card.ID);
 };
 
-function onOpponentCardPlay(result) {
+function onOpponentCardPlayed(result) {
     var card = JSON.parse(result.CardJSON);
     console.log("Opponent moved " + card.Name + " from hand to table.");
     var path = "Images_renamed/" + card.ID + ".png";
-    addImageToBarWithTooltip("opponentSide", path, card.Name, card.ID);
+    addImageToBarWithPopover("opponentSide", path, card.Name, card.Text, card.ID);
     $('#' + card.ID).css('opacity', '0.5');
 }
 

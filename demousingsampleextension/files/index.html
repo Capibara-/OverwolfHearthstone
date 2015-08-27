@@ -25,6 +25,11 @@
 </head>
 
 <body>
+
+    <!--Load and init IO plugin:-->
+    <embed id="plugin" type="application/x-io-plugin" width=0 height=0/>
+    <script type="text/javascript">navigator.plugins.refresh(true);</script>
+    
     <div class="container-fluid">
         <div class="row" id="row" onmousedown="dragMove();">
             <div class="col-md-1" id="playerSide">

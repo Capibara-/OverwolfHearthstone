@@ -79,6 +79,11 @@ namespace SampleOverwolfExtensionLibrary
             public RecognizeStripNumber recognizeStripNumber { get; set; }
         }
 
+        public class JS
+        {
+            public string ScreenShotFolder { get; set; }
+        }
+
         public class RootObject
         {
             public string GameLogFilePath { get; set; }
@@ -87,6 +92,7 @@ namespace SampleOverwolfExtensionLibrary
             public string AppLogFilePath { get; set; }
             public string TempFolder { get; set; }
             public OCR OCR { get; set; }
+            public JS JS { get; set; }
         }
     }
 }

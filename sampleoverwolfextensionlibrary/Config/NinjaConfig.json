@@ -6,7 +6,7 @@
   "TempFolder": "%LOCALAPPDATA%\\Overwolf\\Ninja\\Temp",
   "OCR": {
     "TesseractDataPath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\tessdata",
-    "splitToStrips": {
+    "SplitToStrips": {
       "deckNameRatio": 9.391304347,
       "stripRatio": 27.0,
       "bottomMenuRatio": 9.6428571428571
@@ -14,7 +14,7 @@
     "isNotWhiteRange": {
       "minVal": 185,
       "maxDiff": 10,
-      "minAlpha": 150,
+      "minAlpha": 150
     },
     "isNotInYellowRange": {
       "delta": 80
@@ -26,5 +26,8 @@
     "recognizeStripNumber": {
       "numberToStripWidthRatio": 11.4705882352941
     }
+  },
+  "JS": {
+    "ScreenShotFolder":  ""
   }
 }

@@ -19,6 +19,7 @@
         "file": "Files/index.html",
         "transparent": true,
         "resizable": true,
+        "show_in_taskbar": true,
         "size": {
           "width": 250,
           "height": 1080
@@ -42,6 +43,9 @@
         "file": "Files/lib/SampleOverwolfExtensionLibrary.dll",
         "class": "SampleOverwolfExtensionLibrary.EntryPoint"
       }
-    }
+    },
+    "plugins": [
+      "Files/lib/npIOPlugin.dll"
+    ]
   }
 }

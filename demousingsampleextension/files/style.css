@@ -41,6 +41,15 @@ div.desc {
     background-color: rgba(0,0,0,0.05);
 }
 
+.popover {
+    max-width: 300px; 
+    max-height: 300px; 
+    width: 100%;
+    height: auto;
+    text-align: center;
+    opacity: 1;
+}
+
 #playerSide {
     background: white;
     height: 97%;

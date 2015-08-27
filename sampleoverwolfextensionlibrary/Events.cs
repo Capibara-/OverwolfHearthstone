@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SampleOverwolfExtensionLibrary.Events
 {
-        public class CardHandEventArgs : EventArgs
+        public class CardReceivedEventArgs : EventArgs
         {
             public string CardJSON { get; set; }
         }

@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SampleOverwolfExtensionLibrary.Events;
 using log4net;
+using System.Diagnostics;
 
 namespace SampleOverwolfExtensionLibrary
 {
@@ -28,7 +29,7 @@ namespace SampleOverwolfExtensionLibrary
 
         public event Action<object> CardPlayedEvent;
         public event Action<object> OpponentCardPlayedEvent;
-        public event Action<object> CardHandEvent;
+        public event Action<object> CardReceivedEvent;
 
 
         public EntryPoint(int nativeWindowHandle)
@@ -41,6 +42,8 @@ namespace SampleOverwolfExtensionLibrary
 
         public void Dispose()
         {
+            logger.Logger.Repository.Shutdown();
+            m_Worker.CancelAsync();
             GC.SuppressFinalize(this);
         }
 
@@ -113,7 +116,7 @@ namespace SampleOverwolfExtensionLibrary
                                         if (l_id != "" && l_to.Contains("FRIENDLY HAND"))
                                         {
                                             //      fireCardPlayedEvent(output); 
-                                            fireCardHandEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
+                                            fireCardReceivedEvent(JsonConvert.SerializeObject(m_AllCards[l_id]));
 
                                         }
                                         if (l_id != "" && l_to.Contains("FRIENDLY PLAY") && l_id != "TU4a_006")
@@ -263,13 +266,13 @@ namespace SampleOverwolfExtensionLibrary
             }
         }
 
-        private void fireCardHandEvent(string msg)
+        private void fireCardReceivedEvent(string msg)
         {
 
-            if (CardHandEvent != null)
+            if (CardReceivedEvent != null)
             {
-                CardHandEventArgs e = new CardHandEventArgs { CardJSON = msg };
-                CardHandEvent(e);
+                CardReceivedEventArgs e = new CardReceivedEventArgs { CardJSON = msg };
+                CardReceivedEvent(e);
             }
         }
 
