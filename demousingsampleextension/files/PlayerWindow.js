@@ -2,7 +2,7 @@
 // Init Bootstrap tooltips and popovers:
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
-    //$('[data-toggle="popover"]').popover();
+    $('[data-toggle="popover"]').popover();
 });
 
 window.onload = function (e) {
@@ -45,27 +45,21 @@ function addImageToBarWithTooltip(elementName, path, tooltipTitle, id) {
 };
 
 function addImageToBarWithPopover(elementName, path, tooltipTitle, popoverContent, id) {
-    // Create new div WITH tooltip:
-    //var $newdiv = $('<div class="thumbnail" data-toggle="tooltip" data-placement="bottom"/>');
-
-    // Create new div WITHOUT tooltip:
+    // Create new div:
     var $newdiv = $('<div class="thumbnail"/>');
     $newdiv.attr('title', tooltipTitle);
     $newdiv.attr('id', id);
 
-    // Create new img add a popover to it:
+    // Create new img and add popover:
     var $newimg = $('<img class="img-responsive"/>');
     $newimg.attr('src', path);
-
-    // Add popover:
     $newimg.popover({ title: tooltipTitle, content: popoverContent, html: true, placement: "right", trigger: "hover" });
 
-    // Append img to div:
+    // Append img to div and div to element:
     $newdiv.append($newimg);
-    // Append div to element:
     $('#' + elementName).prepend($newdiv);
-    // Enable tooltip/popover:
-    //$('[data-toggle="tooltip"]').tooltip();
+
+    // Enable popover:
     $('.popover').popover({
         container: 'body'
     });
@@ -166,7 +160,12 @@ function resizeWindow(width, height) {
 function resizeWindowFromMenu() {
     var height = parseInt($('#heightText').val());
     var width = parseInt($('#widthText').val());
-    resizeWindow(width, height);
+    if (isNaN(width) || isNaN(height)) {
+        $('#errorDialog').show();
+    }
+    else {
+        resizeWindow(width, height);
+    }
 }
 
 
@@ -199,11 +198,11 @@ function onOpponentCardPlayed(result) {
 
 function changeOpponentDeckVisibility() {
     if ($('#opponentDeckBtn').hasClass('active')) {
-        $('#opponentSide').css('background', 'white');
+        $('#opponentSide').show();
         $('#opponentDeckBtn').removeClass('active');
     }
     else {
-        $('#opponentSide').css('background', 'transparent');
+        $('#opponentSide').hide();
         $('#opponentDeckBtn').addClass('active');
     }
 }
