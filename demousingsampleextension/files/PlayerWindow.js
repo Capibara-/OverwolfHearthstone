@@ -169,6 +169,25 @@ function resizeWindowFromMenu() {
 }
 
 
+
+function resizeWindowFromMenu() {
+    var height = parseInt($('#heightText').val());
+    var width = parseInt($('#widthText').val());
+    if (isNaN(width) || isNaN(height)) {
+        $('#errorDialog').show();
+    }
+    else {
+        resizeWindow(width, height);
+    }
+}
+
+function GetCard() {
+    var name = $('#CardName').val();
+    console.log(name);
+        $('#errorDialog2').show();
+ 
+}
+
 // C# interop event handlers:
 
 function onCardPlayed(result) {
