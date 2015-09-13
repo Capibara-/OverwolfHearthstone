@@ -241,20 +241,22 @@ namespace SampleOverwolfExtensionLibrary
             }
         }
 
-        public void GetMyDeck(Action<object> callback)
+        public void getMyDeck(Action<object> callback)
         {
-            int i = 0;
-            foreach (var entry in m_AllCards)
-            {
-                i++;
-                m_MyDeck.Add(entry.Value);
-                // do something with entry.Value or entry.Key
-                if (i > 30)
+            int i=0;
+            foreach (var item in m_AllCards.Values)
+	{
+                m_MyDeck.Add(item);
+                if (i > 5)
                     break;
-            }
-
-            callback(JsonConvert.SerializeObject(m_MyDeck[0]));
+                i++;
+	}
+           
+               
+          
+            callback(JsonConvert.SerializeObject(m_MyDeck));
         }
+        
 
         private void fireCardPlayedEvent(string msg)
         {
