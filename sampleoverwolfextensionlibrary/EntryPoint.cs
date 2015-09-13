@@ -71,6 +71,33 @@ namespace SampleOverwolfExtensionLibrary
             }            
         }
 
+        public void StartWorkerThread(Action<object> callback)
+        {
+            m_isGameRunning = true;
+            logger.Debug("Set isGameRunning to true.");
+            callback("Set isGameRunning to true.");
+            if (m_Worker != null)
+            {
+                callback("Starting worker thread.");
+                logger.Debug("Starting worker thread.");
+                m_Worker.RunWorkerAsync();
+            }
+
+        }
+
+        public void StopWorkerThread(Action<object> callback)
+        {
+            m_isGameRunning = false;
+            logger.Debug("Set isGameRunning to false.");
+            callback("Set isGameRunning to false.");
+            if (m_Worker != null && m_Worker.IsBusy)
+            {
+                callback("Stopping worker thread.");
+                logger.Debug("Stopping worker thread.");
+                m_Worker.CancelAsync();
+            }
+        }
+
         private void pollLogFile(object sender, DoWorkEventArgs e)
         {
             string logFile = Configuration.Instance.GameLogFilePath;
@@ -282,33 +309,6 @@ namespace SampleOverwolfExtensionLibrary
             {
                 OpponentCardPlayedEventArgs e = new OpponentCardPlayedEventArgs { CardJSON = msg };
                 OpponentCardPlayedEvent(e);
-            }
-        }
-
-        public void StartWorkerThread(Action<object> callback)
-        {
-            m_isGameRunning = true;
-            logger.Debug("Set isGameRunning to true.");
-            callback("Set isGameRunning to true.");
-            if (m_Worker != null)
-            {
-                callback("Starting worker thread.");
-                logger.Debug("Starting worker thread.");
-                m_Worker.RunWorkerAsync();
-            }
-            
-        }
-
-        public void StopWorkerThread(Action<object> callback)
-        {
-            m_isGameRunning = false;
-            logger.Debug("Set isGameRunning to false.");
-            callback("Set isGameRunning to false.");
-            if (m_Worker != null && m_Worker.IsBusy)
-            {
-                callback("Stopping worker thread.");
-                logger.Debug("Stopping worker thread.");
-                m_Worker.CancelAsync();
             }
         }
     }

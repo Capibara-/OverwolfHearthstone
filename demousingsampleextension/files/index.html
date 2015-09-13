@@ -39,7 +39,7 @@
                 <button id="refreshBtn" type="button" class="btn btn-primary btn-xs center-block btn-block" onclick="reloadPage()">Resfresh</button>
                 <button id="screenshotBtn" type="button" class="btn btn-primary btn-xs center-block btn-block" onclick="takeScreenshot()">Screenshot</button>
                 <button id="screenshotFolderBtn" data-toggle="modal" type="button" class="btn btn-info btn-xs center-block btn-block" data-target="#SettingsModal">Settings</button>
-                <button id="closeBtn" type="button" class="btn btn-danger btn-xs center-block btn-block" onclick="closeWindow();">Close</button>
+                <button id="closeBtn" type="button" class="btn btn-danger btn-xs center-block btn-block" onclick="closeWindow()">Close</button>
                 
 
                 <!--Settings modal: -->
@@ -87,6 +87,9 @@
                                         <input type="text" class="form-control" placeholder="Height" id="heightText" />
                                     </div>
                                 </div>
+
+                                <ul class="nav nav-pills" id="monitorsList">
+                                </ul>
 
                             </div>
                             <div class="panel-footer" style="margin-bottom:-14px;">

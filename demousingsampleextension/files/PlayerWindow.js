@@ -3,14 +3,31 @@
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover();
+    $('ul.nav.nav-pills li a').click(function () {
+        $(this).parent().addClass('active').siblings().removeClass('active');
+    });
 });
 
 window.onload = function (e) {
     initLibrary();
     overwolf.games.onGameInfoUpdated.addListener(onGameInfoUpdate);
+    overwolf.utils.getMonitorList(handleMonitorsList);
 };
 
 var sampleLibraryObj = null;
+
+function addMonitorToSettings(monitorName) {
+    var newItem = $('<li><a href="#" onclick="selectMonitor(' + monitorName + ');">' + monitorName +'</a></li>');
+    $('#monitorsList').append(newItem);
+}
+
+function selectMonitor(monitorName) {
+    
+}
+
+function handleMonitorsList(monitorsArray) {
+    consol.log(monitorsArray);
+}
 
 function plugin() {
     return document.querySelector('#plugin');
@@ -64,7 +81,6 @@ function addImageToBarWithPopover(elementName, path, tooltipTitle, popoverConten
         container: 'body'
     });
 }
-
 
 function dragResize(edge) {
     overwolf.windows.getCurrentWindow(function (result) {
