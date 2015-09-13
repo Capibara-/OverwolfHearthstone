@@ -185,6 +185,25 @@ function resizeWindowFromMenu() {
 }
 
 
+
+function resizeWindowFromMenu() {
+    var height = parseInt($('#heightText').val());
+    var width = parseInt($('#widthText').val());
+    if (isNaN(width) || isNaN(height)) {
+        $('#errorDialog').show();
+    }
+    else {
+        resizeWindow(width, height);
+    }
+}
+
+function GetCard() {
+    var name = $('#CardName').val();
+    console.log(name);
+        $('#errorDialog2').show();
+ 
+}
+
 // C# interop event handlers:
 
 function onCardPlayed(result) {
@@ -203,6 +222,16 @@ function onCardReceived(result) {
     var path = "Images_renamed/" + card.ID + ".png";
     addImageToBarWithPopover("playerSide", path, card.Name, card.Text, card.ID);
 };
+
+function onDeckSelect(result) {
+    var id = "CS2_171";
+    var path = "Images_renamed/" + id + ".png";
+    console.log("path");
+    for (i = 0; i < 30;i++)
+    addImageToBarWithPopover("tableBody", path, "bla", "bla", id);
+
+};
+
 
 function onOpponentCardPlayed(result) {
     var card = JSON.parse(result.CardJSON);
