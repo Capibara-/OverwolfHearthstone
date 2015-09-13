@@ -283,6 +283,8 @@ namespace SampleOverwolfExtensionLibrary
             callback(JsonConvert.SerializeObject(m_MyDeck[0]));
         }
 
+        #region Interop events
+
         private void fireCardPlayedEvent(string msg)
         {
 
@@ -310,6 +312,12 @@ namespace SampleOverwolfExtensionLibrary
                 OpponentCardPlayedEventArgs e = new OpponentCardPlayedEventArgs { CardJSON = msg };
                 OpponentCardPlayedEvent(e);
             }
+        }
+
+        #endregion
+
+        public void HandleScreenshot(string path)
+        {
         }
     }
 }

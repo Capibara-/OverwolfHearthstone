@@ -69,3 +69,13 @@ div.desc {
     background: white;
     height: 97%;
 }
+
+#CardsModal {
+    height: 97%;
+    width: 97%;
+}
+
+#CardsModalDialog {
+    height: 97%;
+    width: 97%;
+}
