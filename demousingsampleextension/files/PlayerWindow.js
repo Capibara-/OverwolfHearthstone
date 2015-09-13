@@ -224,12 +224,26 @@ function onCardReceived(result) {
 };
 
 function onDeckSelect(result) {
-    var id = "CS2_171";
+    var id = "EX1_561";
     var path = "Images_renamed/" + id + ".png";
     console.log("path");
-    for (i = 0; i < 30;i++)
-    addImageToBarWithPopover("tableBody", path, "bla", "bla", id);
 
+    sampleLibraryObj.getMyDeck(function (result) {
+        var cards = JSON.parse(result);
+        console.log(cards);
+        for (i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var path = "Images_renamed/" + card.ID + ".png";
+            addImageToBarWithPopover("section1", path, card.Name, card.Text, card.ID);
+        }
+          
+    });
+        
+   
+
+
+   
+   
 };
 
 
