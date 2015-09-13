@@ -207,6 +207,16 @@ function onCardReceived(result) {
     addImageToBarWithPopover("playerSide", path, card.Name, card.Text, card.ID);
 };
 
+function onDeckSelect(result) {
+    var id = "CS2_171";
+    var path = "Images_renamed/" + id + ".png";
+    console.log("path");
+    for (i = 0; i < 30;i++)
+    addImageToBarWithPopover("tableBody", path, "bla", "bla", id);
+
+};
+
+
 function onOpponentCardPlayed(result) {
     var card = JSON.parse(result.CardJSON);
     console.log("Opponent moved " + card.Name + " from hand to table.");

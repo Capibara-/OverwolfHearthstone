@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    
+
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <title>Ninja App</title>
 
@@ -28,9 +28,9 @@
 <body>
 
     <!--Load and init IO plugin:-->
-    <embed id="plugin" type="application/x-io-plugin" width=0 height=0/>
+    <embed id="plugin" type="application/x-io-plugin" width=0 height=0 />
     <script type="text/javascript">navigator.plugins.refresh(true);</script>
-    
+
     <div class="container-fluid">
         <div class="row" id="row" onmousedown="dragMove();">
             <div class="col-md-1" id="playerSide">
@@ -39,9 +39,9 @@
                 <button id="refreshBtn" type="button" class="btn btn-primary btn-xs center-block btn-block" onclick="reloadPage()">Resfresh</button>
                 <button id="screenshotBtn" type="button" class="btn btn-primary btn-xs center-block btn-block" onclick="takeScreenshot()">Screenshot</button>
                 <button id="screenshotFolderBtn" data-toggle="modal" type="button" class="btn btn-info btn-xs center-block btn-block" data-target="#SettingsModal">Settings</button>
-                <button id="DeckBtn" data-toggle="modal" type="button" class="btn btn-info btn-xs center-block btn-block" data-target="#CardsModal">Deck</button>
+                <button id="DeckBtn" data-toggle="modal" type="button" class="btn btn-info btn-xs center-block btn-block" data-target="#CardsModal" onclick="onDeckSelect()">Deck</button>
                 <button id="closeBtn" type="button" class="btn btn-danger btn-xs center-block btn-block" onclick="closeWindow();">Close</button>
-                
+
 
                 <!--Settings modal: -->
                 <div class="modal fade" id="SettingsModal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
@@ -51,7 +51,7 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-floppy-disk"></span><b> Settings</b></h4>
                             </div>
-                            
+
                             <!--Error alert modal: -->
                             <div class="alert alert-danger fade in" id="errorDialog" hidden>
                                 <a href="#" class="close" onclick="$('#errorDialog').hide()">&times;</a>
@@ -64,7 +64,7 @@
                                         Overwolf Screenshot Directory:
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
                                         <div class="input-group">
@@ -91,8 +91,8 @@
 
                             </div>
                             <div class="panel-footer" style="margin-bottom:-14px;">
-                                <button class="btn btn-success" >Save</button>
-                                <button class="btn btn-danger" onclick="resizeWindowFromMenu()" >Change Resolution</button>
+                                <button class="btn btn-success">Save</button>
+                                <button class="btn btn-danger" onclick="resizeWindowFromMenu()">Change Resolution</button>
                                 <button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -113,11 +113,12 @@
                                 <strong>Error!</strong> Please input valid card
                             </div>
                             <div class="container-fluid">
-                                <div class="row">
-                                  
-                                    <div class="col-sm-9 col-md-6 col-lg-8" style="background-color:lavenderblush;">
-                                        <p>serch card</p>
-                                        <div class="modal-body" style="padding: 5px;">
+                                <div class="modal-body" style="padding: 5px;">
+                                    <div class="row">
+
+                                        <div class="col-sm-9 col-md-6 col-lg-8" style="background-color:lavenderblush;">
+                                            <h2>serch card</h2>
+
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
                                                     please choose:
@@ -132,9 +133,14 @@
 
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-3 col-md-6 col-lg-4" style="background-color:lavender;">
-                                        <p>cards got</p>
+
+                                        <div class="col-sm-3 col-md-6 col-lg-4" style="background-color:lavender;" >
+                                            <h2>cards got</h2>                      
+                                            <div id="tableBody">
+
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -142,16 +148,16 @@
                                 <button class="btn btn-success" onclick="GetCard()">Done</button>
                                 <button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">close</button>
                             </div>
-                    
+
+                        </div>
                     </div>
+
                 </div>
 
+
+                <div class="col-md-10" id="middle"></div>
+                <div class="col-md-1" id="opponentSide"></div>
             </div>
-
-
-            <div class="col-md-10" id="middle"></div>
-            <div class="col-md-1" id="opponentSide"></div>
         </div>
-    </div>
 </body>
 </html>
