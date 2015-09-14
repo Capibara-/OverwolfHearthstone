@@ -5,6 +5,7 @@
   "AppLogConfigFilePath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\log4net.config",
   "AppLogFilePath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\NinjaLog.txt",
   "TempFolder": "%LOCALAPPDATA%\\Overwolf\\Ninja\\Temp",
+  "JSONCardsURL":  "http://hearthstonejson.com/json/AllSets.json",
   "OCR": {
     "TesseractDataPath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\tessdata",
     "SplitToStrips": {
