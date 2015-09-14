@@ -14,6 +14,14 @@ namespace SampleOverwolfExtensionLibrary
         public class RootObject
         {
             public List<string> Druid { get; set; }
+            public List<string> Hunter { get; set; }
+            public List<string> Mage { get; set; }
+            public List<string> Paladin { get; set; }
+            public List<string> Priest { get; set; }
+            public List<string> Rouge { get; set; }
+            public List<string> Shaman { get; set; }
+            public List<string> Warlock { get; set; }
+            public List<string> Warrior { get; set; }
         }
 
         private static RootObject m_instanse=null;

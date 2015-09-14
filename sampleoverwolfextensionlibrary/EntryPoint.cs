@@ -281,6 +281,22 @@ namespace SampleOverwolfExtensionLibrary
                     break;
                 i++;
             }
+            i = 0;
+            foreach (var item in CardsByClasses.Instanse.Mage)
+            {
+                m_MyDeck.Add(m_AllCards[item]);
+                if (i > 5)
+                    break;
+                i++;
+            }
+            i = 0;
+            foreach (var item in CardsByClasses.Instanse.Hunter)
+            {
+                m_MyDeck.Add(m_AllCards[item]);
+                if (i > 5)
+                    break;
+                i++;
+            }
             callback(JsonConvert.SerializeObject(m_MyDeck));
         }
         
