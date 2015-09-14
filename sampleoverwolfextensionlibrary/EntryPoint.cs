@@ -271,16 +271,15 @@ namespace SampleOverwolfExtensionLibrary
         public void getMyDeck(Action<object> callback)
         {
             int i=0;
-            foreach (var item in m_AllCards.Values)
+            foreach (var item in CardsByClasses.Instanse.Druid)
 	{
-                m_MyDeck.Add(item);
+                m_MyDeck.Add(m_AllCards[item]);
                 if (i > 5)
                     break;
                 i++;
 	}
-           
-               
-          
+
+
             callback(JsonConvert.SerializeObject(m_MyDeck));
         }
         

@@ -29,6 +29,7 @@ namespace SampleOverwolfExtensionLibrary
                             m_instance = JsonConvert.DeserializeObject<RootObject>(configuration);
                         };
                         m_instance.JSONCardsFilePath = Environment.ExpandEnvironmentVariables(m_instance.JSONCardsFilePath);
+                        m_instance.JSONCardsByClasses = Environment.ExpandEnvironmentVariables(m_instance.JSONCardsByClasses);
                         m_instance.AppLogConfigFilePath = Environment.ExpandEnvironmentVariables(m_instance.AppLogConfigFilePath);
                         m_instance.AppLogFilePath = Environment.ExpandEnvironmentVariables(m_instance.AppLogFilePath);
                         m_instance.GameLogFilePath = Environment.ExpandEnvironmentVariables(m_instance.GameLogFilePath);
@@ -88,6 +89,7 @@ namespace SampleOverwolfExtensionLibrary
         {
             public string GameLogFilePath { get; set; }
             public string JSONCardsFilePath { get; set; }
+            public string JSONCardsByClasses { get; set; }
             public string AppLogConfigFilePath { get; set; }
             public string AppLogFilePath { get; set; }
             public string TempFolder { get; set; }

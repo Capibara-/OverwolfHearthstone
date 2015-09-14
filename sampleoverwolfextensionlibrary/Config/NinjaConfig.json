@@ -1,6 +1,7 @@
 {
   "GameLogFilePath": "C:\\Program Files (x86)\\Hearthstone\\Hearthstone_Data\\output_log.txt",
-  "JSONCardsFilePath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\AllSets.json",
+    "JSONCardsFilePath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\AllSets.json",
+    "JSONCardsByClasses": "%LOCALAPPDATA%\\Overwolf\\Ninja\\CardsClasses.json",
   "AppLogConfigFilePath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\log4net.config",
   "AppLogFilePath": "%LOCALAPPDATA%\\Overwolf\\Ninja\\NinjaLog.txt",
   "TempFolder": "%LOCALAPPDATA%\\Overwolf\\Ninja\\Temp",
