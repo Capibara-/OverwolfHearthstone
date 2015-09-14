@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using SampleOverwolfExtensionLibrary.Events;
 using log4net;
 using System.Diagnostics;
+using System.Net;
 
 namespace SampleOverwolfExtensionLibrary
 {
@@ -30,7 +31,9 @@ namespace SampleOverwolfExtensionLibrary
         public event Action<object> CardPlayedEvent;
         public event Action<object> OpponentCardPlayedEvent;
         public event Action<object> CardReceivedEvent;
-
+        public event Action<object> ErrorEvent;
+        public event Action<object> FatalErrorEvent;
+        public event Action<object> UpdateCompleteEvent;
 
         public EntryPoint(int nativeWindowHandle)
         {
@@ -272,53 +275,72 @@ namespace SampleOverwolfExtensionLibrary
         {
             int i=0;
             foreach (var item in CardsByClasses.Instanse.Druid)
-	{
+            {
                 m_MyDeck.Add(m_AllCards[item]);
                 if (i > 5)
                     break;
                 i++;
-	}
-
-
+            }
             callback(JsonConvert.SerializeObject(m_MyDeck));
         }
         
-
-        #region Interop events
-
         private void fireCardPlayedEvent(string msg)
         {
-
-            if (CardPlayedEvent != null)
-            {
-                CardPlayedEventArgs e = new CardPlayedEventArgs { CardJSON = msg };
-                CardPlayedEvent(e);
-            }
+            fireEvent(CardPlayedEvent, new CardPlayedEventArgs { CardJSON = msg }, msg);
         }
 
         private void fireCardReceivedEvent(string msg)
         {
-
-            if (CardReceivedEvent != null)
-            {
-                CardReceivedEventArgs e = new CardReceivedEventArgs { CardJSON = msg };
-                CardReceivedEvent(e);
-            }
+            fireEvent(CardReceivedEvent, new CardReceivedEventArgs { CardJSON = msg }, msg);
         }
 
         private void fireOpponentCardPlayedEvent(string msg)
         {
-            if (OpponentCardPlayedEvent != null)
+            fireEvent(OpponentCardPlayedEvent, new OpponentCardPlayedEventArgs { CardJSON = msg }, msg);
+        }
+
+        private void fireErrorEvent(string msg)
+        {
+            fireEvent(ErrorEvent, new Events.ErrorEventArgs { Message = msg }, msg);
+        }
+
+        private void fireFatalErrorEvent(string msg)
+        {
+            fireEvent(FatalErrorEvent, new FatalErrorEventArgs { Message = msg }, msg);
+        }
+
+        private void fireUpdateCompleteEvent(string msg)
+        {
+            fireEvent(UpdateCompleteEvent, new UpdateCompleteEventArgs { Message = msg }, msg);
+        }
+
+        private void fireEvent(Action<object> handler, OverwolfEventArgs eventArgs, string msg)
+        {
+            if (handler != null)
             {
-                OpponentCardPlayedEventArgs e = new OpponentCardPlayedEventArgs { CardJSON = msg };
-                OpponentCardPlayedEvent(e);
+                handler(eventArgs);
             }
         }
 
-        #endregion
-
         public void HandleScreenshot(string path)
         {
+        }
+
+        public void UpdateCardData()
+        {
+            try
+            {
+                WebClient wc = new WebClient();
+                string json = wc.DownloadString(Configuration.Instance.JSONCardsURL);
+                File.WriteAllText(Configuration.Instance.JSONCardsFilePath, json);
+                fireUpdateCompleteEvent("Updated all cards successfully.");
+            }
+            catch (Exception e)
+            {
+                string msg = string.Format("Could not update the cards JSON file: {0}", e.Message);
+                logger.Error(msg);
+                fireErrorEvent(msg);
+            }
         }
     }
 }

@@ -122,6 +122,7 @@ namespace SampleOverwolfExtensionLibrary
             public string AppLogConfigFilePath { get; set; }
             public string AppLogFilePath { get; set; }
             public string TempFolder { get; set; }
+            public string JSONCardsURL { get; set; }
             public OCR OCR { get; set; }
             public JS JS { get; set; }
         }
