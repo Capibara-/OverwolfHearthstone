@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
+    <Compile Include="CardsByClasses.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="EntryPoint.cs" />
@@ -75,6 +76,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="CardsByCharacter\CardsClasses.json" />
     <None Include="Config\log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -117,6 +119,7 @@
 if not exist %25LOCALAPPDATA%25\Overwolf\Ninja\Temp mkdir %25LOCALAPPDATA%25\Overwolf\Ninja\Temp
 if not exist %25LOCALAPPDATA%25\Overwolf\Ninja\tessdata mkdir %25LOCALAPPDATA%25\Overwolf\Ninja\tessdata
 copy /y $(ProjectDir)Config\NinjaConfig.json %25LOCALAPPDATA%25\Overwolf\Ninja
+copy /y $(ProjectDir)CardsByCharacter\CardsClasses.json %25LOCALAPPDATA%25\Overwolf\Ninja
 copy /y $(ProjectDir)Config\log4net.config %25LOCALAPPDATA%25\Overwolf\Ninja
 copy /y $(ProjectDir)tessdata\*.* %25LOCALAPPDATA%25\Overwolf\Ninja\tessdata
 </PostBuildEvent>
