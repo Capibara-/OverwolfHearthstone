@@ -268,6 +268,18 @@ namespace SampleOverwolfExtensionLibrary
             }
         }
 
+        public void GetHunterCrads(Action<object> callback)
+        {
+            
+            foreach (var item in CardsByClasses.Instanse.Hunter)
+            {
+                m_MyDeck.Add(m_AllCards[item]);
+            }
+            callback(JsonConvert.SerializeObject(m_MyDeck));
+        }
+
+
+
         public void getMyDeck(Action<object> callback)
         {
             int i=0;
