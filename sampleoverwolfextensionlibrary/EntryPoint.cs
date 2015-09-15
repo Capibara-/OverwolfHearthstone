@@ -71,7 +71,7 @@ namespace SampleOverwolfExtensionLibrary
                 m_Worker = new BackgroundWorker();
                 m_Worker.DoWork += new DoWorkEventHandler(pollLogFile);
                 m_Worker.WorkerSupportsCancellation = true;
-            }            
+            }
         }
 
         public void StartWorkerThread(Action<object> callback)
@@ -270,48 +270,120 @@ namespace SampleOverwolfExtensionLibrary
                 return offset;
             }
         }
-
-        public void GetHunterCrads(Action<object> callback)
+        /// <summary>
+        /// return all Druid cards
+        /// </summary>
+        /// <param name="callback"></param>
+        public void GetDruidCrads(Action<object> callback)
         {
-            
-            foreach (var item in CardsByClasses.Instanse.Hunter)
-            {
-                m_MyDeck.Add(m_AllCards[item]);
-            }
-            callback(JsonConvert.SerializeObject(m_MyDeck));
-        }
-
-
-
-        public void getMyDeck(Action<object> callback)
-        {
-            int i=0;
+            List<Card> l_Cards = new List<Card>();
             foreach (var item in CardsByClasses.Instanse.Druid)
             {
-                m_MyDeck.Add(m_AllCards[item]);
-                if (i > 5)
-                    break;
-                i++;
+                l_Cards.Add(m_AllCards[item]);
             }
-            i = 0;
-            foreach (var item in CardsByClasses.Instanse.Mage)
-            {
-                m_MyDeck.Add(m_AllCards[item]);
-                if (i > 5)
-                    break;
-                i++;
-            }
-            i = 0;
+            callback(JsonConvert.SerializeObject(l_Cards));
+        }
+        /// <summary>
+        /// return all Hunter cards
+        /// </summary>
+        /// <param name="callback"></param>
+        public void GetHunterCrads(Action<object> callback)
+        {
+            List<Card> l_Cards = new List<Card>(); ;
             foreach (var item in CardsByClasses.Instanse.Hunter)
             {
-                m_MyDeck.Add(m_AllCards[item]);
-                if (i > 5)
-                    break;
-                i++;
+                l_Cards.Add(m_AllCards[item]);
             }
-            callback(JsonConvert.SerializeObject(m_MyDeck));
+            callback(JsonConvert.SerializeObject(l_Cards));
         }
+
+        /// <summary>
+        /// return all Mage cards
+        /// </summary>
+        /// <param name="callback"></param>
+        public void GetMageCrads(Action<object> callback)
+        {  
+            List<Card> l_Cards = new List<Card>();
+            foreach (var item in CardsByClasses.Instanse.Mage)
+            {
         
+                    l_Cards.Add(m_AllCards[item]);
+           
+            }
+            callback(JsonConvert.SerializeObject(l_Cards));
+        }
+        /// <summary>
+        /// return all Paladin cards
+        /// </summary>
+        /// <param name="callback"></param>
+        public void GetPaladinCrads(Action<object> callback)
+        {
+            List<Card> l_Cards = new List<Card>();
+            foreach (var item in CardsByClasses.Instanse.Paladin)
+            {
+             
+                    l_Cards.Add(m_AllCards[item]);
+         
+            }
+            callback(JsonConvert.SerializeObject(l_Cards));
+        }
+        /// <summary>
+        /// return all Priest cards
+        /// </summary>
+        /// <param name="callback"></param>
+        public void GetPriestCrads(Action<object> callback)
+        {
+            List<Card> l_Cards = new List<Card>();
+            foreach (var item in CardsByClasses.Instanse.Priest)
+            {
+             
+                    l_Cards.Add(m_AllCards[item]);
+              
+            }
+            callback(JsonConvert.SerializeObject(l_Cards));
+        }
+        /// <summary>
+        /// return all Shaman cards
+        /// </summary>
+        /// <param name="callback"></param>
+        public void GetShamanCrads(Action<object> callback)
+        {
+            List<Card> l_Cards = new List<Card>();
+            foreach (var item in CardsByClasses.Instanse.Shaman)
+            {
+                l_Cards.Add(m_AllCards[item]);
+            }
+            callback(JsonConvert.SerializeObject(l_Cards));
+        }
+        /// <summary>
+        /// return all Warlock cards
+        /// </summary>
+        /// <param name="callback"></param>
+        public void GetWarlockCrads(Action<object> callback)
+        {
+            List<Card> l_Cards = new List<Card>();
+            foreach (var item in CardsByClasses.Instanse.Warlock)
+            {
+                l_Cards.Add(m_AllCards[item]);
+            }
+            callback(JsonConvert.SerializeObject(l_Cards));
+        }
+        /// <summary>
+        /// return all Warrior cards
+        /// </summary>
+        /// <param name="callback"></param>
+        public void GetWarriorCrads(Action<object> callback)
+        {
+            List<Card> l_Cards = new List<Card>();
+            foreach (var item in CardsByClasses.Instanse.Warrior)
+            {
+                l_Cards.Add(m_AllCards[item]);
+            }
+            callback(JsonConvert.SerializeObject(l_Cards));
+        }
+
+
+
         private void fireCardPlayedEvent(string msg)
         {
             fireEvent(CardPlayedEvent, new CardPlayedEventArgs { CardJSON = msg }, msg);

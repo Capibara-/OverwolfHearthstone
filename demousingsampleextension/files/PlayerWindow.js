@@ -17,12 +17,12 @@ window.onload = function (e) {
 var sampleLibraryObj = null;
 
 function addMonitorToSettings(monitorName) {
-    var newItem = $('<li><a href="#" onclick="selectMonitor(' + monitorName + ');">' + monitorName +'</a></li>');
+    var newItem = $('<li><a href="#" onclick="selectMonitor(' + monitorName + ');">' + monitorName + '</a></li>');
     $('#monitorsList').append(newItem);
 }
 
 function selectMonitor(monitorName) {
-    
+
 }
 
 function handleMonitorsList(monitorsArray) {
@@ -164,8 +164,7 @@ function openWindow(windowName) {
 
 function resizeWindow(width, height) {
     overwolf.windows.getCurrentWindow(function (result) {
-        if (result.status == "success")
-        {
+        if (result.status == "success") {
             overwolf.windows.changeSize(result.window.id, width, height, genericCallback);
             $('#body').height(height);
             $('#body').width(width);
@@ -200,8 +199,8 @@ function resizeWindowFromMenu() {
 function GetCard() {
     var name = $('#CardName').val();
     console.log(name);
-        $('#errorDialog2').show();
- 
+    $('#errorDialog2').show();
+
 }
 
 // C# interop event handlers:
@@ -224,37 +223,100 @@ function onCardReceived(result) {
 };
 
 function onDeckSelect(result) {
-    var id = "EX1_561";
-    var path = "Images_renamed/" + id + ".png";
-    console.log("path");
 
-    sampleLibraryObj.getMyDeck(function (result) {
+    //draw Druid
+    sampleLibraryObj.GetDruidCrads(function (result) {
         var cards = JSON.parse(result);
         console.log(cards);
         for (i = 0; i < cards.length; i++) {
             var card = cards[i];
             var path = "Images_renamed/" + card.ID + ".png";
-            addImageToBarWithPopover("section1", path, card.Name, card.Text, card.ID);
+            addImageToBarWithPopover("Druid", path, card.Name, card.Text, card.ID);
         }
-          
     });
-        
 
+    //draw Hunter
     sampleLibraryObj.GetHunterCrads(function (result) {
         var cards = JSON.parse(result);
         console.log(cards);
         for (i = 0; i < cards.length; i++) {
             var card = cards[i];
             var path = "Images_renamed/" + card.ID + ".png";
-            addImageToBarWithPopover("section2", path, card.Name, card.Text, card.ID);
+            addImageToBarWithPopover("Hunter", path, card.Name, card.Text, card.ID);
         }
-
     });
-   
+    //draw Mage
+    sampleLibraryObj.GetMageCrads(function (result) {
+        var cards = JSON.parse(result);
+        console.log(cards);
+        for (i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var path = "Images_renamed/" + card.ID + ".png";
+            addImageToBarWithPopover("Mage", path, card.Name, card.Text, card.ID);
+        }
+    });
+    //draw Paladin
+    sampleLibraryObj.GetPaladinCrads(function (result) {
+        var cards = JSON.parse(result);
+        console.log(cards);
+        for (i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var path = "Images_renamed/" + card.ID + ".png";
+            addImageToBarWithPopover("Paladin", path, card.Name, card.Text, card.ID);
+        }
+    });
+    //draw Priest
+    sampleLibraryObj.GetPriestCrads(function (result) {
+        var cards = JSON.parse(result);
+        console.log(cards);
+        for (i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var path = "Images_renamed/" + card.ID + ".png";
+            addImageToBarWithPopover("Priest", path, card.Name, card.Text, card.ID);
+        }
+    });
+    //draw Rouge
+    sampleLibraryObj.GetRougeCrads(function (result) {
+        var cards = JSON.parse(result);
+        console.log(cards);
+        for (i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var path = "Images_renamed/" + card.ID + ".png";
+            addImageToBarWithPopover("Rouge", path, card.Name, card.Text, card.ID);
+        }
+    });
+    //draw Shaman
+    sampleLibraryObj.GetShamanCrads(function (result) {
+        var cards = JSON.parse(result);
+        console.log(cards);
+        for (i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var path = "Images_renamed/" + card.ID + ".png";
+            addImageToBarWithPopover("Shaman", path, card.Name, card.Text, card.ID);
+        }
+    });
+    //draw Warlock
+    sampleLibraryObj.GetWarlockCrads(function (result) {
+        var cards = JSON.parse(result);
+        console.log(cards);
+        for (i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var path = "Images_renamed/" + card.ID + ".png";
+            addImageToBarWithPopover("Warlock", path, card.Name, card.Text, card.ID);
+        }
+    });
+    //draw Warrior
+    sampleLibraryObj.GetWarriorCrads(function (result) {
+        var cards = JSON.parse(result);
+        console.log(cards);
+        for (i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var path = "Images_renamed/" + card.ID + ".png";
+            addImageToBarWithPopover("Warrior", path, card.Name, card.Text, card.ID);
+        }
+    });
 
 
-   
-   
 };
 
 
